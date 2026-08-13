@@ -1,0 +1,37 @@
+.kb-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--kb-space-2);
+  margin: var(--kb-space-4) 0;
+}
+
+.kb-divider--vertical {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  margin: 0 var(--kb-space-2);
+  background: var(--kb-color-border);
+  vertical-align: middle;
+}
+
+.kb-divider::before,
+.kb-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--kb-color-border);
+}
+
+.kb-divider--content-left::before {
+  flex: 0.06;
+}
+
+.kb-divider--content-right::after {
+  flex: 0.06;
+}
+
+.kb-divider__text {
+  color: var(--kb-color-text-2);
+  font-size: var(--kb-font-size-md);
+  white-space: nowrap;
+}
