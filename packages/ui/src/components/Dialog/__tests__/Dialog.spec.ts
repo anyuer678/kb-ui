@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import KbDialog from '../Dialog.vue'
 
-const stubTeleport = { stubs: { teleport: true } }
+const stubTeleport = { global: { stubs: { teleport: true } } }
 
 describe('KbDialog', () => {
   it('modelValue=false 时不渲染', () => {
