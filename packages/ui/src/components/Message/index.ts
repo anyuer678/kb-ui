@@ -58,8 +58,3 @@ const message = {
 }
 
 export default message
-
-// 保留组件本身的 install 能力（不加入全量注册，函数式为主）
-export const MessagePlugin: Plugin = {
-  install() {},
-}
