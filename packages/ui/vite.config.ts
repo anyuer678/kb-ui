@@ -5,7 +5,11 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
   plugins: [
     vue(),
-    dts({ include: ['src'], tsconfigPath: './tsconfig.json' }),
+    dts({
+      include: ['src'],
+      exclude: ['**/__tests__/**'],
+      tsconfigPath: './tsconfig.json',
+    }),
   ],
   build: {
     lib: {
@@ -13,7 +17,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
       fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs'),
     },
-    rollupOptions: { external: ['vue'] },
+    rollupOptions: { external: ['vue'], output: { exports: 'named' } },
     cssCodeSplit: true,
   },
 })

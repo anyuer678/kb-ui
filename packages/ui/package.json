@@ -25,7 +25,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite build && node scripts/build-styles.mjs",
     "test": "vitest run",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . && stylelint \"src/**/*.css\" --allow-empty-input"
