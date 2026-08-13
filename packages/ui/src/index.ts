@@ -5,6 +5,7 @@ export * from './components/Space'
 export * from './components/Divider'
 export * from './components/Grid'
 export * from './components/Input'
+export * from './components/Checkbox'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -14,8 +15,9 @@ import { Space } from './components/Space'
 import { Divider } from './components/Divider'
 import { Row, Col } from './components/Grid'
 import { Input } from './components/Input'
+import { Checkbox } from './components/Checkbox'
 
-const components = [Button, Icon, Tag, Space, Divider, Row, Col, Input]
+const components = [Button, Icon, Tag, Space, Divider, Row, Col, Input, Checkbox]
 
 const install: Plugin = (app: App) => {
   components.forEach((c) => app.component(c.name!, c))
