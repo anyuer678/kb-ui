@@ -1,0 +1,71 @@
+.kb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--kb-space-1);
+  box-sizing: border-box;
+  padding: 0 var(--kb-space-2);
+  height: 24px;
+  border-radius: var(--kb-radius-sm);
+  background: var(--kb-color-bg-elevated);
+  color: var(--kb-color-text-2);
+  font-size: var(--kb-font-size-xs);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.kb-tag--small {
+  height: 20px;
+  font-size: var(--kb-font-size-xs);
+}
+
+.kb-tag--large {
+  height: 28px;
+  font-size: var(--kb-font-size-sm);
+}
+
+.kb-tag--round {
+  border-radius: var(--kb-radius-round);
+}
+
+.kb-tag--primary {
+  background: color-mix(in srgb, var(--kb-color-primary) 12%, transparent);
+  color: var(--kb-color-primary);
+}
+
+.kb-tag--success {
+  background: color-mix(in srgb, var(--kb-color-success) 12%, transparent);
+  color: var(--kb-color-success);
+}
+
+.kb-tag--warning {
+  background: color-mix(in srgb, var(--kb-color-warning) 12%, transparent);
+  color: var(--kb-color-warning);
+}
+
+.kb-tag--danger {
+  background: color-mix(in srgb, var(--kb-color-danger) 12%, transparent);
+  color: var(--kb-color-danger);
+}
+
+.kb-tag--info {
+  background: color-mix(in srgb, var(--kb-color-info) 12%, transparent);
+  color: var(--kb-color-info);
+}
+
+.kb-tag__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.kb-tag__close:hover {
+  opacity: 1;
+}
