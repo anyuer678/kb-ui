@@ -12,6 +12,7 @@ export * from './components/Select'
 export * from './components/Tooltip'
 export * from './components/Dialog'
 export * from './components/Message'
+export * from './components/Table'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -27,6 +28,7 @@ import { Switch } from './components/Switch'
 import { Select } from './components/Select'
 import { Tooltip } from './components/Tooltip'
 import { Dialog } from './components/Dialog'
+import { Table } from './components/Table'
 
 const components = [
   Button,
@@ -43,6 +45,7 @@ const components = [
   Select,
   Tooltip,
   Dialog,
+  Table,
 ]
 
 const install: Plugin = (app: App) => {
