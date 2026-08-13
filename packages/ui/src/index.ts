@@ -8,6 +8,7 @@ export * from './components/Input'
 export * from './components/Checkbox'
 export * from './components/Radio'
 export * from './components/Switch'
+export * from './components/Select'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -20,6 +21,7 @@ import { Input } from './components/Input'
 import { Checkbox } from './components/Checkbox'
 import { Radio } from './components/Radio'
 import { Switch } from './components/Switch'
+import { Select } from './components/Select'
 
 const components = [
   Button,
@@ -33,6 +35,7 @@ const components = [
   Checkbox,
   Radio,
   Switch,
+  Select,
 ]
 
 const install: Plugin = (app: App) => {
