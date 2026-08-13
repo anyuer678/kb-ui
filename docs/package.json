@@ -1,0 +1,17 @@
+{
+  "name": "kb-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "dependencies": {
+    "@kb/ui": "workspace:*",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.0"
+  }
+}
