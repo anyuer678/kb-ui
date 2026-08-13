@@ -1,0 +1,88 @@
+.kb-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--kb-space-1);
+  box-sizing: border-box;
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  background: var(--kb-color-bg);
+  color: var(--kb-color-text-1);
+  font-family: var(--kb-font-family);
+  font-size: var(--kb-font-size-md);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background var(--kb-transition-duration) var(--kb-transition-timing),
+    border-color var(--kb-transition-duration) var(--kb-transition-timing),
+    color var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-button:hover:not(.kb-button--disabled) {
+  border-color: var(--kb-color-primary);
+  color: var(--kb-color-primary);
+}
+
+.kb-button--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.kb-button--round {
+  border-radius: var(--kb-radius-round);
+}
+
+.kb-button--small {
+  padding: var(--kb-space-1) var(--kb-space-2);
+  font-size: var(--kb-font-size-sm);
+}
+
+.kb-button--medium {
+  padding: var(--kb-space-2) var(--kb-space-4);
+}
+
+.kb-button--large {
+  padding: var(--kb-space-3) var(--kb-space-5);
+  font-size: var(--kb-font-size-lg);
+}
+
+.kb-button--primary {
+  border-color: var(--kb-color-primary);
+  background: var(--kb-color-primary);
+  color: var(--kb-color-bg);
+}
+
+.kb-button--primary:hover:not(.kb-button--disabled) {
+  border-color: var(--kb-color-primary);
+  color: var(--kb-color-bg);
+  filter: brightness(0.94);
+}
+
+.kb-button--success {
+  border-color: var(--kb-color-success);
+  background: var(--kb-color-success);
+  color: var(--kb-color-bg);
+}
+
+.kb-button--warning {
+  border-color: var(--kb-color-warning);
+  background: var(--kb-color-warning);
+  color: var(--kb-color-bg);
+}
+
+.kb-button--danger {
+  border-color: var(--kb-color-danger);
+  background: var(--kb-color-danger);
+  color: var(--kb-color-bg);
+}
+
+.kb-button--info {
+  border-color: var(--kb-color-info);
+  background: var(--kb-color-info);
+  color: var(--kb-color-bg);
+}
+
+.kb-button--plain.kb-button--primary {
+  background: var(--kb-color-bg);
+  color: var(--kb-color-primary);
+}
