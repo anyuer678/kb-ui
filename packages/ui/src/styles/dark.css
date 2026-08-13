@@ -1,0 +1,10 @@
+[data-theme='dark'] {
+  --kb-color-bg: #0f172a;
+  --kb-color-bg-elevated: #1e293b;
+  --kb-color-border: #334155;
+  --kb-color-text-1: #f1f5f9;
+  --kb-color-text-2: #cbd5e1;
+  --kb-color-text-3: #64748b;
+  --kb-shadow-1: 0 1px 2px rgb(0 0 0 / 40%);
+  --kb-shadow-2: 0 4px 12px rgb(0 0 0 / 50%);
+}
