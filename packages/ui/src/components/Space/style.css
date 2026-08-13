@@ -1,0 +1,27 @@
+.kb-space {
+  display: inline-flex;
+}
+
+.kb-space--vertical {
+  flex-direction: column;
+}
+
+.kb-space--wrap {
+  flex-wrap: wrap;
+}
+
+.kb-space--align-start {
+  align-items: flex-start;
+}
+
+.kb-space--align-center {
+  align-items: center;
+}
+
+.kb-space--align-end {
+  align-items: flex-end;
+}
+
+.kb-space--align-baseline {
+  align-items: baseline;
+}
