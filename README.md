@@ -20,6 +20,16 @@ pnpm create kb --template starter   # 生成带完整示例的项目
 pnpm create kb                 # 交互式选择
 ```
 
+## 发布流程
+
+组件库与脚手架通过 [changesets](https://github.com/changesets/changesets) 管理版本与 changelog：
+
+1. 改动后运行 `pnpm changeset`，按提示选择变更级别（major/minor/patch）并填写说明；
+2. 推送代码，CI 自动执行 lint / typecheck / test / build；
+3. GitHub Actions 自动创建「版本 PR」（更新 CHANGELOG 与版本号），合入后自动发布 `@kb/ui` 与 `create-kb` 到 npm。
+
+> 首次发布前需在 GitHub 仓库 Secrets 配置 `NPM_TOKEN`（npm 账号的 automation token）。
+
 ## 常用命令
 
 ```bash
