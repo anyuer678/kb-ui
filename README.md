@@ -21,6 +21,22 @@ pnpm test          # 全部包测试
 pnpm build         # 全部包构建
 ```
 
+## 如何新增一个组件（@kb/ui）
+
+在 `packages/ui/src/components/<Name>/` 下创建 4 个文件（以 Button 为范式）：
+
+```
+<Name>.vue                  # 组件：defineOptions({ name: 'Kb<Name>' }) + withDefaults(defineProps<Props>())
+style.css                   # 样式：全部引用 --kb-* token，class 前缀 kb-
+index.ts                    # 导出组件与 Props 类型
+__tests__/<Name>.spec.ts    # Vitest 测试
+```
+
+然后在两个汇总文件中各追加一行：
+
+- `packages/ui/src/index.ts`：`export * from './components/<Name>'` + 加入 `components` 数组
+- 构建脚本会自动把 `style.css` 输出为 `dist/styles/<Name>.css`
+
 ## 技术栈
 
 Vue 3 + TypeScript + Vite（lib mode）+ Vitest + pnpm workspace，样式为原生 CSS + CSS 变量（设计 token）。设计文档见 `docs/superpowers/specs/`，实施计划见 `docs/superpowers/plans/`。
