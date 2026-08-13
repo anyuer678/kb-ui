@@ -8,8 +8,8 @@
 |---|---|
 | `@kb/ui` | 通用 Vue 3 组件库（发布 npm） |
 | `@kb/config` | 共享工程配置（tsconfig / eslint / prettier / stylelint） |
-
-（后续将新增 `create-kb` 脚手架、playground 演示站、docs 文档站）
+| `kb-playground` | 组件演示站（源码直连热更新） |
+| `kb-docs` | Vitepress 组件文档站 |
 
 ## 常用命令
 
@@ -19,6 +19,8 @@ pnpm lint          # 全部包 lint
 pnpm typecheck     # 全部包类型检查
 pnpm test          # 全部包测试
 pnpm build         # 全部包构建
+pnpm dev           # 启动 playground（http://localhost:5173）
+pnpm docs:dev      # 启动文档站（http://localhost:5174）
 ```
 
 ## 如何新增一个组件（@kb/ui）
