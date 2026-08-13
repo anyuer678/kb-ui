@@ -14,9 +14,13 @@
     "build": "pnpm -r build",
     "dev": "pnpm --filter kb-playground dev",
     "docs:dev": "pnpm --filter kb-docs docs:dev",
-    "docs:build": "pnpm --filter kb-docs docs:build"
+    "docs:build": "pnpm --filter kb-docs docs:build",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.0",
     "@kb/config": "workspace:*",
     "eslint": "^10.8.1",
     "prettier": "^3.9.6",
