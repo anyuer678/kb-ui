@@ -1,0 +1,32 @@
+.kb-message {
+  display: flex;
+  align-items: center;
+  gap: var(--kb-space-2);
+  padding: var(--kb-space-2) var(--kb-space-4);
+  border-radius: var(--kb-radius-md);
+  background: var(--kb-color-bg);
+  box-shadow: var(--kb-shadow-2);
+  font-size: var(--kb-font-size-md);
+  color: var(--kb-color-text-1);
+}
+
+.kb-message--success {
+  color: var(--kb-color-success);
+}
+
+.kb-message--error {
+  color: var(--kb-color-danger);
+}
+
+.kb-message--warning {
+  color: var(--kb-color-warning);
+}
+
+.kb-message--info {
+  color: var(--kb-color-info);
+}
+
+.kb-message__content {
+  color: var(--kb-color-text-1);
+  line-height: 1.5;
+}

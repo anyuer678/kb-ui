@@ -11,6 +11,7 @@ export * from './components/Switch'
 export * from './components/Select'
 export * from './components/Tooltip'
 export * from './components/Dialog'
+export * from './components/Message'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
