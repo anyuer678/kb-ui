@@ -2,8 +2,13 @@
   "name": "create-kb",
   "version": "0.1.0",
   "type": "module",
-  "bin": { "create-kb": "./dist/index.js" },
-  "files": ["dist", "templates"],
+  "bin": {
+    "create-kb": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -17,7 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "@types/prompts": "^2.4.0",
+    "@types/prompts": "^2.4.9",
     "tsup": "^8.0.0",
     "typescript": "^5.9.0"
   }

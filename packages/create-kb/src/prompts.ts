@@ -1,4 +1,7 @@
-import prompts from 'prompts'
+import prompts, { type PromptObject } from 'prompts'
+
+// @types/prompts 长期缺失 skip 选项类型（prompts 官方支持）
+type PromptItem = PromptObject & { skip?: () => boolean }
 
 export interface CreateOptions {
   projectName: string
@@ -8,6 +11,16 @@ export interface CreateOptions {
 }
 
 export async function promptMissing(options: Partial<CreateOptions>): Promise<CreateOptions> {
+  // 非交互模式：所有必填选项已提供时，直接返回（避免在非 TTY 环境触发 prompts）
+  if (options.projectName && options.template && options.packageManager) {
+    return {
+      projectName: options.projectName,
+      template: options.template,
+      packageManager: options.packageManager,
+      git: options.git ?? true,
+    }
+  }
+
   const answers = await prompts(
     [
       {
@@ -17,7 +30,7 @@ export async function promptMissing(options: Partial<CreateOptions>): Promise<Cr
         initial: 'kb-app',
         validate: validateProjectName,
         skip: () => Boolean(options.projectName),
-      },
+      } satisfies PromptItem,
       {
         type: 'select',
         name: 'template',
@@ -27,7 +40,7 @@ export async function promptMissing(options: Partial<CreateOptions>): Promise<Cr
           { title: 'starter - 完整示例', value: 'starter' },
         ],
         skip: () => Boolean(options.template),
-      },
+      } satisfies PromptItem,
       {
         type: 'select',
         name: 'packageManager',
@@ -38,8 +51,8 @@ export async function promptMissing(options: Partial<CreateOptions>): Promise<Cr
           { title: 'yarn', value: 'yarn' },
         ],
         skip: () => Boolean(options.packageManager),
-      },
-    ],
+      } satisfies PromptItem,
+    ] as unknown as PromptObject[],
     { onCancel: () => process.exit(1) },
   )
 

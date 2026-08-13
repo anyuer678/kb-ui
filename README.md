@@ -10,6 +10,15 @@
 | `@kb/config` | 共享工程配置（tsconfig / eslint / prettier / stylelint） |
 | `kb-playground` | 组件演示站（源码直连热更新） |
 | `kb-docs` | Vitepress 组件文档站 |
+| `create-kb` | 项目脚手架 CLI（发布 npm） |
+
+## 快速创建项目
+
+```bash
+pnpm create kb my-app          # 生成最小项目（Vite + Vue 3 + TS + @kb/ui）
+pnpm create kb --template starter   # 生成带完整示例的项目
+pnpm create kb                 # 交互式选择
+```
 
 ## 常用命令
 
