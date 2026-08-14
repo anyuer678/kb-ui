@@ -1,0 +1,31 @@
+.kb-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: var(--kb-radius-md);
+  background: var(--kb-color-bg-elevated);
+  color: var(--kb-color-text-2);
+  flex-shrink: 0;
+}
+
+.kb-avatar--round {
+  border-radius: var(--kb-radius-round);
+}
+
+.kb-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kb-avatar__fallback {
+  font-size: 0.5em;
+  line-height: 1;
+}
+
+.kb-avatar__icon {
+  width: 50%;
+  height: 50%;
+}

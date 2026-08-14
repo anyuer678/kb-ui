@@ -29,6 +29,16 @@ export * from './components/Message'
 export { default as message } from './components/Message'
 export * from './components/Table'
 export { Table as KbTable } from './components/Table'
+export * from './components/Badge'
+export { Badge as KbBadge } from './components/Badge'
+export * from './components/Avatar'
+export { Avatar as KbAvatar } from './components/Avatar'
+export * from './components/Progress'
+export { Progress as KbProgress } from './components/Progress'
+export * from './components/Card'
+export { Card as KbCard } from './components/Card'
+export * from './components/Alert'
+export { Alert as KbAlert } from './components/Alert'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -45,6 +55,11 @@ import { Select } from './components/Select'
 import { Tooltip } from './components/Tooltip'
 import { Dialog } from './components/Dialog'
 import { Table } from './components/Table'
+import { Badge } from './components/Badge'
+import { Avatar } from './components/Avatar'
+import { Progress } from './components/Progress'
+import { Card } from './components/Card'
+import { Alert } from './components/Alert'
 
 // 由 vite.config.ts 的 define 注入（与 package.json version 保持同步）
 declare const __KB_VERSION__: string
@@ -65,6 +80,11 @@ const components = [
   Tooltip,
   Dialog,
   Table,
+  Badge,
+  Avatar,
+  Progress,
+  Card,
+  Alert,
 ]
 
 const install: Plugin = (app: App) => {

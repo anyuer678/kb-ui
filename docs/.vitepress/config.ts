@@ -52,7 +52,14 @@ export default defineConfig({
         },
         {
           text: '数据展示',
-          items: [{ text: 'Table 表格', link: '/components/table' }],
+          items: [
+            { text: 'Table 表格', link: '/components/table' },
+            { text: 'Badge 徽标', link: '/components/badge' },
+            { text: 'Avatar 头像', link: '/components/avatar' },
+            { text: 'Progress 进度条', link: '/components/progress' },
+            { text: 'Card 卡片', link: '/components/card' },
+            { text: 'Alert 警告提示', link: '/components/alert' },
+          ],
         },
       ],
     },

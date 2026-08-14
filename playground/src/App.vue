@@ -16,6 +16,11 @@ import {
   KbTooltip,
   KbDialog,
   KbTable,
+  KbBadge,
+  KbAvatar,
+  KbProgress,
+  KbCard,
+  KbAlert,
   message,
 } from '@kb/ui'
 
@@ -173,6 +178,67 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
 
       <h3>Table</h3>
       <KbTable :data="tableData" :columns="tableColumns" stripe border />
+    </section>
+
+    <!-- 展示组件 -->
+    <section class="block">
+      <h2>展示组件</h2>
+      <KbDivider />
+
+      <h3>Badge 徽标</h3>
+      <KbSpace wrap :size="28">
+        <KbBadge :content="5"><KbButton>消息</KbButton></KbBadge>
+        <KbBadge :content="120" :max="99"><KbButton>邮件</KbButton></KbBadge>
+        <KbBadge dot><KbButton>小红点</KbButton></KbBadge>
+        <KbBadge :content="'new'" color="#16a34a" />
+      </KbSpace>
+
+      <h3>Avatar 头像</h3>
+      <KbSpace wrap>
+        <KbAvatar fallback="张" round />
+        <KbAvatar fallback="KB" :size="56" round />
+        <KbAvatar :size="48" round />
+        <KbAvatar fallback="李" :size="32" />
+      </KbSpace>
+
+      <h3>Progress 进度条</h3>
+      <KbSpace direction="vertical" :size="12" style="width: 100%">
+        <KbProgress :percentage="30" />
+        <KbProgress :percentage="66" status="warning" />
+        <KbProgress :percentage="100" status="success" />
+        <KbProgress :percentage="80" :stroke-width="12" :show-text="false" />
+      </KbSpace>
+
+      <h3>Card 卡片</h3>
+      <KbRow :gutter="12">
+        <KbCol :span="8">
+          <KbCard title="基础卡片">
+            <p>这是卡片内容，支持任意内容。</p>
+          </KbCard>
+        </KbCol>
+        <KbCol :span="8">
+          <KbCard title="带操作" shadow="hover">
+            <p>悬停有阴影效果。</p>
+            <template #footer>
+              <KbButton type="primary" size="small">确定</KbButton>
+              <KbButton size="small">取消</KbButton>
+            </template>
+          </KbCard>
+        </KbCol>
+        <KbCol :span="8">
+          <KbCard title="无阴影" shadow="never">
+            <p>简洁无阴影。</p>
+          </KbCard>
+        </KbCol>
+      </KbRow>
+
+      <h3>Alert 警告提示</h3>
+      <KbSpace direction="vertical" :size="12" style="width: 100%">
+        <KbAlert type="info" title="提示" show-icon>这是一条普通提示信息。</KbAlert>
+        <KbAlert type="success" title="成功" show-icon closable>操作已成功完成。</KbAlert>
+        <KbAlert type="warning" title="注意" show-icon closable>部分功能暂不可用。</KbAlert>
+        <KbAlert type="danger" title="错误" show-icon closable>发生了一个错误。</KbAlert>
+      </KbSpace>
     </section>
   </div>
 </template>

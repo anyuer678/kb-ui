@@ -1,0 +1,49 @@
+.kb-badge {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.kb-badge--independent {
+  display: inline-flex;
+}
+
+.kb-badge__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--kb-space-1);
+  border-radius: var(--kb-radius-round);
+  background: var(--kb-color-danger);
+  color: var(--kb-color-bg);
+  font-size: var(--kb-font-size-xs);
+  line-height: 1;
+}
+
+.kb-badge--independent .kb-badge__content {
+  position: static;
+}
+
+.kb-badge__content:not(.kb-badge--independent, .kb-badge__content--dot) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.kb-badge__content--dot {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  padding: 0;
+}
+
+.kb-badge__content--dot:not(.kb-badge--independent) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+}
