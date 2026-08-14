@@ -19,3 +19,9 @@
 @import url('../components/Progress/style.css');
 @import url('../components/Card/style.css');
 @import url('../components/Alert/style.css');
+@import url('../components/Skeleton/style.css');
+@import url('../components/Empty/style.css');
+@import url('../components/Breadcrumb/style.css');
+@import url('../components/Collapse/style.css');
+@import url('../components/Tabs/style.css');
+@import url('../components/Pagination/style.css');

@@ -39,6 +39,18 @@ export * from './components/Card'
 export { Card as KbCard } from './components/Card'
 export * from './components/Alert'
 export { Alert as KbAlert } from './components/Alert'
+export * from './components/Skeleton'
+export { Skeleton as KbSkeleton } from './components/Skeleton'
+export * from './components/Empty'
+export { Empty as KbEmpty } from './components/Empty'
+export * from './components/Breadcrumb'
+export { Breadcrumb as KbBreadcrumb } from './components/Breadcrumb'
+export * from './components/Collapse'
+export { Collapse as KbCollapse } from './components/Collapse'
+export * from './components/Tabs'
+export { Tabs as KbTabs } from './components/Tabs'
+export * from './components/Pagination'
+export { Pagination as KbPagination } from './components/Pagination'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -60,6 +72,12 @@ import { Avatar } from './components/Avatar'
 import { Progress } from './components/Progress'
 import { Card } from './components/Card'
 import { Alert } from './components/Alert'
+import { Skeleton } from './components/Skeleton'
+import { Empty } from './components/Empty'
+import { Breadcrumb } from './components/Breadcrumb'
+import { Collapse } from './components/Collapse'
+import { Tabs } from './components/Tabs'
+import { Pagination } from './components/Pagination'
 
 // 由 vite.config.ts 的 define 注入（与 package.json version 保持同步）
 declare const __KB_VERSION__: string
@@ -85,6 +103,12 @@ const components = [
   Progress,
   Card,
   Alert,
+  Skeleton,
+  Empty,
+  Breadcrumb,
+  Collapse,
+  Tabs,
+  Pagination,
 ]
 
 const install: Plugin = (app: App) => {

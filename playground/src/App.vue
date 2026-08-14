@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import LoginModule from './modules/LoginModule.vue'
 import {
   KbButton,
   KbIcon,
@@ -21,6 +22,12 @@ import {
   KbProgress,
   KbCard,
   KbAlert,
+  KbSkeleton,
+  KbEmpty,
+  KbBreadcrumb,
+  KbCollapse,
+  KbTabs,
+  KbPagination,
   message,
 } from '@kb/ui'
 
@@ -35,6 +42,25 @@ const selectOptions = [
   { label: '香蕉', value: 'banana' },
   { label: '橙子', value: 'orange' },
 ]
+
+// 导航组件状态
+const breadcrumbItems = [
+  { label: '首页', href: '/' },
+  { label: '组件', href: '/components' },
+  { label: '导航与反馈' },
+]
+const tabItems = [
+  { label: '标签 A', name: 'a' },
+  { label: '标签 B', name: 'b' },
+  { label: '标签 C', name: 'c' },
+]
+const activeTab = ref('a')
+const collapseItems = [
+  { title: '什么是 KB UI？', content: '一套自建的 Vue 3 组件库，使用原生 CSS 变量驱动主题。' },
+  { title: '如何按需引入？', content: 'import { KbButton } from "@kb/ui"; import "@kb/ui/styles/Button.css"' },
+  { title: '支持暗色模式吗？', content: '支持，给 <html> 设置 data-theme="dark" 即可切换。' },
+]
+const currentPage = ref(1)
 
 // Dialog 状态
 const dialogVisible = ref(false)
@@ -239,6 +265,47 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
         <KbAlert type="warning" title="注意" show-icon closable>部分功能暂不可用。</KbAlert>
         <KbAlert type="danger" title="错误" show-icon closable>发生了一个错误。</KbAlert>
       </KbSpace>
+    </section>
+
+    <!-- 模块模板 -->
+    <section class="block">
+      <h2>模块模板</h2>
+      <KbDivider />
+      <h3>登录页</h3>
+      <LoginModule />
+    </section>
+
+    <!-- 导航与反馈组件 -->
+    <section class="block">
+      <h2>导航与反馈</h2>
+      <KbDivider />
+
+      <h3>Breadcrumb 面包屑</h3>
+      <KbBreadcrumb :items="breadcrumbItems" />
+
+      <h3>Tabs 标签页</h3>
+      <KbTabs v-model="activeTab" :tabs="tabItems">
+        <div v-if="activeTab === 'a'" class="hint">这是标签 A 的内容。</div>
+        <div v-else-if="activeTab === 'b'" class="hint">这是标签 B 的内容。</div>
+        <div v-else class="hint">这是标签 C 的内容。</div>
+      </KbTabs>
+
+      <h3>Collapse 折叠面板</h3>
+      <KbCollapse :items="collapseItems" />
+
+      <h3>Pagination 分页</h3>
+      <KbPagination v-model:current-page="currentPage" :total="256" :page-size="10" />
+      <p class="hint">当前页：{{ currentPage }}</p>
+
+      <h3>Skeleton 骨架屏</h3>
+      <KbSkeleton :rows="3" />
+
+      <h3>Empty 空状态</h3>
+      <KbEmpty description="暂无数据">
+        <template #action>
+          <KbButton type="primary" size="small">去创建</KbButton>
+        </template>
+      </KbEmpty>
     </section>
   </div>
 </template>

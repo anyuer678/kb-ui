@@ -1,0 +1,24 @@
+.kb-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--kb-space-2);
+  padding: var(--kb-space-6);
+  color: var(--kb-color-text-3);
+}
+
+.kb-empty__image {
+  color: var(--kb-color-text-3);
+  opacity: 0.5;
+}
+
+.kb-empty__description {
+  margin: 0;
+  font-size: var(--kb-font-size-md);
+  color: var(--kb-color-text-3);
+}
+
+.kb-empty__action {
+  margin-top: var(--kb-space-2);
+}
