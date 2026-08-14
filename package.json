@@ -18,7 +18,8 @@
     "docs:build": "pnpm --filter kb-docs docs:build",
     "changeset": "changeset",
     "changeset:version": "changeset version",
-    "changeset:publish": "changeset publish"
+    "changeset:publish": "changeset publish",
+    "e2e": "node scripts/e2e.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.0",
