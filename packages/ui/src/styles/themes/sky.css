@@ -1,0 +1,20 @@
+/* 主题：天空（明亮蓝白） */
+[data-theme='sky'] {
+  --kb-color-primary: #0284c7;
+  --kb-color-success: #16a34a;
+  --kb-color-warning: #d97706;
+  --kb-color-danger: #dc2626;
+  --kb-color-info: #0ea5e9;
+  --kb-color-bg: #f8fafc;
+  --kb-color-bg-elevated: #eff6ff;
+  --kb-color-border: #bfdbfe;
+  --kb-color-text-1: #0c4a6e;
+  --kb-color-text-2: #075985;
+  --kb-color-text-3: #7dd3fc;
+  --kb-radius-sm: 6px;
+  --kb-radius-md: 10px;
+  --kb-radius-lg: 16px;
+  --kb-shadow-1: 0 2px 8px rgb(2 132 199 / 12%);
+  --kb-shadow-2: 0 8px 28px rgb(2 132 199 / 18%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #38bdf8, #0284c7);
+}

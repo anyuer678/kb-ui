@@ -1,0 +1,20 @@
+/* 主题：薄荷（清爽绿） */
+[data-theme='mint'] {
+  --kb-color-primary: #0d9488;
+  --kb-color-success: #059669;
+  --kb-color-warning: #d97706;
+  --kb-color-danger: #dc2626;
+  --kb-color-info: #0891b2;
+  --kb-color-bg: #f0fdfa;
+  --kb-color-bg-elevated: #ccfbf1;
+  --kb-color-border: #99f6e4;
+  --kb-color-text-1: #134e4a;
+  --kb-color-text-2: #0f766e;
+  --kb-color-text-3: #5eead4;
+  --kb-radius-sm: 8px;
+  --kb-radius-md: 14px;
+  --kb-radius-lg: 20px;
+  --kb-shadow-1: 0 2px 8px rgb(13 148 136 / 15%);
+  --kb-shadow-2: 0 8px 28px rgb(13 148 136 / 22%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #2dd4bf, #0d9488);
+}

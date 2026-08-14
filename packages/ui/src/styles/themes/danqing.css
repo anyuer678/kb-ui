@@ -1,0 +1,27 @@
+/* 主题：丹青（中国风水墨） */
+[data-theme='danqing'] {
+  --kb-color-primary: #7a5c3e;
+  --kb-color-success: #4a6b57;
+  --kb-color-warning: #b8860b;
+  --kb-color-danger: #9e3b3b;
+  --kb-color-info: #5c728f;
+  --kb-color-bg: #f7f4ee;
+  --kb-color-bg-elevated: #efe9df;
+  --kb-color-border: #d8cdba;
+  --kb-color-text-1: #2f2a24;
+  --kb-color-text-2: #6b6359;
+  --kb-color-text-3: #a89d8d;
+  --kb-radius-sm: 2px;
+  --kb-radius-md: 4px;
+  --kb-radius-lg: 8px;
+  --kb-shadow-1: 0 1px 4px rgb(47 42 36 / 10%);
+  --kb-shadow-2: 0 6px 20px rgb(47 42 36 / 14%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #8a6d4d, #7a5c3e);
+  --kb-font-family:
+    'STKaiti', 'KaiTi', 'SimSun', serif;
+}
+
+[data-theme='danqing'] .kb-button:not(.kb-button--plain) {
+  border-radius: 2px;
+  letter-spacing: 2px;
+}

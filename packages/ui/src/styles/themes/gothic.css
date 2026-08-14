@@ -1,0 +1,20 @@
+/* 主题：哥特（暗黑浪漫） */
+[data-theme='gothic'] {
+  --kb-color-primary: #8e4a6e;
+  --kb-color-success: #4a8e6e;
+  --kb-color-warning: #a8874a;
+  --kb-color-danger: #a84040;
+  --kb-color-info: #6e4a8e;
+  --kb-color-bg: #141018;
+  --kb-color-bg-elevated: #1e1824;
+  --kb-color-border: #352a3f;
+  --kb-color-text-1: #e8dcec;
+  --kb-color-text-2: #a894b4;
+  --kb-color-text-3: #6a5a74;
+  --kb-radius-sm: 6px;
+  --kb-radius-md: 10px;
+  --kb-radius-lg: 16px;
+  --kb-shadow-1: 0 2px 10px rgb(0 0 0 / 45%);
+  --kb-shadow-2: 0 10px 32px rgb(0 0 0 / 55%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #a86a8e, #8e4a6e);
+}

@@ -28,6 +28,14 @@ import ActivityModule from './modules/ActivityModule.vue'
 import ProfileEditModule from './modules/ProfileEditModule.vue'
 import SearchModule from './modules/SearchModule.vue'
 import LandingModule from './modules/LandingModule.vue'
+import KanbanModule from './modules/KanbanModule.vue'
+import AnalyticsModule from './modules/AnalyticsModule.vue'
+import BlogPostModule from './modules/BlogPostModule.vue'
+import OrdersModule from './modules/OrdersModule.vue'
+import UserListModule from './modules/UserListModule.vue'
+import ResumeModule from './modules/ResumeModule.vue'
+import PetshopModule from './modules/PetshopModule.vue'
+import VideoModule from './modules/VideoModule.vue'
 import {
   KbButton,
   KbIcon,
@@ -158,6 +166,12 @@ const styleThemes = [
   { key: 'pastel', name: '粉彩', color: '#b8a8e0' },
   { key: 'neonlight', name: '浅霓虹', color: '#00d4ff' },
   { key: 'sunset', name: '日落', color: '#fb7185' },
+  { key: 'danqing', name: '丹青', color: '#7a5c3e' },
+  { key: 'gold', name: '鎏金', color: '#c9a227' },
+  { key: 'gothic', name: '哥特', color: '#8e4a6e' },
+  { key: 'mint', name: '薄荷', color: '#0d9488' },
+  { key: 'candy', name: '糖果', color: '#ec4899' },
+  { key: 'sky', name: '天空', color: '#0284c7' },
 ]
 const currentTheme = ref('')
 
@@ -195,6 +209,14 @@ const moduleItems = [
   { label: '编辑资料', key: 'profile-edit' },
   { label: '搜索页', key: 'search' },
   { label: '落地页', key: 'landing' },
+  { label: '任务看板', key: 'kanban' },
+  { label: '数据分析', key: 'analytics' },
+  { label: '博客文章', key: 'blog-post' },
+  { label: '订单管理', key: 'orders' },
+  { label: '用户管理', key: 'users' },
+  { label: '个人简历', key: 'resume' },
+  { label: '宠物商店', key: 'petshop' },
+  { label: '视频列表', key: 'video' },
   { label: '404', key: '404' },
 ]
 const moduleTabs = moduleItems.map((m) => ({ label: m.label, name: m.key }))
@@ -468,6 +490,14 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
           <ProfileEditModule v-else-if="activeModule === 'profile-edit'" />
           <SearchModule v-else-if="activeModule === 'search'" />
           <LandingModule v-else-if="activeModule === 'landing'" />
+          <KanbanModule v-else-if="activeModule === 'kanban'" />
+          <AnalyticsModule v-else-if="activeModule === 'analytics'" />
+          <BlogPostModule v-else-if="activeModule === 'blog-post'" />
+          <OrdersModule v-else-if="activeModule === 'orders'" />
+          <UserListModule v-else-if="activeModule === 'users'" />
+          <ResumeModule v-else-if="activeModule === 'resume'" />
+          <PetshopModule v-else-if="activeModule === 'petshop'" />
+          <VideoModule v-else-if="activeModule === 'video'" />
           <NotFoundModule v-else-if="activeModule === '404'" />
         </KbTabs>
       </div>

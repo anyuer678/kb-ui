@@ -1,0 +1,26 @@
+/* 主题：鎏金（金黑奢华） */
+[data-theme='gold'] {
+  --kb-color-primary: #c9a227;
+  --kb-color-success: #b8a15c;
+  --kb-color-warning: #d4af37;
+  --kb-color-danger: #b03a3a;
+  --kb-color-info: #8a7a4f;
+  --kb-color-bg: #141210;
+  --kb-color-bg-elevated: #1e1b18;
+  --kb-color-border: #3a342b;
+  --kb-color-text-1: #f0e6c8;
+  --kb-color-text-2: #b8a97f;
+  --kb-color-text-3: #6e6349;
+  --kb-radius-sm: 2px;
+  --kb-radius-md: 4px;
+  --kb-radius-lg: 8px;
+  --kb-shadow-1: 0 2px 8px rgb(0 0 0 / 40%);
+  --kb-shadow-2: 0 10px 30px rgb(0 0 0 / 50%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #e8c25c, #c9a227 60%, #8a6d1d);
+}
+
+[data-theme='gold'] .kb-button--primary {
+  color: #141210;
+  font-weight: 600;
+  letter-spacing: 1px;
+}

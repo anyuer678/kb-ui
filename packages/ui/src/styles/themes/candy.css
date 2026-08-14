@@ -1,0 +1,21 @@
+/* 主题：糖果（明亮甜腻） */
+[data-theme='candy'] {
+  --kb-color-primary: #ec4899;
+  --kb-color-success: #10b981;
+  --kb-color-warning: #f59e0b;
+  --kb-color-danger: #f43f5e;
+  --kb-color-info: #38bdf8;
+  --kb-color-bg: #fff5fb;
+  --kb-color-bg-elevated: #ffe4f1;
+  --kb-color-border: #ffc2e2;
+  --kb-color-text-1: #5b2440;
+  --kb-color-text-2: #a05a80;
+  --kb-color-text-3: #d9a0c0;
+  --kb-radius-sm: 14px;
+  --kb-radius-md: 20px;
+  --kb-radius-lg: 30px;
+  --kb-radius-round: 999px;
+  --kb-shadow-1: 0 4px 14px rgb(236 72 153 / 18%);
+  --kb-shadow-2: 0 10px 34px rgb(236 72 153 / 25%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #f472b6, #ec4899 55%, #a855f7);
+}
