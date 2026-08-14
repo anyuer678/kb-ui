@@ -1,0 +1,27 @@
+/* 椋庢牸锛氶┈鍗￠緳锛堢矇瀚╃敎鐐硅壊锛? */
+[data-theme='macaron'] {
+  --kb-color-primary: #a78bfa;
+  --kb-color-success: #86efac;
+  --kb-color-warning: #fcd34d;
+  --kb-color-danger: #fda4af;
+  --kb-color-info: #93c5fd;
+  --kb-color-bg: #fdfaff;
+  --kb-color-bg-elevated: #f5f0ff;
+  --kb-color-border: #e9d5ff;
+  --kb-color-text-1: #5b21b6;
+  --kb-color-text-2: #7c3aed;
+  --kb-color-text-3: #c4b5fd;
+  --kb-radius-sm: 14px;
+  --kb-radius-md: 22px;
+  --kb-radius-lg: 30px;
+  --kb-radius-round: 999px;
+  --kb-shadow-1: 0 2px 10px rgb(167 139 250 / 20%);
+  --kb-shadow-2: 0 8px 30px rgb(167 139 250 / 28%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #c4b5fd, #a78bfa);
+  --kb-font-family:
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+[data-theme='macaron'] .kb-button:not(.kb-button--plain) {
+  font-weight: 600;
+}

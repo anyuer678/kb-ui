@@ -1,0 +1,35 @@
+/* 妞嬪孩鐗搁敍姘槻閸欍倖濮ら崚濠忕礄缁娊绮嶇痪?+ 閸欏瞼鍤庢潏瑙勵攱閿? */
+[data-theme='retro'] {
+  --kb-color-primary: #8b5a2b;
+  --kb-color-success: #6b7a3f;
+  --kb-color-warning: #a16207;
+  --kb-color-danger: #7f1d1d;
+  --kb-color-info: #5c4033;
+  --kb-color-bg: #f5efe0;
+  --kb-color-bg-elevated: #efe6d0;
+  --kb-color-border: #8b5a2b;
+  --kb-color-text-1: #3e2f1c;
+  --kb-color-text-2: #6b5636;
+  --kb-color-text-3: #a08b6a;
+  --kb-radius-sm: 0;
+  --kb-radius-md: 0;
+  --kb-radius-lg: 0;
+  --kb-radius-round: 0;
+  --kb-shadow-1: none;
+  --kb-shadow-2: none;
+  --kb-color-primary-gradient: var(--kb-color-primary);
+  --kb-font-family:
+    'Noto Serif SC', 'Songti SC', georgia, serif;
+}
+
+[data-theme='retro'] .kb-card,
+[data-theme='retro'] .kb-dialog,
+[data-theme='retro'] .kb-button:not(.kb-button--plain) {
+  box-shadow: 3px 3px 0 var(--kb-color-primary);
+}
+
+[data-theme='retro'] .kb-card__header,
+[data-theme='retro'] .kb-dialog__header {
+  border-bottom: 2px double var(--kb-color-border);
+  letter-spacing: 2px;
+}

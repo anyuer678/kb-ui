@@ -1,4 +1,4 @@
-/* 风格：玻璃拟态（半透明卡片 + 模糊 + 渐变底） */
+/* 椋庢牸锛氱幓鐠冩嫙鎬侊紙鍗婇€忔槑鍗＄墖 + 妯＄硦 + 娓愬彉搴曪級 */
 [data-theme='glass'] {
   --kb-color-primary: #6366f1;
   --kb-color-success: #10b981;
@@ -18,7 +18,7 @@
   --kb-shadow-2: 0 12px 40px rgb(99 102 241 / 25%);
 }
 
-/* 页面背景：柔和渐变 */
+/* 椤甸潰鑳屾櫙锛氭煍鍜屾笎鍙? */
 [data-theme='glass'] body {
   background:
     radial-gradient(at 15% 20%, rgb(99 102 241 / 20%), transparent 50%),
@@ -26,7 +26,7 @@
     linear-gradient(135deg, #eef2ff, #f0fdfa);
 }
 
-/* 浮层/卡片类组件加模糊 */
+/* 娴眰/鍗＄墖绫荤粍浠跺姞妯＄硦 */
 [data-theme='glass'] .kb-card,
 [data-theme='glass'] .kb-dialog,
 [data-theme='glass'] .kb-drawer,
@@ -34,10 +34,6 @@
 [data-theme='glass'] .kb-dropdown__menu,
 [data-theme='glass'] .kb-notification,
 [data-theme='glass'] .kb-message,
-[data-theme='glass'] .kb-select__panel,
-[data-theme='glass'] .login-module__card,
-[data-theme='glass'] .list-module,
-[data-theme='glass'] .form-module {
+[data-theme='glass'] .kb-select__panel {
   backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }

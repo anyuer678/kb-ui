@@ -106,6 +106,14 @@ const styleThemes = [
   { key: 'neon', name: '霓虹', color: '#22d3ee' },
   { key: 'cyber', name: '赛博', color: '#00f0ff' },
   { key: 'terminal', name: '终端', color: '#22c55e' },
+  { key: 'business', name: '商务', color: '#1e293b' },
+  { key: 'retro', name: '报刊', color: '#8b5a2b' },
+  { key: 'cartoon', name: '卡通', color: '#ff6b6b' },
+  { key: 'mono', name: '极简', color: '#111111' },
+  { key: 'forest', name: '森林', color: '#166534' },
+  { key: 'ocean', name: '海洋', color: '#0284c7' },
+  { key: 'midnight', name: '午夜', color: '#f59e0b' },
+  { key: 'macaron', name: '马卡龙', color: '#a78bfa' },
 ]
 const currentTheme = ref('')
 
@@ -451,7 +459,7 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
 .page {
   max-width: 900px;
   margin: 0 auto;
-  padding: 76px 24px 80px;
+  padding: 128px 24px 80px;
   font-family: var(--kb-font-family);
 }
 
@@ -463,7 +471,8 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
   z-index: 50;
   display: flex;
   align-items: center;
-  gap: var(--kb-space-1);
+  flex-wrap: wrap;
+  row-gap: 4px;
   padding: var(--kb-space-2) var(--kb-space-4);
   border-bottom: 1px solid var(--kb-color-border);
   background: color-mix(in srgb, var(--kb-color-bg) 90%, transparent);

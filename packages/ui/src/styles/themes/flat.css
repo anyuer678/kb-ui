@@ -1,11 +1,11 @@
-/* 风格：扁平极简（小圆角 + 无阴影 + 粗描边） */
+/* 椋庢牸锛氭墎骞虫瀬绠€锛堝皬鍦嗚 + 鏃犻槾褰?+ 绮楁弿杈癸級 */
 [data-theme='flat'] {
   --kb-color-primary: #2563eb;
   --kb-color-success: #16a34a;
   --kb-color-warning: #d97706;
   --kb-color-danger: #dc2626;
   --kb-color-info: #4b5563;
-  --kb-color-bg: #ffffff;
+  --kb-color-bg: #fff;
   --kb-color-bg-elevated: #f3f4f6;
   --kb-color-border: #111827;
   --kb-radius-sm: 2px;

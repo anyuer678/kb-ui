@@ -1,0 +1,31 @@
+/* 风格：儿童卡通（明亮 + 粗圆角 + 粗边框） */
+[data-theme='cartoon'] {
+  --kb-color-primary: #ff6b6b;
+  --kb-color-success: #4ecdc4;
+  --kb-color-warning: #ffd93d;
+  --kb-color-danger: #ff4757;
+  --kb-color-info: #6c5ce7;
+  --kb-color-bg: #fff9f0;
+  --kb-color-bg-elevated: #fff3e0;
+  --kb-color-border: #4a4a4a;
+  --kb-color-text-1: #2d3436;
+  --kb-color-text-2: #636e72;
+  --kb-color-text-3: #b2bec3;
+  --kb-radius-sm: 12px;
+  --kb-radius-md: 20px;
+  --kb-radius-lg: 28px;
+  --kb-radius-round: 999px;
+  --kb-shadow-1: 0 3px 0 rgb(74 74 74 / 90%);
+  --kb-shadow-2: 0 6px 0 rgb(74 74 74 / 90%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #ff9a9e, #ff6b6b);
+  --kb-font-family:
+    'Comic Sans MS', 'Chalkboard SE', 'KaiTi', cursive;
+}
+
+[data-theme='cartoon'] .kb-button:not(.kb-button--plain) {
+  border: 2.5px solid var(--kb-color-border);
+}
+
+[data-theme='cartoon'] .kb-card {
+  border: 3px solid var(--kb-color-border);
+}

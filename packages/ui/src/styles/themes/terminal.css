@@ -1,4 +1,4 @@
-/* 风格：复古终端（等宽字体 + 绿黑 + 锐角） */
+/* 椋庢牸锛氬鍙ょ粓绔紙绛夊瀛椾綋 + 缁块粦 + 閿愯锛? */
 [data-theme='terminal'] {
   --kb-color-primary: #22c55e;
   --kb-color-success: #4ade80;
@@ -39,8 +39,6 @@
 }
 
 [data-theme='terminal'] .kb-card,
-[data-theme='terminal'] .kb-dialog,
-[data-theme='terminal'] .list-module,
-[data-theme='terminal'] .form-module {
+[data-theme='terminal'] .kb-dialog {
   border: 1px solid var(--kb-color-primary);
 }

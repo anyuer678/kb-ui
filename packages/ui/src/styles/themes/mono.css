@@ -1,0 +1,36 @@
+/* 妞嬪孩鐗搁敍姘€粻鈧鎴犳閿涘牊妫よぐ鈺勫 + 婢堆囨？鐠烘繐绱? */
+[data-theme='mono'] {
+  --kb-color-primary: #111;
+  --kb-color-success: #333;
+  --kb-color-warning: #555;
+  --kb-color-danger: #000;
+  --kb-color-info: #666;
+  --kb-color-bg: #fff;
+  --kb-color-bg-elevated: #f5f5f5;
+  --kb-color-border: #d4d4d4;
+  --kb-color-text-1: #0a0a0a;
+  --kb-color-text-2: #444;
+  --kb-color-text-3: #999;
+  --kb-radius-sm: 0;
+  --kb-radius-md: 0;
+  --kb-radius-lg: 0;
+  --kb-radius-round: 999px;
+  --kb-shadow-1: none;
+  --kb-shadow-2: none;
+  --kb-color-primary-gradient: var(--kb-color-primary);
+  --kb-space-4: 24px;
+  --kb-space-5: 32px;
+  --kb-space-6: 40px;
+}
+
+[data-theme='mono'] .kb-button:not(.kb-button--plain) {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+[data-theme='mono'] .kb-card,
+[data-theme='mono'] .kb-dialog {
+  border: 1px solid var(--kb-color-text-1);
+}

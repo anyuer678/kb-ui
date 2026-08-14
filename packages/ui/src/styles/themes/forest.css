@@ -1,0 +1,20 @@
+/* 风格：自然森林（墨绿 + 大地色） */
+[data-theme='forest'] {
+  --kb-color-primary: #166534;
+  --kb-color-success: #15803d;
+  --kb-color-warning: #a16207;
+  --kb-color-danger: #b91c1c;
+  --kb-color-info: #4d7c0f;
+  --kb-color-bg: #f7faf5;
+  --kb-color-bg-elevated: #eef4ea;
+  --kb-color-border: #d4e2cd;
+  --kb-color-text-1: #14532d;
+  --kb-color-text-2: #3f6212;
+  --kb-color-text-3: #86a789;
+  --kb-radius-sm: 6px;
+  --kb-radius-md: 10px;
+  --kb-radius-lg: 16px;
+  --kb-shadow-1: 0 2px 6px rgb(22 101 52 / 10%);
+  --kb-shadow-2: 0 6px 20px rgb(22 101 52 / 18%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #16a34a, #166534);
+}
