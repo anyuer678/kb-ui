@@ -1,0 +1,46 @@
+/* 风格：复古终端（等宽字体 + 绿黑 + 锐角） */
+[data-theme='terminal'] {
+  --kb-color-primary: #22c55e;
+  --kb-color-success: #4ade80;
+  --kb-color-warning: #facc15;
+  --kb-color-danger: #f87171;
+  --kb-color-info: #38bdf8;
+  --kb-color-bg: #0a0f0a;
+  --kb-color-bg-elevated: #101810;
+  --kb-color-border: #1f3d23;
+  --kb-color-text-1: #86efac;
+  --kb-color-text-2: #4ade80;
+  --kb-color-text-3: #22c55e;
+  --kb-radius-sm: 0;
+  --kb-radius-md: 0;
+  --kb-radius-lg: 0;
+  --kb-radius-round: 0;
+  --kb-shadow-1: none;
+  --kb-shadow-2: none;
+  --kb-color-primary-gradient: var(--kb-color-primary);
+  --kb-font-family:
+    'Cascadia Code', 'Consolas', 'Courier New', ui-monospace, monospace;
+}
+
+[data-theme='terminal'] .kb-button {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+[data-theme='terminal'] .kb-button--primary {
+  border: 1px solid var(--kb-color-primary);
+  background: transparent;
+  color: var(--kb-color-primary);
+}
+
+[data-theme='terminal'] .kb-button--primary:hover:not(.kb-button--disabled) {
+  background: var(--kb-color-primary);
+  color: var(--kb-color-bg);
+}
+
+[data-theme='terminal'] .kb-card,
+[data-theme='terminal'] .kb-dialog,
+[data-theme='terminal'] .list-module,
+[data-theme='terminal'] .form-module {
+  border: 1px solid var(--kb-color-primary);
+}

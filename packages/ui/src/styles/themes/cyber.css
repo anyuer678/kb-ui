@@ -1,0 +1,37 @@
+/* 风格：赛博霓虹（暗底 + 发光 + 锐角） */
+[data-theme='cyber'] {
+  --kb-color-primary: #00f0ff;
+  --kb-color-success: #00ff9d;
+  --kb-color-warning: #ffcc00;
+  --kb-color-danger: #ff2d78;
+  --kb-color-info: #b967ff;
+  --kb-color-bg: #05060f;
+  --kb-color-bg-elevated: #0b0e22;
+  --kb-color-border: #2a2f5e;
+  --kb-color-text-1: #e8eaff;
+  --kb-color-text-2: #8a90c9;
+  --kb-color-text-3: #4a4f85;
+  --kb-radius-sm: 0;
+  --kb-radius-md: 2px;
+  --kb-radius-lg: 4px;
+  --kb-radius-round: 2px;
+  --kb-shadow-1: 0 0 6px rgb(0 240 255 / 30%);
+  --kb-shadow-2: 0 0 20px rgb(0 240 255 / 35%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #00f0ff, #b967ff);
+  --kb-font-family:
+    'Share Tech Mono', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+}
+
+[data-theme='cyber'] .kb-button--primary {
+  border-color: var(--kb-color-primary);
+  box-shadow: 0 0 12px rgb(0 240 255 / 50%);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+[data-theme='cyber'] .kb-card,
+[data-theme='cyber'] .kb-dialog,
+[data-theme='cyber'] .kb-select__panel {
+  border: 1px solid var(--kb-color-primary);
+  box-shadow: 0 0 16px rgb(0 240 255 / 20%), inset 0 0 24px rgb(0 240 255 / 5%);
+}

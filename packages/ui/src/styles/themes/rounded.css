@@ -1,0 +1,18 @@
+/* 风格：圆润糖果（大圆角 + 柔和阴影） */
+[data-theme='rounded'] {
+  --kb-color-primary: #6366f1;
+  --kb-color-success: #10b981;
+  --kb-color-warning: #f59e0b;
+  --kb-color-danger: #f43f5e;
+  --kb-color-info: #06b6d4;
+  --kb-color-bg: #fffdfd;
+  --kb-color-bg-elevated: #f5f3ff;
+  --kb-color-border: #e9e5ff;
+  --kb-radius-sm: 10px;
+  --kb-radius-md: 16px;
+  --kb-radius-lg: 24px;
+  --kb-radius-round: 999px;
+  --kb-shadow-1: 0 2px 8px rgb(99 102 241 / 12%);
+  --kb-shadow-2: 0 8px 24px rgb(99 102 241 / 18%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #818cf8, #6366f1);
+}

@@ -88,16 +88,24 @@ const timelineItems = [
   { content: '计划 v2.0', time: '2026-09', type: 'warning' },
 ]
 
-// 主题切换
-const themes = [
+// 主题切换（颜色组 + 风格组）
+const colorThemes = [
   { key: '', name: '默认', color: '#3b82f6' },
   { key: 'violet', name: '紫', color: '#7c3aed' },
   { key: 'teal', name: '青', color: '#0d9488' },
   { key: 'rose', name: '粉', color: '#e11d48' },
   { key: 'amber', name: '琥珀', color: '#d97706' },
+  { key: 'dark', name: '暗色', color: '#0f172a' },
+]
+const styleThemes = [
+  { key: 'rounded', name: '圆润', color: '#6366f1' },
+  { key: 'flat', name: '扁平', color: '#111827' },
+  { key: 'gradient', name: '渐变', color: '#8b5cf6' },
+  { key: 'glass', name: '玻璃', color: 'rgba(99,102,241,.5)' },
   { key: 'ink', name: '水墨', color: '#374151' },
   { key: 'neon', name: '霓虹', color: '#22d3ee' },
-  { key: 'dark', name: '暗色', color: '#0f172a' },
+  { key: 'cyber', name: '赛博', color: '#00f0ff' },
+  { key: 'terminal', name: '终端', color: '#22c55e' },
 ]
 const currentTheme = ref('')
 
@@ -128,9 +136,22 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
   <div class="page">
     <!-- 主题切换器 -->
     <div class="theme-switcher">
-      <span class="theme-switcher__label">主题</span>
+      <span class="theme-switcher__label">颜色</span>
       <button
-        v-for="theme in themes"
+        v-for="theme in colorThemes"
+        :key="theme.key"
+        class="theme-switcher__item"
+        :class="{ 'theme-switcher__item--active': currentTheme === theme.key }"
+        type="button"
+        :title="theme.name"
+        @click="applyTheme(theme.key)"
+      >
+        <span class="theme-switcher__dot" :style="{ background: theme.color }" />
+        <span class="theme-switcher__name">{{ theme.name }}</span>
+      </button>
+      <span class="theme-switcher__label theme-switcher__label--group">风格</span>
+      <button
+        v-for="theme in styleThemes"
         :key="theme.key"
         class="theme-switcher__item"
         :class="{ 'theme-switcher__item--active': currentTheme === theme.key }"
@@ -453,6 +474,10 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
   margin-right: var(--kb-space-1);
   color: var(--kb-color-text-3);
   font-size: var(--kb-font-size-sm);
+}
+
+.theme-switcher__label--group {
+  margin-left: var(--kb-space-3);
 }
 
 .theme-switcher__item {

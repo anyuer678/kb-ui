@@ -14,7 +14,7 @@
 
 .kb-progress__bar {
   border-radius: var(--kb-radius-round);
-  background: var(--kb-color-primary);
+  background: var(--kb-color-primary-gradient);
   transition: width var(--kb-transition-duration) var(--kb-transition-timing);
 }
 

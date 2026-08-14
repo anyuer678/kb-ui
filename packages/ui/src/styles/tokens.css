@@ -6,6 +6,10 @@
   --kb-color-danger: #dc2626;
   --kb-color-info: #64748b;
 
+  /* 渐变变体（风格主题可覆盖，默认与实色一致） */
+  --kb-color-primary-gradient: linear-gradient(135deg, var(--kb-color-primary), var(--kb-color-primary));
+  --kb-color-success-gradient: linear-gradient(135deg, var(--kb-color-success), var(--kb-color-success));
+
   /* 中性色 */
   --kb-color-bg: #fff;
   --kb-color-bg-elevated: #f8fafc;

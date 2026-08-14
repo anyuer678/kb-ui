@@ -48,7 +48,7 @@
 
 .kb-button--primary {
   border-color: var(--kb-color-primary);
-  background: var(--kb-color-primary);
+  background: var(--kb-color-primary-gradient);
   color: var(--kb-color-bg);
 }
 

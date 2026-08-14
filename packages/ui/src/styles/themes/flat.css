@@ -1,0 +1,18 @@
+/* 风格：扁平极简（小圆角 + 无阴影 + 粗描边） */
+[data-theme='flat'] {
+  --kb-color-primary: #2563eb;
+  --kb-color-success: #16a34a;
+  --kb-color-warning: #d97706;
+  --kb-color-danger: #dc2626;
+  --kb-color-info: #4b5563;
+  --kb-color-bg: #ffffff;
+  --kb-color-bg-elevated: #f3f4f6;
+  --kb-color-border: #111827;
+  --kb-radius-sm: 2px;
+  --kb-radius-md: 3px;
+  --kb-radius-lg: 4px;
+  --kb-radius-round: 999px;
+  --kb-shadow-1: none;
+  --kb-shadow-2: none;
+  --kb-color-primary-gradient: var(--kb-color-primary);
+}

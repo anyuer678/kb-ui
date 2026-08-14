@@ -1,0 +1,18 @@
+/* 风格：活力渐变（按钮/进度条双色渐变） */
+[data-theme='gradient'] {
+  --kb-color-primary: #3b82f6;
+  --kb-color-success: #10b981;
+  --kb-color-warning: #f59e0b;
+  --kb-color-danger: #ef4444;
+  --kb-color-info: #8b5cf6;
+  --kb-color-bg: #fafbff;
+  --kb-color-bg-elevated: #eef2ff;
+  --kb-color-border: #e0e7ff;
+  --kb-radius-sm: 6px;
+  --kb-radius-md: 10px;
+  --kb-radius-lg: 14px;
+  --kb-shadow-1: 0 2px 6px rgb(59 130 246 / 15%);
+  --kb-shadow-2: 0 6px 20px rgb(59 130 246 / 22%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #60a5fa, #3b82f6 55%, #8b5cf6);
+  --kb-color-success-gradient: linear-gradient(135deg, #34d399, #10b981 55%, #0ea5e9);
+}
