@@ -1,0 +1,14 @@
+/* 主题：琥珀（暖阳复古） */
+[data-theme='amber'] {
+  --kb-color-primary: #d97706;
+  --kb-color-success: #65a30d;
+  --kb-color-warning: #ea580c;
+  --kb-color-danger: #dc2626;
+  --kb-color-info: #a16207;
+  --kb-color-bg: #fffdf5;
+  --kb-color-bg-elevated: #fef3c7;
+  --kb-color-border: #fde68a;
+  --kb-color-text-1: #451a03;
+  --kb-color-text-2: #78350f;
+  --kb-color-text-3: #d97706;
+}

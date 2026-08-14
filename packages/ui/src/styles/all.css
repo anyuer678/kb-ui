@@ -45,3 +45,9 @@
 @import url('../components/Descriptions/style.css');
 @import url('../components/Calendar/style.css');
 @import url('../components/Loading/style.css');
+@import url('./themes/violet.css');
+@import url('./themes/teal.css');
+@import url('./themes/rose.css');
+@import url('./themes/amber.css');
+@import url('./themes/ink.css');
+@import url('./themes/neon.css');

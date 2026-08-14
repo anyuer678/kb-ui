@@ -1,0 +1,16 @@
+/* 主题：霓虹（暗夜荧光） */
+[data-theme='neon'] {
+  --kb-color-primary: #22d3ee;
+  --kb-color-success: #4ade80;
+  --kb-color-warning: #fbbf24;
+  --kb-color-danger: #fb7185;
+  --kb-color-info: #a78bfa;
+  --kb-color-bg: #0b0f19;
+  --kb-color-bg-elevated: #131a2a;
+  --kb-color-border: #243049;
+  --kb-color-text-1: #e2e8f0;
+  --kb-color-text-2: #94a3b8;
+  --kb-color-text-3: #475569;
+  --kb-shadow-1: 0 1px 2px rgb(0 0 0 / 60%);
+  --kb-shadow-2: 0 4px 16px rgb(34 211 238 / 15%);
+}

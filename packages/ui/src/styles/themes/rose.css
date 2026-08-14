@@ -1,0 +1,14 @@
+/* 主题：玫瑰（温柔粉红） */
+[data-theme='rose'] {
+  --kb-color-primary: #e11d48;
+  --kb-color-success: #16a34a;
+  --kb-color-warning: #ea580c;
+  --kb-color-danger: #be123c;
+  --kb-color-info: #db2777;
+  --kb-color-bg: #fffbfc;
+  --kb-color-bg-elevated: #fff1f3;
+  --kb-color-border: #ffe4e6;
+  --kb-color-text-1: #881337;
+  --kb-color-text-2: #9f1239;
+  --kb-color-text-3: #fda4af;
+}

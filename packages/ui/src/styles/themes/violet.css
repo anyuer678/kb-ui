@@ -1,0 +1,14 @@
+/* 主题：紫罗兰（优雅紫） */
+[data-theme='violet'] {
+  --kb-color-primary: #7c3aed;
+  --kb-color-success: #059669;
+  --kb-color-warning: #d97706;
+  --kb-color-danger: #e11d48;
+  --kb-color-info: #6366f1;
+  --kb-color-bg: #fff;
+  --kb-color-bg-elevated: #f5f3ff;
+  --kb-color-border: #e4e0f5;
+  --kb-color-text-1: #2e1065;
+  --kb-color-text-2: #5b21b6;
+  --kb-color-text-3: #a78bfa;
+}

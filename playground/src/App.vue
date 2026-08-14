@@ -88,6 +88,24 @@ const timelineItems = [
   { content: '计划 v2.0', time: '2026-09', type: 'warning' },
 ]
 
+// 主题切换
+const themes = [
+  { key: '', name: '默认', color: '#3b82f6' },
+  { key: 'violet', name: '紫', color: '#7c3aed' },
+  { key: 'teal', name: '青', color: '#0d9488' },
+  { key: 'rose', name: '粉', color: '#e11d48' },
+  { key: 'amber', name: '琥珀', color: '#d97706' },
+  { key: 'ink', name: '水墨', color: '#374151' },
+  { key: 'neon', name: '霓虹', color: '#22d3ee' },
+  { key: 'dark', name: '暗色', color: '#0f172a' },
+]
+const currentTheme = ref('')
+
+function applyTheme(key: string) {
+  currentTheme.value = key
+  document.documentElement.dataset.theme = key
+}
+
 // Dialog 状态
 const dialogVisible = ref(false)
 
@@ -108,6 +126,23 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
 
 <template>
   <div class="page">
+    <!-- 主题切换器 -->
+    <div class="theme-switcher">
+      <span class="theme-switcher__label">主题</span>
+      <button
+        v-for="theme in themes"
+        :key="theme.key"
+        class="theme-switcher__item"
+        :class="{ 'theme-switcher__item--active': currentTheme === theme.key }"
+        type="button"
+        :title="theme.name"
+        @click="applyTheme(theme.key)"
+      >
+        <span class="theme-switcher__dot" :style="{ background: theme.color }" />
+        <span class="theme-switcher__name">{{ theme.name }}</span>
+      </button>
+    </div>
+
     <h1>KB UI Playground</h1>
     <p class="subtitle">@kb/ui 组件库实时预览（源码直连，热更新）</p>
 
@@ -395,8 +430,63 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
 .page {
   max-width: 900px;
   margin: 0 auto;
-  padding: 32px 24px 80px;
+  padding: 76px 24px 80px;
   font-family: var(--kb-font-family);
+}
+
+.theme-switcher {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: var(--kb-space-1);
+  padding: var(--kb-space-2) var(--kb-space-4);
+  border-bottom: 1px solid var(--kb-color-border);
+  background: color-mix(in srgb, var(--kb-color-bg) 90%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.theme-switcher__label {
+  margin-right: var(--kb-space-1);
+  color: var(--kb-color-text-3);
+  font-size: var(--kb-font-size-sm);
+}
+
+.theme-switcher__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--kb-radius-round);
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.theme-switcher__item:hover {
+  background: var(--kb-color-bg-elevated);
+}
+
+.theme-switcher__item--active {
+  border-color: var(--kb-color-border);
+  background: var(--kb-color-bg-elevated);
+}
+
+.theme-switcher__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--kb-color-bg);
+  box-shadow: 0 0 0 1px var(--kb-color-border);
+}
+
+.theme-switcher__name {
+  color: var(--kb-color-text-2);
+  font-size: var(--kb-font-size-xs);
 }
 
 .subtitle {

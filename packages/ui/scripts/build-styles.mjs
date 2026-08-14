@@ -29,6 +29,19 @@ for (const file of readdirSync(stylesDir)) {
   }
 }
 
+// 预设主题：src/styles/themes/*.css → dist/styles/themes/
+const themesDir = join(stylesDir, 'themes')
+if (existsSync(themesDir)) {
+  const themesOut = join(outDir, 'themes')
+  mkdirSync(themesOut, { recursive: true })
+  for (const file of readdirSync(themesDir)) {
+    if (file.endsWith('.css')) {
+      copyFileSync(join(themesDir, file), join(themesOut, file))
+      count++
+    }
+  }
+}
+
 // 全量样式入口 index.css = tokens + dark + 全部组件样式（顺序保证 token 先定义）
 const tokens = readFileSync(join(stylesDir, 'tokens.css'), 'utf-8')
 const dark = readFileSync(join(stylesDir, 'dark.css'), 'utf-8')

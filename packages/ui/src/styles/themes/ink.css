@@ -1,0 +1,16 @@
+/* 主题：水墨（纸张/墨色，低饱和克制） */
+[data-theme='ink'] {
+  --kb-color-primary: #374151;
+  --kb-color-success: #4b5563;
+  --kb-color-warning: #6b7280;
+  --kb-color-danger: #1f2937;
+  --kb-color-info: #9ca3af;
+  --kb-color-bg: #fafaf7;
+  --kb-color-bg-elevated: #f1f0ea;
+  --kb-color-border: #e2e0d8;
+  --kb-color-text-1: #27241d;
+  --kb-color-text-2: #57534e;
+  --kb-color-text-3: #a8a29e;
+  --kb-font-family:
+    'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+}

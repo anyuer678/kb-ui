@@ -1,0 +1,14 @@
+/* 主题：青碧（清新青绿） */
+[data-theme='teal'] {
+  --kb-color-primary: #0d9488;
+  --kb-color-success: #059669;
+  --kb-color-warning: #ca8a04;
+  --kb-color-danger: #e11d48;
+  --kb-color-info: #0891b2;
+  --kb-color-bg: #fff;
+  --kb-color-bg-elevated: #f0fdfa;
+  --kb-color-border: #ccfbf1;
+  --kb-color-text-1: #134e4a;
+  --kb-color-text-2: #115e59;
+  --kb-color-text-3: #5eead4;
+}
