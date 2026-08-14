@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbAvatar, KbInput, KbButton, KbEmpty, message } from '@kb/ui'
+import { KbAvatar, KbInput, KbButton, KbEmpty } from '@kb/ui'
 
 interface Msg {
   from: 'me' | 'other'

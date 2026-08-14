@@ -1,0 +1,15 @@
+/* 主题：极光（青紫渐变 + 暗底） */
+[data-theme='aurora'] {
+  --kb-color-primary: #34d399;
+  --kb-color-success: #2dd4bf;
+  --kb-color-warning: #a78bfa;
+  --kb-color-danger: #fb7185;
+  --kb-color-info: #22d3ee;
+  --kb-color-bg: #06121a;
+  --kb-color-bg-elevated: #0b2029;
+  --kb-color-border: #1c3a44;
+  --kb-color-text-1: #d1fae5;
+  --kb-color-text-2: #6ee7b7;
+  --kb-color-text-3: #2f7a63;
+  --kb-color-primary-gradient: linear-gradient(135deg, #34d399, #a78bfa);
+}

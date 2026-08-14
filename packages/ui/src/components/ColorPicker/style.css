@@ -1,0 +1,36 @@
+.kb-colorpicker {
+  display: flex;
+  align-items: center;
+  gap: var(--kb-space-3);
+}
+
+.kb-colorpicker__value {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-sm);
+  flex-shrink: 0;
+}
+
+.kb-colorpicker__presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kb-space-1);
+}
+
+.kb-colorpicker__swatch {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--kb-radius-sm);
+  cursor: pointer;
+}
+
+.kb-colorpicker__swatch--active {
+  border-color: var(--kb-color-text-1);
+}
+
+.kb-colorpicker__swatch:hover {
+  transform: scale(1.1);
+}

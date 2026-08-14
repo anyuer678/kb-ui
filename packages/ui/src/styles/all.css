@@ -45,6 +45,11 @@
 @import url('../components/Descriptions/style.css');
 @import url('../components/Calendar/style.css');
 @import url('../components/Loading/style.css');
+@import url('../components/Form/style.css');
+@import url('../components/DatePicker/style.css');
+@import url('../components/Upload/style.css');
+@import url('../components/Tree/style.css');
+@import url('../components/ColorPicker/style.css');
 @import url('./themes/violet.css');
 @import url('./themes/teal.css');
 @import url('./themes/rose.css');
@@ -73,3 +78,9 @@
 @import url('./themes/spring.css');
 @import url('./themes/autumn.css');
 @import url('./themes/winter.css');
+@import url('./themes/starry.css');
+@import url('./themes/lava.css');
+@import url('./themes/aurora.css');
+@import url('./themes/coffee.css');
+@import url('./themes/matcha.css');
+@import url('./themes/morandi.css');

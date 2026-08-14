@@ -91,6 +91,16 @@ export * from './components/Calendar'
 export { Calendar as KbCalendar } from './components/Calendar'
 export * from './components/Loading'
 export { Loading as KbLoading } from './components/Loading'
+export * from './components/Form'
+export { Form as KbForm, FormItem as KbFormItem } from './components/Form'
+export * from './components/DatePicker'
+export { DatePicker as KbDatePicker } from './components/DatePicker'
+export * from './components/Upload'
+export { Upload as KbUpload } from './components/Upload'
+export * from './components/Tree'
+export { Tree as KbTree } from './components/Tree'
+export * from './components/ColorPicker'
+export { ColorPicker as KbColorPicker } from './components/ColorPicker'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -137,6 +147,11 @@ import { Carousel } from './components/Carousel'
 import { Descriptions } from './components/Descriptions'
 import { Calendar } from './components/Calendar'
 import { Loading } from './components/Loading'
+import { Form, FormItem } from './components/Form'
+import { DatePicker } from './components/DatePicker'
+import { Upload } from './components/Upload'
+import { Tree } from './components/Tree'
+import { ColorPicker } from './components/ColorPicker'
 
 // 由 vite.config.ts 的 define 注入（与 package.json version 保持同步）
 declare const __KB_VERSION__: string
@@ -187,6 +202,12 @@ const components = [
   Descriptions,
   Calendar,
   Loading,
+  Form,
+  FormItem,
+  DatePicker,
+  Upload,
+  Tree,
+  ColorPicker,
 ]
 
 const install: Plugin = (app: App) => {

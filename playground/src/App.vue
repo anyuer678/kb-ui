@@ -12,6 +12,14 @@ import ChatModule from './modules/ChatModule.vue'
 import ProductModule from './modules/ProductModule.vue'
 import BlogModule from './modules/BlogModule.vue'
 import MessageCenterModule from './modules/MessageCenterModule.vue'
+import MusicPlayerModule from './modules/MusicPlayerModule.vue'
+import ChartModule from './modules/ChartModule.vue'
+import CheckoutModule from './modules/CheckoutModule.vue'
+import TeamModule from './modules/TeamModule.vue'
+import CommentsModule from './modules/CommentsModule.vue'
+import PricingModule from './modules/PricingModule.vue'
+import WizardModule from './modules/WizardModule.vue'
+import GalleryModule from './modules/GalleryModule.vue'
 import {
   KbButton,
   KbIcon,
@@ -90,7 +98,7 @@ const stepItems = [
   { title: '完善信息', description: '补充个人资料' },
   { title: '完成', description: '开始使用' },
 ]
-const timelineItems = [
+const timelineItems: { content: string; time: string; type?: 'success' | 'warning' }[] = [
   { content: '项目立项', time: '2026-04-07' },
   { content: '发布 v1.0', time: '2026-08-08', type: 'success' },
   { content: '计划 v2.0', time: '2026-09', type: 'warning' },
@@ -130,6 +138,12 @@ const styleThemes = [
   { key: 'spring', name: '春', color: '#22c55e' },
   { key: 'autumn', name: '秋', color: '#ea580c' },
   { key: 'winter', name: '冬', color: '#38bdf8' },
+  { key: 'starry', name: '星空', color: '#818cf8' },
+  { key: 'lava', name: '熔岩', color: '#f97316' },
+  { key: 'aurora', name: '极光', color: '#34d399' },
+  { key: 'coffee', name: '咖啡', color: '#92400e' },
+  { key: 'matcha', name: '抹茶', color: '#4d7c0f' },
+  { key: 'morandi', name: '莫兰迪', color: '#9c8f7d' },
 ]
 const currentTheme = ref('')
 
@@ -151,6 +165,14 @@ const moduleItems = [
   { label: '商品', key: 'product' },
   { label: '博客', key: 'blog' },
   { label: '消息中心', key: 'messages' },
+  { label: '音乐播放器', key: 'player' },
+  { label: '数据图表', key: 'chart' },
+  { label: '购物结算', key: 'checkout' },
+  { label: '团队成员', key: 'team' },
+  { label: '评论区', key: 'comments' },
+  { label: '价格页', key: 'pricing' },
+  { label: '分步向导', key: 'wizard' },
+  { label: '图片画廊', key: 'gallery' },
   { label: '404', key: '404' },
 ]
 const moduleTabs = moduleItems.map((m) => ({ label: m.label, name: m.key }))
@@ -408,6 +430,14 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
           <ProductModule v-else-if="activeModule === 'product'" />
           <BlogModule v-else-if="activeModule === 'blog'" />
           <MessageCenterModule v-else-if="activeModule === 'messages'" />
+          <MusicPlayerModule v-else-if="activeModule === 'player'" />
+          <ChartModule v-else-if="activeModule === 'chart'" />
+          <CheckoutModule v-else-if="activeModule === 'checkout'" />
+          <TeamModule v-else-if="activeModule === 'team'" />
+          <CommentsModule v-else-if="activeModule === 'comments'" />
+          <PricingModule v-else-if="activeModule === 'pricing'" />
+          <WizardModule v-else-if="activeModule === 'wizard'" />
+          <GalleryModule v-else-if="activeModule === 'gallery'" />
           <NotFoundModule v-else-if="activeModule === '404'" />
         </KbTabs>
       </div>

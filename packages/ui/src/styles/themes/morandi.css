@@ -1,0 +1,18 @@
+/* 主题：莫兰迪（低饱和高级灰） */
+[data-theme='morandi'] {
+  --kb-color-primary: #9c8f7d;
+  --kb-color-success: #8f9e8f;
+  --kb-color-warning: #b3a07d;
+  --kb-color-danger: #a07d7d;
+  --kb-color-info: #7d8f9c;
+  --kb-color-bg: #f2f0ec;
+  --kb-color-bg-elevated: #e9e5dd;
+  --kb-color-border: #d5cfc3;
+  --kb-color-text-1: #4a443c;
+  --kb-color-text-2: #7a7266;
+  --kb-color-text-3: #b0a99c;
+  --kb-radius-sm: 8px;
+  --kb-radius-md: 12px;
+  --kb-radius-lg: 16px;
+  --kb-color-primary-gradient: linear-gradient(135deg, #b3a99a, #8d8272);
+}

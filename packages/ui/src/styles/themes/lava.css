@@ -1,0 +1,15 @@
+/* 主题：熔岩（暗红橙 + 炽热） */
+[data-theme='lava'] {
+  --kb-color-primary: #f97316;
+  --kb-color-success: #fb923c;
+  --kb-color-warning: #facc15;
+  --kb-color-danger: #ef4444;
+  --kb-color-info: #ea580c;
+  --kb-color-bg: #1c0a05;
+  --kb-color-bg-elevated: #2d1206;
+  --kb-color-border: #5c2508;
+  --kb-color-text-1: #ffedd5;
+  --kb-color-text-2: #fdba74;
+  --kb-color-text-3: #9a3412;
+  --kb-color-primary-gradient: linear-gradient(135deg, #fb923c, #ea580c);
+}

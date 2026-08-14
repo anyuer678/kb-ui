@@ -1,0 +1,15 @@
+/* 主题：星空（深蓝 + 星点） */
+[data-theme='starry'] {
+  --kb-color-primary: #818cf8;
+  --kb-color-success: #34d399;
+  --kb-color-warning: #fbbf24;
+  --kb-color-danger: #fb7185;
+  --kb-color-info: #38bdf8;
+  --kb-color-bg: #0b1120;
+  --kb-color-bg-elevated: #131c33;
+  --kb-color-border: #243255;
+  --kb-color-text-1: #e2e8f0;
+  --kb-color-text-2: #94a3b8;
+  --kb-color-text-3: #475569;
+  --kb-color-primary-gradient: linear-gradient(135deg, #a5b4fc, #6366f1);
+}

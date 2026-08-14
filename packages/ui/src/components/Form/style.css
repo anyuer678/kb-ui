@@ -1,0 +1,33 @@
+.kb-form {
+  width: 100%;
+}
+
+.kb-form-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--kb-space-2);
+  margin-bottom: var(--kb-space-4);
+}
+
+.kb-form-item__label {
+  flex-shrink: 0;
+  padding-top: 8px;
+  color: var(--kb-color-text-2);
+  font-size: var(--kb-font-size-sm);
+}
+
+.kb-form-item__content {
+  flex: 1;
+}
+
+.kb-form-item__error {
+  margin-top: var(--kb-space-1);
+  color: var(--kb-color-danger);
+  font-size: var(--kb-font-size-xs);
+  line-height: 1.4;
+}
+
+.kb-form-item--error .kb-input,
+.kb-form-item--error .kb-textarea__inner {
+  border-color: var(--kb-color-danger);
+}

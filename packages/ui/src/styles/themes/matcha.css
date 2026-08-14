@@ -1,0 +1,18 @@
+/* 主题：抹茶（清新茶绿） */
+[data-theme='matcha'] {
+  --kb-color-primary: #4d7c0f;
+  --kb-color-success: #65a30d;
+  --kb-color-warning: #a16207;
+  --kb-color-danger: #b91c1c;
+  --kb-color-info: #15803d;
+  --kb-color-bg: #fbfef7;
+  --kb-color-bg-elevated: #f2fbea;
+  --kb-color-border: #d9f0c3;
+  --kb-color-text-1: #1a2e05;
+  --kb-color-text-2: #3f6212;
+  --kb-color-text-3: #84cc16;
+  --kb-radius-sm: 8px;
+  --kb-radius-md: 12px;
+  --kb-radius-lg: 18px;
+  --kb-color-primary-gradient: linear-gradient(135deg, #84cc16, #4d7c0f);
+}

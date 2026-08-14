@@ -1,0 +1,33 @@
+.kb-datepicker {
+  position: relative;
+  display: inline-block;
+}
+
+.kb-datepicker__input {
+  width: 180px;
+  box-sizing: border-box;
+  padding: var(--kb-space-2) var(--kb-space-3);
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  outline: none;
+  background: var(--kb-color-bg);
+  color: var(--kb-color-text-1);
+  font-size: var(--kb-font-size-md);
+  cursor: pointer;
+  transition: border-color var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-datepicker__input:focus {
+  border-color: var(--kb-color-primary);
+}
+
+.kb-datepicker__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: var(--kb-z-index-modal);
+  width: 300px;
+  background: var(--kb-color-bg);
+  border-radius: var(--kb-radius-md);
+  box-shadow: var(--kb-shadow-2);
+}

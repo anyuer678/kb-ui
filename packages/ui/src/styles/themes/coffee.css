@@ -1,0 +1,18 @@
+/* 主题：咖啡（暖棕拿铁） */
+[data-theme='coffee'] {
+  --kb-color-primary: #92400e;
+  --kb-color-success: #78350f;
+  --kb-color-warning: #d97706;
+  --kb-color-danger: #b45309;
+  --kb-color-info: #78716c;
+  --kb-color-bg: #fbf7f1;
+  --kb-color-bg-elevated: #f3ead9;
+  --kb-color-border: #e0d2ba;
+  --kb-color-text-1: #3f2a14;
+  --kb-color-text-2: #6b4d28;
+  --kb-color-text-3: #a98d66;
+  --kb-radius-sm: 10px;
+  --kb-radius-md: 14px;
+  --kb-radius-lg: 20px;
+  --kb-color-primary-gradient: linear-gradient(135deg, #b45309, #78350f);
+}

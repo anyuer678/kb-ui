@@ -1,0 +1,50 @@
+.kb-tree {
+  font-size: var(--kb-font-size-md);
+  color: var(--kb-color-text-1);
+}
+
+.kb-tree__row {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  border-radius: var(--kb-radius-sm);
+}
+
+.kb-tree__row:hover {
+  background: var(--kb-color-bg-elevated);
+}
+
+.kb-tree__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--kb-color-text-3);
+  cursor: pointer;
+  transition: transform var(--kb-transition-duration) var(--kb-transition-timing);
+  flex-shrink: 0;
+}
+
+.kb-tree__toggle--open {
+  transform: rotate(90deg);
+}
+
+.kb-tree__toggle--leaf {
+  cursor: default;
+}
+
+.kb-tree__label {
+  padding: 2px var(--kb-space-2);
+  border-radius: var(--kb-radius-sm);
+  cursor: pointer;
+}
+
+.kb-tree__label--selected {
+  background: color-mix(in srgb, var(--kb-color-primary) 12%, transparent);
+  color: var(--kb-color-primary);
+}
+
+.kb-tree__children {
+  margin-left: var(--kb-space-4);
+}
