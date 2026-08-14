@@ -24,7 +24,7 @@ program
       }
     }
 
-    const validTemplates: CreateOptions['template'][] = ['base', 'starter', 'api', 'fullstack', 'electron']
+    const validTemplates: CreateOptions['template'][] = ['base', 'starter', 'api', 'fullstack', 'electron', 'react', 'ai']
     const template = validTemplates.includes(cliOptions.template as CreateOptions['template'])
       ? (cliOptions.template as CreateOptions['template'])
       : 'base'

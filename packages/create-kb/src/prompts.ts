@@ -5,7 +5,7 @@ type PromptItem = PromptObject & { skip?: () => boolean }
 
 export interface CreateOptions {
   projectName: string
-  template: 'base' | 'starter' | 'api' | 'fullstack' | 'electron'
+  template: 'base' | 'starter' | 'api' | 'fullstack' | 'electron' | 'react' | 'ai'
   packageManager: 'pnpm' | 'npm' | 'yarn'
   git: boolean
 }
@@ -41,6 +41,8 @@ export async function promptMissing(options: Partial<CreateOptions>): Promise<Cr
           { title: 'api - Express 后端服务', value: 'api' },
           { title: 'fullstack - 前端+API+Docker', value: 'fullstack' },
           { title: 'electron - 桌面应用', value: 'electron' },
+          { title: 'react - React 19 前端', value: 'react' },
+          { title: 'ai - LLM 工作台', value: 'ai' },
         ],
         skip: () => Boolean(options.template),
       } satisfies PromptItem,
