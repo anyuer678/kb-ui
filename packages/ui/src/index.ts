@@ -71,6 +71,26 @@ export * from './components/Timeline'
 export { Timeline as KbTimeline } from './components/Timeline'
 export * from './components/Notification'
 export { default as notification } from './components/Notification'
+export * from './components/InputNumber'
+export { InputNumber as KbInputNumber } from './components/InputNumber'
+export * from './components/Textarea'
+export { Textarea as KbTextarea } from './components/Textarea'
+export * from './components/Search'
+export { Search as KbSearch } from './components/Search'
+export * from './components/Segmented'
+export { Segmented as KbSegmented } from './components/Segmented'
+export * from './components/Watermark'
+export { Watermark as KbWatermark } from './components/Watermark'
+export * from './components/Popconfirm'
+export { Popconfirm as KbPopconfirm } from './components/Popconfirm'
+export * from './components/Carousel'
+export { Carousel as KbCarousel } from './components/Carousel'
+export * from './components/Descriptions'
+export { Descriptions as KbDescriptions } from './components/Descriptions'
+export * from './components/Calendar'
+export { Calendar as KbCalendar } from './components/Calendar'
+export * from './components/Loading'
+export { Loading as KbLoading } from './components/Loading'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -107,6 +127,16 @@ import { Result } from './components/Result'
 import { Statistic } from './components/Statistic'
 import { Steps } from './components/Steps'
 import { Timeline } from './components/Timeline'
+import { InputNumber } from './components/InputNumber'
+import { Textarea } from './components/Textarea'
+import { Search } from './components/Search'
+import { Segmented } from './components/Segmented'
+import { Watermark } from './components/Watermark'
+import { Popconfirm } from './components/Popconfirm'
+import { Carousel } from './components/Carousel'
+import { Descriptions } from './components/Descriptions'
+import { Calendar } from './components/Calendar'
+import { Loading } from './components/Loading'
 
 // 由 vite.config.ts 的 define 注入（与 package.json version 保持同步）
 declare const __KB_VERSION__: string
@@ -147,6 +177,16 @@ const components = [
   Statistic,
   Steps,
   Timeline,
+  InputNumber,
+  Textarea,
+  Search,
+  Segmented,
+  Watermark,
+  Popconfirm,
+  Carousel,
+  Descriptions,
+  Calendar,
+  Loading,
 ]
 
 const install: Plugin = (app: App) => {

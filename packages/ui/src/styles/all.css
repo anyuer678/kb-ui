@@ -35,3 +35,13 @@
 @import url('../components/Steps/style.css');
 @import url('../components/Timeline/style.css');
 @import url('../components/Notification/style.css');
+@import url('../components/InputNumber/style.css');
+@import url('../components/Textarea/style.css');
+@import url('../components/Search/style.css');
+@import url('../components/Segmented/style.css');
+@import url('../components/Watermark/style.css');
+@import url('../components/Popconfirm/style.css');
+@import url('../components/Carousel/style.css');
+@import url('../components/Descriptions/style.css');
+@import url('../components/Calendar/style.css');
+@import url('../components/Loading/style.css');

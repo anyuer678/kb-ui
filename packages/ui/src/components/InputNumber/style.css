@@ -1,0 +1,40 @@
+.kb-input-number {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  overflow: hidden;
+  background: var(--kb-color-bg);
+}
+
+.kb-input-number__input {
+  width: 48px;
+  padding: 0;
+  border: none;
+  outline: none;
+  text-align: center;
+  color: var(--kb-color-text-1);
+  font-size: var(--kb-font-size-md);
+  background: transparent;
+}
+
+.kb-input-number__step {
+  width: 28px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: var(--kb-color-bg-elevated);
+  color: var(--kb-color-text-2);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.kb-input-number__step:disabled,
+.kb-input-number--disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.kb-input-number__step:hover:not(:disabled) {
+  color: var(--kb-color-primary);
+}

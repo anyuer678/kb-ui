@@ -1,0 +1,53 @@
+.kb-popconfirm {
+  position: relative;
+  display: inline-block;
+}
+
+.kb-popconfirm__panel {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: var(--kb-z-index-modal);
+  min-width: 160px;
+  box-sizing: border-box;
+  padding: var(--kb-space-3);
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  background: var(--kb-color-bg);
+  box-shadow: var(--kb-shadow-2);
+  transform: translateX(-50%);
+}
+
+.kb-popconfirm__title {
+  color: var(--kb-color-text-1);
+  font-size: var(--kb-font-size-md);
+}
+
+.kb-popconfirm__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--kb-space-2);
+  margin-top: var(--kb-space-3);
+}
+
+.kb-popconfirm__cancel,
+.kb-popconfirm__ok {
+  padding: var(--kb-space-1) var(--kb-space-3);
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-sm);
+  background: var(--kb-color-bg);
+  color: var(--kb-color-text-1);
+  font-size: var(--kb-font-size-sm);
+  cursor: pointer;
+}
+
+.kb-popconfirm__ok {
+  border-color: var(--kb-color-danger);
+  background: var(--kb-color-danger);
+  color: var(--kb-color-bg);
+}
+
+.kb-popconfirm__cancel:hover {
+  border-color: var(--kb-color-primary);
+  color: var(--kb-color-primary);
+}

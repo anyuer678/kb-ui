@@ -1,0 +1,79 @@
+.kb-calendar {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  padding: var(--kb-space-3);
+  background: var(--kb-color-bg);
+}
+
+.kb-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--kb-space-3);
+}
+
+.kb-calendar__title {
+  color: var(--kb-color-text-1);
+  font-size: var(--kb-font-size-lg);
+  font-weight: 600;
+}
+
+.kb-calendar__nav {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--kb-radius-sm);
+  background: transparent;
+  color: var(--kb-color-text-2);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.kb-calendar__nav:hover {
+  background: var(--kb-color-bg-elevated);
+  color: var(--kb-color-primary);
+}
+
+.kb-calendar__week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: var(--kb-space-1);
+}
+
+.kb-calendar__week-label {
+  text-align: center;
+  color: var(--kb-color-text-3);
+  font-size: var(--kb-font-size-sm);
+}
+
+.kb-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.kb-calendar__day {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: var(--kb-radius-sm);
+  background: transparent;
+  color: var(--kb-color-text-1);
+  font-size: var(--kb-font-size-sm);
+  cursor: pointer;
+}
+
+.kb-calendar__day:hover:not(.kb-calendar__day--active) {
+  background: var(--kb-color-bg-elevated);
+}
+
+.kb-calendar__day--outside {
+  color: var(--kb-color-text-3);
+  opacity: 0.5;
+}
+
+.kb-calendar__day--active {
+  background: var(--kb-color-primary);
+  color: var(--kb-color-bg);
+}

@@ -1,0 +1,27 @@
+.kb-loading {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--kb-space-2);
+}
+
+.kb-loading__spinner {
+  display: inline-block;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: var(--kb-color-primary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: kb-loading-spin 0.8s linear infinite;
+}
+
+.kb-loading__text {
+  color: var(--kb-color-text-3);
+  font-size: var(--kb-font-size-sm);
+}
+
+@keyframes kb-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,87 @@
+.kb-carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--kb-radius-lg);
+}
+
+.kb-carousel__item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--kb-transition-duration) var(--kb-transition-timing);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--kb-color-primary) 18%, transparent), transparent),
+    var(--kb-color-bg-elevated);
+}
+
+.kb-carousel__item--active {
+  opacity: 1;
+}
+
+.kb-carousel__title {
+  color: var(--kb-color-text-1);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.kb-carousel__description {
+  margin-top: var(--kb-space-2);
+  color: var(--kb-color-text-3);
+  font-size: var(--kb-font-size-sm);
+}
+
+.kb-carousel__prev,
+.kb-carousel__next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 25%);
+  color: var(--kb-color-bg);
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-carousel__prev {
+  left: var(--kb-space-3);
+}
+
+.kb-carousel__next {
+  right: var(--kb-space-3);
+}
+
+.kb-carousel:hover .kb-carousel__prev,
+.kb-carousel:hover .kb-carousel__next {
+  opacity: 1;
+}
+
+.kb-carousel__dots {
+  position: absolute;
+  bottom: var(--kb-space-2);
+  left: 50%;
+  display: flex;
+  gap: var(--kb-space-1);
+  transform: translateX(-50%);
+}
+
+.kb-carousel__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: var(--kb-radius-round);
+  background: rgb(255 255 255 / 50%);
+  cursor: pointer;
+}
+
+.kb-carousel__dot--active {
+  background: var(--kb-color-bg);
+}

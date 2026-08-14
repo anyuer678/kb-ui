@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import LoginModule from './modules/LoginModule.vue'
 import DashboardModule from './modules/DashboardModule.vue'
 import ListModule from './modules/ListModule.vue'
+import FormModule from './modules/FormModule.vue'
 import {
   KbButton,
   KbIcon,
@@ -304,6 +305,9 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
 
       <h3>数据列表页</h3>
       <ListModule />
+
+      <h3>表单页</h3>
+      <FormModule />
     </section>
 
     <!-- 导航与反馈组件 -->

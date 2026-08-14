@@ -1,0 +1,32 @@
+.kb-segmented {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: var(--kb-radius-md);
+  background: var(--kb-color-bg-elevated);
+  gap: 2px;
+}
+
+.kb-segmented__item {
+  padding: var(--kb-space-1) var(--kb-space-3);
+  border-radius: var(--kb-radius-sm);
+  color: var(--kb-color-text-2);
+  font-size: var(--kb-font-size-md);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background var(--kb-transition-duration) var(--kb-transition-timing),
+    color var(--kb-transition-duration) var(--kb-transition-timing),
+    box-shadow var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-segmented__item--active {
+  background: var(--kb-color-bg);
+  color: var(--kb-color-primary);
+  box-shadow: var(--kb-shadow-1);
+  font-weight: 500;
+}
+
+.kb-segmented__item--disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
