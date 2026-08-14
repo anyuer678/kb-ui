@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, provide } from 'vue'
+import { ROW_GUTTER_KEY } from './constants'
 
 defineOptions({ name: 'KbRow' })
 
@@ -15,7 +16,7 @@ const props = withDefaults(defineProps<RowProps>(), {
   align: 'top',
 })
 
-provide('kbRowGutter', computed(() => props.gutter))
+provide(ROW_GUTTER_KEY, computed(() => props.gutter))
 
 const classes = computed(() => [
   'kb-row',

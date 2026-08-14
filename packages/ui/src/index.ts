@@ -46,6 +46,9 @@ import { Tooltip } from './components/Tooltip'
 import { Dialog } from './components/Dialog'
 import { Table } from './components/Table'
 
+// 由 vite.config.ts 的 define 注入（与 package.json version 保持同步）
+declare const __KB_VERSION__: string
+
 const components = [
   Button,
   Icon,
@@ -70,5 +73,5 @@ const install: Plugin = (app: App) => {
 
 export default {
   install,
-  version: '0.1.0',
+  version: __KB_VERSION__,
 }

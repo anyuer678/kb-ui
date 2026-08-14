@@ -21,6 +21,7 @@ function kbVersion(): string {
     const pkg = require('@kb/ui/package.json') as { version: string }
     return pkg.version
   } catch {
+    console.warn('⚠ 未读取到 @kb/ui 版本，模板将使用 "latest" 作为依赖版本')
     return 'latest'
   }
 }
@@ -84,7 +85,11 @@ export async function createProject(options: CreateOptions): Promise<void> {
   walkAndReplace(targetDir, options, version)
 
   if (options.git) {
-    execSync('git init', { cwd: targetDir, stdio: 'ignore' })
+    try {
+      execSync('git init', { cwd: targetDir, stdio: 'ignore' })
+    } catch {
+      console.warn('⚠ git init 失败（未安装 git？），已跳过，不影响项目创建')
+    }
   }
 
   console.log(`\n✔ 项目创建完成：${targetDir}\n`)

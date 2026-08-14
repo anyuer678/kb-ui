@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, inject, type ComputedRef } from 'vue'
+import { ROW_GUTTER_KEY } from './constants'
 
 defineOptions({ name: 'KbCol' })
 
@@ -13,7 +14,7 @@ const props = withDefaults(defineProps<ColProps>(), {
   offset: 0,
 })
 
-const gutter = inject<ComputedRef<number>>('kbRowGutter', computed(() => 0))
+const gutter = inject<ComputedRef<number>>(ROW_GUTTER_KEY, computed(() => 0))
 
 const classes = computed(() => [
   'kb-col',

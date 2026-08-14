@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import KbSelect from '../Select.vue'
 
 const options = [
@@ -36,5 +37,26 @@ describe('KbSelect', () => {
     const wrapper = mount(KbSelect, { props: { options, disabled: true } })
     await wrapper.find('.kb-select__trigger').trigger('click')
     expect(wrapper.find('.kb-select__option').exists()).toBe(false)
+  })
+
+  it('点击外部关闭面板', async () => {
+    const wrapper = mount(KbSelect, { props: { options } })
+    await wrapper.find('.kb-select__trigger').trigger('click')
+    expect(wrapper.find('.kb-select__option').exists()).toBe(true)
+    document.dispatchEvent(new MouseEvent('click'))
+    await nextTick()
+    expect(wrapper.find('.kb-select__option').exists()).toBe(false)
+    wrapper.unmount()
+  })
+
+  it('disabled 选项点击不触发选择', async () => {
+    const withDisabled = [
+      { label: '苹果', value: 'apple' },
+      { label: '香蕉', value: 'banana', disabled: true },
+    ]
+    const wrapper = mount(KbSelect, { props: { options: withDisabled, modelValue: '' } })
+    await wrapper.find('.kb-select__trigger').trigger('click')
+    await wrapper.findAll('.kb-select__option')[1].trigger('click')
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
   })
 })

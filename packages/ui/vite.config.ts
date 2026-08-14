@@ -1,8 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
+import { readFileSync } from 'node:fs'
+
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'))
 
 export default defineConfig({
+  define: { __KB_VERSION__: JSON.stringify(pkg.version) },
   plugins: [
     vue(),
     dts({

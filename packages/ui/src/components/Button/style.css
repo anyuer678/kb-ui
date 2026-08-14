@@ -86,3 +86,23 @@
   background: var(--kb-color-bg);
   color: var(--kb-color-primary);
 }
+
+.kb-button--plain.kb-button--success {
+  background: var(--kb-color-bg);
+  color: var(--kb-color-success);
+}
+
+.kb-button--plain.kb-button--warning {
+  background: var(--kb-color-bg);
+  color: var(--kb-color-warning);
+}
+
+.kb-button--plain.kb-button--danger {
+  background: var(--kb-color-bg);
+  color: var(--kb-color-danger);
+}
+
+.kb-button--plain.kb-button--info {
+  background: var(--kb-color-bg);
+  color: var(--kb-color-info);
+}

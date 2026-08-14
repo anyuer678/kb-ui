@@ -30,9 +30,17 @@ function mountMessage(options: MessageOptions) {
   })
   app.mount(holder)
 
+  let unmounted = false
   const unmount = () => {
+    if (unmounted) return
+    unmounted = true
     app.unmount()
     holder.remove()
+    // 全部消息卸载后清理挂载容器，避免 body 残留空节点
+    if (container && container.childElementCount === 0) {
+      container.remove()
+      container = null
+    }
   }
 
   const duration = options.duration ?? 3000

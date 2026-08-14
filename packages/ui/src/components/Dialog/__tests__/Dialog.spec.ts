@@ -38,4 +38,19 @@ describe('KbDialog', () => {
     )
     expect(wrapper.find('.kb-dialog__footer button').text()).toContain('确定')
   })
+
+  it('ESC 关闭对话框', () => {
+    const wrapper = mount(KbDialog, { props: { modelValue: true }, ...stubTeleport })
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual([false])
+  })
+
+  it('closeOnClickOverlay=false 时点击遮罩不关闭', async () => {
+    const wrapper = mount(
+      KbDialog,
+      { props: { modelValue: true, closeOnClickOverlay: false }, ...stubTeleport },
+    )
+    await wrapper.find('.kb-dialog-overlay').trigger('click')
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+  })
 })
