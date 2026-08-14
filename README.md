@@ -33,14 +33,14 @@ pnpm create kb                 # 交互式选择
 ## 常用命令
 
 ```bash
-pnpm start        # 一键启动全部开发环境（playground :5173 + docs :5174）
+pnpm start        # 一键启动全部开发环境（playground :8070 + docs :8071）
 pnpm install      # 安装依赖
 pnpm lint         # 全部包 lint
 pnpm typecheck    # 全部包类型检查
 pnpm test         # 全部包测试
 pnpm build        # 全部包构建
-pnpm dev          # 仅启动 playground（http://localhost:5173）
-pnpm docs:dev     # 仅启动文档站（http://localhost:5174）
+pnpm dev          # 仅启动 playground（http://localhost:8070）
+pnpm docs:dev     # 仅启动文档站（http://localhost:8071）
 ```
 
 > Windows 下也可用 `.\start.ps1`（支持 `-Web` / `-Docs` 参数单独启动）。

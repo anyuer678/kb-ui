@@ -4,6 +4,7 @@ export default defineConfig({
   lang: 'zh-CN',
   title: 'KB UI',
   description: '一套自建的 Vue 3 组件库',
+  vite: { server: { port: 8071 } },
   themeConfig: {
     nav: [
       { text: '指南', link: '/guide/quickstart' },
