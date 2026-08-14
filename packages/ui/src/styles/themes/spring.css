@@ -1,0 +1,18 @@
+/* 主题：春（嫩绿 + 鹅黄） */
+[data-theme='spring'] {
+  --kb-color-primary: #22c55e;
+  --kb-color-success: #4ade80;
+  --kb-color-warning: #facc15;
+  --kb-color-danger: #f87171;
+  --kb-color-info: #38bdf8;
+  --kb-color-bg: #f7fef7;
+  --kb-color-bg-elevated: #ecfdf0;
+  --kb-color-border: #d1fae5;
+  --kb-color-text-1: #14532d;
+  --kb-color-text-2: #166534;
+  --kb-color-text-3: #86efac;
+  --kb-radius-sm: 8px;
+  --kb-radius-md: 12px;
+  --kb-radius-lg: 18px;
+  --kb-color-primary-gradient: linear-gradient(135deg, #86efac, #22c55e);
+}

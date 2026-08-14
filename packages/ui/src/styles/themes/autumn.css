@@ -1,0 +1,18 @@
+/* 主题：秋（橙棕 + 丰收暖色） */
+[data-theme='autumn'] {
+  --kb-color-primary: #ea580c;
+  --kb-color-success: #ca8a04;
+  --kb-color-warning: #f97316;
+  --kb-color-danger: #b91c1c;
+  --kb-color-info: #92400e;
+  --kb-color-bg: #fffaf3;
+  --kb-color-bg-elevated: #fef3e2;
+  --kb-color-border: #fed7aa;
+  --kb-color-text-1: #431407;
+  --kb-color-text-2: #7c2d12;
+  --kb-color-text-3: #fdba74;
+  --kb-radius-sm: 6px;
+  --kb-radius-md: 10px;
+  --kb-radius-lg: 14px;
+  --kb-color-primary-gradient: linear-gradient(135deg, #f97316, #ea580c);
+}

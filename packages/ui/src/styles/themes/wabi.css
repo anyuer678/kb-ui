@@ -1,0 +1,27 @@
+/* 风格：日式侘寂（米白灰 + 高级克制） */
+[data-theme='wabi'] {
+  --kb-color-primary: #7c6f64;
+  --kb-color-success: #8a9a5b;
+  --kb-color-warning: #c8a45d;
+  --kb-color-danger: #a05d5d;
+  --kb-color-info: #6d7a83;
+  --kb-color-bg: #f4f1ea;
+  --kb-color-bg-elevated: #ebe6db;
+  --kb-color-border: #ddd6c8;
+  --kb-color-text-1: #3d3832;
+  --kb-color-text-2: #6b655b;
+  --kb-color-text-3: #a8a094;
+  --kb-radius-sm: 2px;
+  --kb-radius-md: 4px;
+  --kb-radius-lg: 6px;
+  --kb-shadow-1: 0 1px 4px rgb(61 56 50 / 8%);
+  --kb-shadow-2: 0 6px 20px rgb(61 56 50 / 12%);
+  --kb-color-primary-gradient: var(--kb-color-primary);
+  --kb-font-family:
+    'Noto Serif SC', 'Songti SC', 'Hiragino Mincho ProN', serif;
+}
+
+[data-theme='wabi'] .kb-button {
+  font-weight: 400;
+  letter-spacing: 2px;
+}

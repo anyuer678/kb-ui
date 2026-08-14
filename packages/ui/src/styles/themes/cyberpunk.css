@@ -1,0 +1,32 @@
+/* 风格：赛博朋克（霓虹紫粉黄 + 暗底） */
+[data-theme='cyberpunk'] {
+  --kb-color-primary: #f72585;
+  --kb-color-success: #4cc9f0;
+  --kb-color-warning: #fee440;
+  --kb-color-danger: #f72585;
+  --kb-color-info: #7209b7;
+  --kb-color-bg: #10002b;
+  --kb-color-bg-elevated: #240046;
+  --kb-color-border: #5a189a;
+  --kb-color-text-1: #f0e6ff;
+  --kb-color-text-2: #c8b6ff;
+  --kb-color-text-3: #7b2cbf;
+  --kb-radius-sm: 0;
+  --kb-radius-md: 2px;
+  --kb-radius-lg: 4px;
+  --kb-radius-round: 2px;
+  --kb-shadow-1: 0 0 10px rgb(247 37 133 / 40%);
+  --kb-shadow-2: 0 0 28px rgb(247 37 133 / 45%);
+  --kb-color-primary-gradient: linear-gradient(90deg, #fee440, #f72585 60%, #4cc9f0);
+  --kb-font-family:
+    'Orbitron', 'Cascadia Code', monospace;
+}
+
+[data-theme='cyberpunk'] .kb-button:not(.kb-button--plain) {
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+[data-theme='cyberpunk'] .kb-card,
+[data-theme='cyberpunk'] .kb-dialog {
+  border: 1px solid var(--kb-color-warning);
+}

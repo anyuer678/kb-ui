@@ -1,0 +1,27 @@
+/* 风格：蒸汽波（粉紫霓虹 + 复古未来） */
+[data-theme='vaporwave'] {
+  --kb-color-primary: #ff2e97;
+  --kb-color-success: #00d2ff;
+  --kb-color-warning: #ffe14d;
+  --kb-color-danger: #ff3860;
+  --kb-color-info: #9d4edd;
+  --kb-color-bg: #1a0b2e;
+  --kb-color-bg-elevated: #2a1450;
+  --kb-color-border: #4a2d8a;
+  --kb-color-text-1: #f5e6ff;
+  --kb-color-text-2: #c4a6e8;
+  --kb-color-text-3: #7a5cb0;
+  --kb-radius-sm: 4px;
+  --kb-radius-md: 8px;
+  --kb-radius-lg: 12px;
+  --kb-shadow-1: 0 0 8px rgb(255 46 151 / 25%);
+  --kb-shadow-2: 0 0 24px rgb(255 46 151 / 35%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #00d2ff, #ff2e97);
+  --kb-font-family:
+    'Courier New', monospace;
+}
+
+[data-theme='vaporwave'] .kb-card,
+[data-theme='vaporwave'] .kb-dialog {
+  border: 1px solid var(--kb-color-primary);
+}

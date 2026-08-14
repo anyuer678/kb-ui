@@ -114,6 +114,14 @@ const styleThemes = [
   { key: 'ocean', name: '海洋', color: '#0284c7' },
   { key: 'midnight', name: '午夜', color: '#f59e0b' },
   { key: 'macaron', name: '马卡龙', color: '#a78bfa' },
+  { key: 'vaporwave', name: '蒸汽波', color: '#ff2e97' },
+  { key: 'cyberpunk', name: '赛博朋克', color: '#f72585' },
+  { key: 'gameboy', name: '游戏机', color: '#0f380f' },
+  { key: 'wabi', name: '侘寂', color: '#7c6f64' },
+  { key: 'sakura', name: '樱花', color: '#f472b6' },
+  { key: 'spring', name: '春', color: '#22c55e' },
+  { key: 'autumn', name: '秋', color: '#ea580c' },
+  { key: 'winter', name: '冬', color: '#38bdf8' },
 ]
 const currentTheme = ref('')
 

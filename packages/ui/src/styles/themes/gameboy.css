@@ -1,0 +1,33 @@
+/* 风格：复古游戏机（GB 绿黑 + 像素感） */
+[data-theme='gameboy'] {
+  --kb-color-primary: #0f380f;
+  --kb-color-success: #306230;
+  --kb-color-warning: #8bac0f;
+  --kb-color-danger: #1a2b1a;
+  --kb-color-info: #4a6b3a;
+  --kb-color-bg: #c4cf9e;
+  --kb-color-bg-elevated: #b0ba8c;
+  --kb-color-border: #0f380f;
+  --kb-color-text-1: #0f380f;
+  --kb-color-text-2: #306230;
+  --kb-color-text-3: #7a8a5c;
+  --kb-radius-sm: 0;
+  --kb-radius-md: 0;
+  --kb-radius-lg: 0;
+  --kb-radius-round: 0;
+  --kb-shadow-1: none;
+  --kb-shadow-2: none;
+  --kb-color-primary-gradient: var(--kb-color-primary);
+  --kb-font-family:
+    'Press Start 2P', 'Courier New', monospace;
+}
+
+[data-theme='gameboy'] .kb-button:not(.kb-button--plain) {
+  border: 3px solid var(--kb-color-border);
+  box-shadow: 3px 3px 0 var(--kb-color-text-1);
+}
+
+[data-theme='gameboy'] .kb-card,
+[data-theme='gameboy'] .kb-dialog {
+  border: 3px solid var(--kb-color-border);
+}

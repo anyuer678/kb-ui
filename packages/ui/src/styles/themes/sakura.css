@@ -1,0 +1,20 @@
+/* 主题：樱花（浅粉 + 柔和春意） */
+[data-theme='sakura'] {
+  --kb-color-primary: #f472b6;
+  --kb-color-success: #86efac;
+  --kb-color-warning: #fcd34d;
+  --kb-color-danger: #fb7185;
+  --kb-color-info: #a5b4fc;
+  --kb-color-bg: #fff7fb;
+  --kb-color-bg-elevated: #fdeef7;
+  --kb-color-border: #fbcfe8;
+  --kb-color-text-1: #831843;
+  --kb-color-text-2: #be185d;
+  --kb-color-text-3: #f9a8d4;
+  --kb-radius-sm: 10px;
+  --kb-radius-md: 16px;
+  --kb-radius-lg: 24px;
+  --kb-shadow-1: 0 2px 8px rgb(244 114 182 / 15%);
+  --kb-shadow-2: 0 8px 28px rgb(244 114 182 / 22%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #f9a8d4, #f472b6);
+}
