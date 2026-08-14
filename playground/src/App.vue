@@ -4,6 +4,14 @@ import LoginModule from './modules/LoginModule.vue'
 import DashboardModule from './modules/DashboardModule.vue'
 import ListModule from './modules/ListModule.vue'
 import FormModule from './modules/FormModule.vue'
+import ProfileModule from './modules/ProfileModule.vue'
+import NotFoundModule from './modules/NotFoundModule.vue'
+import SettingsModule from './modules/SettingsModule.vue'
+import RegisterModule from './modules/RegisterModule.vue'
+import ChatModule from './modules/ChatModule.vue'
+import ProductModule from './modules/ProductModule.vue'
+import BlogModule from './modules/BlogModule.vue'
+import MessageCenterModule from './modules/MessageCenterModule.vue'
 import {
   KbButton,
   KbIcon,
@@ -129,6 +137,24 @@ function applyTheme(key: string) {
   currentTheme.value = key
   document.documentElement.dataset.theme = key
 }
+
+// 模块切换
+const moduleItems = [
+  { label: '登录', key: 'login' },
+  { label: '注册', key: 'register' },
+  { label: '仪表盘', key: 'dashboard' },
+  { label: '数据列表', key: 'list' },
+  { label: '表单', key: 'form' },
+  { label: '个人主页', key: 'profile' },
+  { label: '设置', key: 'settings' },
+  { label: '聊天', key: 'chat' },
+  { label: '商品', key: 'product' },
+  { label: '博客', key: 'blog' },
+  { label: '消息中心', key: 'messages' },
+  { label: '404', key: '404' },
+]
+const moduleTabs = moduleItems.map((m) => ({ label: m.label, name: m.key }))
+const activeModule = ref('login')
 
 // Dialog 状态
 const dialogVisible = ref(false)
@@ -367,19 +393,24 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
 
     <!-- 模块模板 -->
     <section class="block">
-      <h2>模块模板</h2>
+      <h2>模块模板（{{ moduleItems.length }} 个）</h2>
       <KbDivider />
-      <h3>登录页</h3>
-      <LoginModule />
-
-      <h3>仪表盘</h3>
-      <DashboardModule />
-
-      <h3>数据列表页</h3>
-      <ListModule />
-
-      <h3>表单页</h3>
-      <FormModule />
+      <div class="module-tabs">
+        <KbTabs v-model="activeModule" :tabs="moduleTabs">
+          <LoginModule v-if="activeModule === 'login'" />
+          <RegisterModule v-else-if="activeModule === 'register'" />
+          <DashboardModule v-else-if="activeModule === 'dashboard'" />
+          <ListModule v-else-if="activeModule === 'list'" />
+          <FormModule v-else-if="activeModule === 'form'" />
+          <ProfileModule v-else-if="activeModule === 'profile'" />
+          <SettingsModule v-else-if="activeModule === 'settings'" />
+          <ChatModule v-else-if="activeModule === 'chat'" />
+          <ProductModule v-else-if="activeModule === 'product'" />
+          <BlogModule v-else-if="activeModule === 'blog'" />
+          <MessageCenterModule v-else-if="activeModule === 'messages'" />
+          <NotFoundModule v-else-if="activeModule === '404'" />
+        </KbTabs>
+      </div>
     </section>
 
     <!-- 导航与反馈组件 -->
