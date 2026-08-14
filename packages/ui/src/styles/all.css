@@ -1,0 +1,16 @@
+/* 源码模式全量组件样式入口（仅开发/演示用，不发布）。
+   使用 dist 产物时请引入 @kb/ui/styles/index.css（构建时已聚合组件样式）。 */
+@import url('../components/Button/style.css');
+@import url('../components/Icon/style.css');
+@import url('../components/Tag/style.css');
+@import url('../components/Space/style.css');
+@import url('../components/Divider/style.css');
+@import url('../components/Grid/style.css');
+@import url('../components/Input/style.css');
+@import url('../components/Checkbox/style.css');
+@import url('../components/Radio/style.css');
+@import url('../components/Switch/style.css');
+@import url('../components/Select/style.css');
+@import url('../components/Tooltip/style.css');
+@import url('../components/Dialog/style.css');
+@import url('../components/Table/style.css');
