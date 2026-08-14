@@ -5,6 +5,13 @@ coverage/
 .DS_Store
 *.tsbuildinfo
 .reasonix/
+# 凭据与密钥（防泄露）
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
 **/.vitepress/cache/
 .vscode/*
 !.vscode/extensions.json
