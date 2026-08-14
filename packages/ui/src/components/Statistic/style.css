@@ -1,0 +1,31 @@
+.kb-statistic {
+  box-sizing: border-box;
+  padding: var(--kb-space-3);
+}
+
+.kb-statistic__title {
+  color: var(--kb-color-text-3);
+  font-size: var(--kb-font-size-sm);
+}
+
+.kb-statistic__value {
+  margin-top: var(--kb-space-1);
+  color: var(--kb-color-text-1);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+.kb-statistic__prefix,
+.kb-statistic__suffix {
+  font-size: var(--kb-font-size-md);
+  font-weight: 400;
+  color: var(--kb-color-text-2);
+}
+
+.kb-statistic__extra {
+  margin-top: var(--kb-space-2);
+  color: var(--kb-color-text-3);
+  font-size: var(--kb-font-size-sm);
+}

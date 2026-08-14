@@ -51,6 +51,26 @@ export * from './components/Tabs'
 export { Tabs as KbTabs } from './components/Tabs'
 export * from './components/Pagination'
 export { Pagination as KbPagination } from './components/Pagination'
+export * from './components/Dropdown'
+export { Dropdown as KbDropdown } from './components/Dropdown'
+export * from './components/Drawer'
+export { Drawer as KbDrawer } from './components/Drawer'
+export * from './components/Popover'
+export { Popover as KbPopover } from './components/Popover'
+export * from './components/Rate'
+export { Rate as KbRate } from './components/Rate'
+export * from './components/Slider'
+export { Slider as KbSlider } from './components/Slider'
+export * from './components/Result'
+export { Result as KbResult } from './components/Result'
+export * from './components/Statistic'
+export { Statistic as KbStatistic } from './components/Statistic'
+export * from './components/Steps'
+export { Steps as KbSteps } from './components/Steps'
+export * from './components/Timeline'
+export { Timeline as KbTimeline } from './components/Timeline'
+export * from './components/Notification'
+export { default as notification } from './components/Notification'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -78,6 +98,15 @@ import { Breadcrumb } from './components/Breadcrumb'
 import { Collapse } from './components/Collapse'
 import { Tabs } from './components/Tabs'
 import { Pagination } from './components/Pagination'
+import { Dropdown } from './components/Dropdown'
+import { Drawer } from './components/Drawer'
+import { Popover } from './components/Popover'
+import { Rate } from './components/Rate'
+import { Slider } from './components/Slider'
+import { Result } from './components/Result'
+import { Statistic } from './components/Statistic'
+import { Steps } from './components/Steps'
+import { Timeline } from './components/Timeline'
 
 // 由 vite.config.ts 的 define 注入（与 package.json version 保持同步）
 declare const __KB_VERSION__: string
@@ -109,6 +138,15 @@ const components = [
   Collapse,
   Tabs,
   Pagination,
+  Dropdown,
+  Drawer,
+  Popover,
+  Rate,
+  Slider,
+  Result,
+  Statistic,
+  Steps,
+  Timeline,
 ]
 
 const install: Plugin = (app: App) => {

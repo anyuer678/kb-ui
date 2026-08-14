@@ -1,0 +1,46 @@
+.kb-slider {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.kb-slider__track {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  border-radius: var(--kb-radius-round);
+  background: var(--kb-color-bg-elevated);
+}
+
+.kb-slider__fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--kb-radius-round);
+  background: var(--kb-color-primary);
+}
+
+.kb-slider__handle {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--kb-color-primary);
+  border-radius: 50%;
+  background: var(--kb-color-bg);
+  transform: translate(-50%, -50%);
+  box-shadow: var(--kb-shadow-1);
+  transition: box-shadow var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-slider__handle:hover {
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--kb-color-primary) 15%, transparent);
+}
+
+.kb-slider--disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

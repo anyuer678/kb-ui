@@ -1,0 +1,21 @@
+.kb-rate {
+  display: inline-flex;
+  gap: var(--kb-space-1);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.kb-rate__star {
+  color: var(--kb-color-border);
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-rate__star:hover {
+  color: var(--kb-color-warning);
+}
+
+.kb-rate__star--active {
+  color: var(--kb-color-warning);
+}

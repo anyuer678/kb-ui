@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import LoginModule from './modules/LoginModule.vue'
+import DashboardModule from './modules/DashboardModule.vue'
+import ListModule from './modules/ListModule.vue'
 import {
   KbButton,
   KbIcon,
@@ -28,6 +30,13 @@ import {
   KbCollapse,
   KbTabs,
   KbPagination,
+  KbRate,
+  KbSlider,
+  KbSteps,
+  KbTimeline,
+  KbDrawer,
+  KbResult,
+  notification,
   message,
 } from '@kb/ui'
 
@@ -61,6 +70,22 @@ const collapseItems = [
   { title: '支持暗色模式吗？', content: '支持，给 <html> 设置 data-theme="dark" 即可切换。' },
 ]
 const currentPage = ref(1)
+
+// 更多组件状态
+const rateValue = ref(4)
+const sliderValue = ref(60)
+const drawerVisible = ref(false)
+const resultVisible = ref(false)
+const stepItems = [
+  { title: '注册账户', description: '创建你的账号' },
+  { title: '完善信息', description: '补充个人资料' },
+  { title: '完成', description: '开始使用' },
+]
+const timelineItems = [
+  { content: '项目立项', time: '2026-04-07' },
+  { content: '发布 v1.0', time: '2026-08-08', type: 'success' },
+  { content: '计划 v2.0', time: '2026-09', type: 'warning' },
+]
 
 // Dialog 状态
 const dialogVisible = ref(false)
@@ -273,6 +298,12 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
       <KbDivider />
       <h3>登录页</h3>
       <LoginModule />
+
+      <h3>仪表盘</h3>
+      <DashboardModule />
+
+      <h3>数据列表页</h3>
+      <ListModule />
     </section>
 
     <!-- 导航与反馈组件 -->
@@ -306,6 +337,52 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
           <KbButton type="primary" size="small">去创建</KbButton>
         </template>
       </KbEmpty>
+    </section>
+
+    <!-- 更多组件 -->
+    <section class="block">
+      <h2>更多组件</h2>
+      <KbDivider />
+
+      <h3>Rate 评分 / Slider 滑块</h3>
+      <KbSpace vertical :size="16">
+        <KbSpace wrap align="center">
+          <KbRate v-model="rateValue" />
+          <span class="hint">{{ rateValue }} 星</span>
+        </KbSpace>
+        <div style="width: 260px">
+          <KbSlider v-model="sliderValue" />
+          <span class="hint">音量：{{ sliderValue }}</span>
+        </div>
+      </KbSpace>
+
+      <h3>Steps 步骤条</h3>
+      <KbSteps :steps="stepItems" :active="1" />
+
+      <h3>Timeline 时间线</h3>
+      <KbTimeline :items="timelineItems" />
+
+      <h3>Drawer 抽屉</h3>
+      <KbSpace wrap>
+        <KbButton @click="drawerVisible = true">打开抽屉</KbButton>
+        <KbButton @click="notification.success({ title: '新通知', message: '这是一条通知消息' })">
+          弹出通知
+        </KbButton>
+        <KbButton @click="resultVisible = !resultVisible">切换 Result</KbButton>
+      </KbSpace>
+      <KbDrawer v-model="drawerVisible" title="抽屉" width="360">
+        <p>这是一个抽屉，支持任意内容。</p>
+        <template #footer>
+          <KbButton @click="drawerVisible = false">关闭</KbButton>
+        </template>
+      </KbDrawer>
+      <div v-if="resultVisible" style="margin-top: 16px">
+        <KbResult status="success" title="操作成功" description="所有步骤已顺利完成">
+          <template #action>
+            <KbButton type="primary">返回首页</KbButton>
+          </template>
+        </KbResult>
+      </div>
     </section>
   </div>
 </template>

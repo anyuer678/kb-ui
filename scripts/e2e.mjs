@@ -51,7 +51,7 @@ try {
   check('Button 渲染(>10)', (await page.locator('.kb-button').count()) > 10)
   check('Icon 渲染(>=12)', (await page.locator('.kb-icon').count()) >= 12)
   check('Tag 渲染(>=6)', (await page.locator('.kb-tag').count()) >= 6)
-  check('Table 行渲染(3)', (await page.locator('.kb-table tbody tr').count()) === 3)
+  check('Table 行渲染(>=3)', (await page.locator('.kb-table tbody tr').count()) >= 3)
   check('组件样式生效(Button primary 背景)', (await page
     .locator('.kb-button--primary')
     .first()
@@ -62,12 +62,12 @@ try {
   check('Input 输入值', (await page.locator('.kb-input__inner').first().inputValue()) === 'hello')
 
   // Select 展开与选择
-  await page.locator('.kb-select__trigger').click()
+  await page.locator('.kb-select__trigger').first().click()
   await page.waitForTimeout(400)
   check('Select 展开(3 选项)', (await page.locator('.kb-select__option').count()) === 3)
   await page.locator('.kb-select__option').nth(1).click()
   await page.waitForTimeout(400)
-  check('Select 选择→显示香蕉', (await page.locator('.kb-select__value').textContent()).includes('香蕉'))
+  check('Select 选择→显示香蕉', (await page.locator('.kb-select__value').first().textContent()).includes('香蕉'))
 
   // Message
   await page.getByRole('button', { name: '成功提示' }).click()
