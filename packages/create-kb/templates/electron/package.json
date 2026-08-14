@@ -1,0 +1,35 @@
+{
+  "name": "{{packageName}}-desktop",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "dev": "electron .",
+    "start": "electron .",
+    "typecheck": "tsc --noEmit",
+    "pack": "electron-builder --dir",
+    "build": "electron-builder --win"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "electron": "^37.0.0",
+    "electron-builder": "^26.0.0",
+    "typescript": "^5.9.0"
+  },
+  "build": {
+    "appId": "com.example.{{projectName}}",
+    "productName": "{{projectName}}",
+    "directories": {
+      "output": "release"
+    },
+    "files": ["dist/**/*"],
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

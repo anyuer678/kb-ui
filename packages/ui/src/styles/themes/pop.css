@@ -2,15 +2,15 @@
 [data-theme='pop'] {
   --kb-color-primary: #ff2d55;
   --kb-color-success: #00c7be;
-  --kb-color-warning: #ffcc00;
+  --kb-color-warning: #fc0;
   --kb-color-danger: #ff2d55;
   --kb-color-info: #0095ff;
   --kb-color-bg: #fff9e6;
   --kb-color-bg-elevated: #fff0b3;
-  --kb-color-border: #000000;
-  --kb-color-text-1: #000000;
-  --kb-color-text-2: #333333;
-  --kb-color-text-3: #999999;
+  --kb-color-border: #000;
+  --kb-color-text-1: #000;
+  --kb-color-text-2: #333;
+  --kb-color-text-3: #999;
   --kb-radius-sm: 0;
   --kb-radius-md: 0;
   --kb-radius-lg: 0;

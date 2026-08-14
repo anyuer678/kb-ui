@@ -1,16 +1,16 @@
 /* 主题：极简白（白底黑字细线） */
 [data-theme='minimal'] {
-  --kb-color-primary: #000000;
-  --kb-color-success: #000000;
-  --kb-color-warning: #000000;
-  --kb-color-danger: #000000;
-  --kb-color-info: #666666;
-  --kb-color-bg: #ffffff;
+  --kb-color-primary: #000;
+  --kb-color-success: #000;
+  --kb-color-warning: #000;
+  --kb-color-danger: #000;
+  --kb-color-info: #666;
+  --kb-color-bg: #fff;
   --kb-color-bg-elevated: #fafafa;
   --kb-color-border: #e5e5e5;
-  --kb-color-text-1: #000000;
-  --kb-color-text-2: #444444;
-  --kb-color-text-3: #999999;
+  --kb-color-text-1: #000;
+  --kb-color-text-2: #444;
+  --kb-color-text-3: #999;
   --kb-radius-sm: 0;
   --kb-radius-md: 0;
   --kb-radius-lg: 0;

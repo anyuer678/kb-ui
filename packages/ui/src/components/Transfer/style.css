@@ -53,12 +53,12 @@
   cursor: pointer;
 }
 
-.kb-transfer__move:hover:not(:disabled) {
-  border-color: var(--kb-color-primary);
-  color: var(--kb-color-primary);
-}
-
 .kb-transfer__move:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.kb-transfer__move:hover:not(:disabled) {
+  border-color: var(--kb-color-primary);
+  color: var(--kb-color-primary);
 }

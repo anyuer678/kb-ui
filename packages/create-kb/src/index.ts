@@ -24,7 +24,13 @@ program
       }
     }
 
-    const template = cliOptions.template === 'starter' ? 'starter' : 'base'
+    const validTemplates: CreateOptions['template'][] = ['base', 'starter', 'api', 'fullstack', 'electron']
+    const template = validTemplates.includes(cliOptions.template as CreateOptions['template'])
+      ? (cliOptions.template as CreateOptions['template'])
+      : 'base'
+    if (cliOptions.template !== template) {
+      console.warn(`⚠ 未知模板 ${cliOptions.template}，使用默认模板 base`)
+    }
     const pm = cliOptions.packageManager
     const pmValid = pm === 'pnpm' || pm === 'npm' || pm === 'yarn'
     if (!pmValid) {

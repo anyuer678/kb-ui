@@ -1,0 +1,37 @@
+{
+  "name": "@kb/utils",
+  "version": "0.1.0",
+  "description": "通用 TS 工具函数库（格式化/时间/数组/对象/字符串/存储/正则/异步/DOM）",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@kb/config": "workspace:*",
+    "@types/node": "^26.2.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

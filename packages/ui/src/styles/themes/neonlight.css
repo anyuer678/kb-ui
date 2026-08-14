@@ -1,11 +1,11 @@
 /* 主题：浅色霓虹（白底荧光） */
 [data-theme='neonlight'] {
   --kb-color-primary: #00d4ff;
-  --kb-color-success: #00ff88;
+  --kb-color-success: #0f8;
   --kb-color-warning: #ffd500;
   --kb-color-danger: #ff2d78;
   --kb-color-info: #b967ff;
-  --kb-color-bg: #ffffff;
+  --kb-color-bg: #fff;
   --kb-color-bg-elevated: #f2fbff;
   --kb-color-border: #d0f2ff;
   --kb-color-text-1: #00283a;

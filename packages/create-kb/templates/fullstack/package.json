@@ -1,0 +1,17 @@
+{
+  "name": "{{packageName}}",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "concurrently -k -n web,api -c cyan,magenta \"pnpm --filter web dev\" \"pnpm --filter api dev\"",
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "pnpm --filter api dev",
+    "build": "pnpm --filter web build",
+    "test": "pnpm --filter api test",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
