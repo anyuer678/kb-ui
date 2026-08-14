@@ -4,6 +4,8 @@ export default defineConfig({
   lang: 'zh-CN',
   title: 'KB UI',
   description: '一套自建的 Vue 3 组件库',
+  // GitHub Pages 部署到 /kb-ui/ 子路径时通过 BASE_URL 覆盖
+  base: process.env.BASE_URL ?? '/',
   vite: { server: { port: 8071 } },
   themeConfig: {
     nav: [
