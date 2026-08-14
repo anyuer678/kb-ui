@@ -52,10 +52,13 @@ try {
   check('Icon 渲染(>=12)', (await page.locator('.kb-icon').count()) >= 12)
   check('Tag 渲染(>=6)', (await page.locator('.kb-tag').count()) >= 6)
   check('Table 行渲染(>=3)', (await page.locator('.kb-table tbody tr').count()) >= 3)
-  check('组件样式生效(Button primary 背景)', (await page
-    .locator('.kb-button--primary')
-    .first()
-    .evaluate((el) => getComputedStyle(el).backgroundColor)) === 'rgb(59, 130, 246)')
+  check(
+    '组件样式生效(Button primary 渐变背景)',
+    (await page
+      .locator('.kb-button--primary')
+      .first()
+      .evaluate((el) => getComputedStyle(el).backgroundImage)) !== 'none',
+  )
 
   // Input 输入
   await page.locator('.kb-input__inner').first().fill('hello')
@@ -112,10 +115,13 @@ try {
   await page.waitForTimeout(800)
   check('docs 组件页渲染 Button', (await page.locator('.kb-button').count()) > 0)
   check('docs 组件页 API 表格', (await page.locator('table').count()) > 0)
-  check('docs 组件样式生效', (await page
-    .locator('.kb-button--primary')
-    .first()
-    .evaluate((el) => getComputedStyle(el).backgroundColor)) === 'rgb(59, 130, 246)')
+  check(
+    'docs 组件样式生效',
+    (await page
+      .locator('.kb-button--primary')
+      .first()
+      .evaluate((el) => getComputedStyle(el).backgroundImage)) !== 'none',
+  )
 } finally {
   await browser.close()
 }
