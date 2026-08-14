@@ -1,0 +1,25 @@
+/* 主题：孟菲斯（几何撞色亮色） */
+[data-theme='memphis'] {
+  --kb-color-primary: #e63946;
+  --kb-color-success: #2a9d8f;
+  --kb-color-warning: #f4a261;
+  --kb-color-danger: #e63946;
+  --kb-color-info: #457b9d;
+  --kb-color-bg: #fdf6ec;
+  --kb-color-bg-elevated: #f8ead8;
+  --kb-color-border: #264653;
+  --kb-color-text-1: #264653;
+  --kb-color-text-2: #457b9d;
+  --kb-color-text-3: #a8b5a0;
+  --kb-radius-sm: 0;
+  --kb-radius-md: 8px;
+  --kb-radius-lg: 12px;
+  --kb-color-primary-gradient: linear-gradient(135deg, #f4a261, #e63946);
+  --kb-font-family:
+    'Comic Sans MS', 'Chalkboard SE', sans-serif;
+}
+
+[data-theme='memphis'] .kb-button:not(.kb-button--plain) {
+  border: 2px solid var(--kb-color-border);
+  box-shadow: 3px 3px 0 var(--kb-color-border);
+}

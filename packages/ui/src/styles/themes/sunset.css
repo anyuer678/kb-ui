@@ -1,0 +1,18 @@
+/* 主题：日落（橙粉渐变暖色） */
+[data-theme='sunset'] {
+  --kb-color-primary: #fb7185;
+  --kb-color-success: #fbbf24;
+  --kb-color-warning: #fb923c;
+  --kb-color-danger: #ef4444;
+  --kb-color-info: #f472b6;
+  --kb-color-bg: #fff7f5;
+  --kb-color-bg-elevated: #ffebe6;
+  --kb-color-border: #ffd6cc;
+  --kb-color-text-1: #5b1f12;
+  --kb-color-text-2: #a83d22;
+  --kb-color-text-3: #e88a6f;
+  --kb-radius-sm: 10px;
+  --kb-radius-md: 16px;
+  --kb-radius-lg: 24px;
+  --kb-color-primary-gradient: linear-gradient(135deg, #fb923c, #fb7185 55%, #f472b6);
+}

@@ -1,0 +1,20 @@
+/* 主题：浅色霓虹（白底荧光） */
+[data-theme='neonlight'] {
+  --kb-color-primary: #00d4ff;
+  --kb-color-success: #00ff88;
+  --kb-color-warning: #ffd500;
+  --kb-color-danger: #ff2d78;
+  --kb-color-info: #b967ff;
+  --kb-color-bg: #ffffff;
+  --kb-color-bg-elevated: #f2fbff;
+  --kb-color-border: #d0f2ff;
+  --kb-color-text-1: #00283a;
+  --kb-color-text-2: #006a8a;
+  --kb-color-text-3: #00a8d4;
+  --kb-radius-sm: 6px;
+  --kb-radius-md: 10px;
+  --kb-radius-lg: 14px;
+  --kb-shadow-1: 0 2px 8px rgb(0 212 255 / 20%);
+  --kb-shadow-2: 0 8px 28px rgb(0 212 255 / 30%);
+  --kb-color-primary-gradient: linear-gradient(135deg, #00ff9d, #00d4ff 60%, #b967ff);
+}

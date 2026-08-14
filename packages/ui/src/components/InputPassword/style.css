@@ -1,0 +1,42 @@
+.kb-input-password {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  background: var(--kb-color-bg);
+  overflow: hidden;
+  transition: border-color var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-input-password:focus-within {
+  border-color: var(--kb-color-primary);
+}
+
+.kb-input-password__inner {
+  flex: 1;
+  min-width: 0;
+  padding: var(--kb-space-2) var(--kb-space-3);
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--kb-color-text-1);
+  font-size: var(--kb-font-size-md);
+}
+
+.kb-input-password__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-right: var(--kb-space-1);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--kb-color-text-3);
+  cursor: pointer;
+}
+
+.kb-input-password__toggle:hover {
+  color: var(--kb-color-primary);
+}

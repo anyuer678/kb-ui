@@ -20,6 +20,14 @@ import CommentsModule from './modules/CommentsModule.vue'
 import PricingModule from './modules/PricingModule.vue'
 import WizardModule from './modules/WizardModule.vue'
 import GalleryModule from './modules/GalleryModule.vue'
+import CalendarModule from './modules/CalendarModule.vue'
+import InboxModule from './modules/InboxModule.vue'
+import FileManagerModule from './modules/FileManagerModule.vue'
+import DatavModule from './modules/DatavModule.vue'
+import ActivityModule from './modules/ActivityModule.vue'
+import ProfileEditModule from './modules/ProfileEditModule.vue'
+import SearchModule from './modules/SearchModule.vue'
+import LandingModule from './modules/LandingModule.vue'
 import {
   KbButton,
   KbIcon,
@@ -144,6 +152,12 @@ const styleThemes = [
   { key: 'coffee', name: '咖啡', color: '#92400e' },
   { key: 'matcha', name: '抹茶', color: '#4d7c0f' },
   { key: 'morandi', name: '莫兰迪', color: '#9c8f7d' },
+  { key: 'memphis', name: '孟菲斯', color: '#e63946' },
+  { key: 'pop', name: '波普', color: '#ff2d55' },
+  { key: 'minimal', name: '极简白', color: '#000000' },
+  { key: 'pastel', name: '粉彩', color: '#b8a8e0' },
+  { key: 'neonlight', name: '浅霓虹', color: '#00d4ff' },
+  { key: 'sunset', name: '日落', color: '#fb7185' },
 ]
 const currentTheme = ref('')
 
@@ -173,6 +187,14 @@ const moduleItems = [
   { label: '价格页', key: 'pricing' },
   { label: '分步向导', key: 'wizard' },
   { label: '图片画廊', key: 'gallery' },
+  { label: '日历日程', key: 'calendar' },
+  { label: '邮件收件箱', key: 'inbox' },
+  { label: '文件管理', key: 'files' },
+  { label: '数据大屏', key: 'datav' },
+  { label: '最近动态', key: 'activity' },
+  { label: '编辑资料', key: 'profile-edit' },
+  { label: '搜索页', key: 'search' },
+  { label: '落地页', key: 'landing' },
   { label: '404', key: '404' },
 ]
 const moduleTabs = moduleItems.map((m) => ({ label: m.label, name: m.key }))
@@ -438,6 +460,14 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
           <PricingModule v-else-if="activeModule === 'pricing'" />
           <WizardModule v-else-if="activeModule === 'wizard'" />
           <GalleryModule v-else-if="activeModule === 'gallery'" />
+          <CalendarModule v-else-if="activeModule === 'calendar'" />
+          <InboxModule v-else-if="activeModule === 'inbox'" />
+          <FileManagerModule v-else-if="activeModule === 'files'" />
+          <DatavModule v-else-if="activeModule === 'datav'" />
+          <ActivityModule v-else-if="activeModule === 'activity'" />
+          <ProfileEditModule v-else-if="activeModule === 'profile-edit'" />
+          <SearchModule v-else-if="activeModule === 'search'" />
+          <LandingModule v-else-if="activeModule === 'landing'" />
           <NotFoundModule v-else-if="activeModule === '404'" />
         </KbTabs>
       </div>

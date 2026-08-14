@@ -1,0 +1,36 @@
+/* 主题：极简白（白底黑字细线） */
+[data-theme='minimal'] {
+  --kb-color-primary: #000000;
+  --kb-color-success: #000000;
+  --kb-color-warning: #000000;
+  --kb-color-danger: #000000;
+  --kb-color-info: #666666;
+  --kb-color-bg: #ffffff;
+  --kb-color-bg-elevated: #fafafa;
+  --kb-color-border: #e5e5e5;
+  --kb-color-text-1: #000000;
+  --kb-color-text-2: #444444;
+  --kb-color-text-3: #999999;
+  --kb-radius-sm: 0;
+  --kb-radius-md: 0;
+  --kb-radius-lg: 0;
+  --kb-radius-round: 999px;
+  --kb-shadow-1: none;
+  --kb-shadow-2: none;
+  --kb-color-primary-gradient: var(--kb-color-primary);
+  --kb-space-4: 24px;
+  --kb-space-5: 32px;
+  --kb-space-6: 48px;
+}
+
+[data-theme='minimal'] .kb-button:not(.kb-button--plain) {
+  border-radius: 0;
+  border: 1px solid var(--kb-color-text-1);
+  background: transparent;
+  color: var(--kb-color-text-1);
+}
+
+[data-theme='minimal'] .kb-button--primary:hover:not(.kb-button--disabled) {
+  background: var(--kb-color-text-1);
+  color: var(--kb-color-bg);
+}

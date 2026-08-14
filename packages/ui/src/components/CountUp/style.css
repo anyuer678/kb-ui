@@ -1,0 +1,4 @@
+.kb-countup {
+  font-variant-numeric: tabular-nums;
+  color: var(--kb-color-text-1);
+}

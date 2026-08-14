@@ -101,6 +101,16 @@ export * from './components/Tree'
 export { Tree as KbTree } from './components/Tree'
 export * from './components/ColorPicker'
 export { ColorPicker as KbColorPicker } from './components/ColorPicker'
+export * from './components/InputPassword'
+export { InputPassword as KbInputPassword } from './components/InputPassword'
+export * from './components/CountUp'
+export { CountUp as KbCountUp } from './components/CountUp'
+export * from './components/List'
+export { List as KbList } from './components/List'
+export * from './components/Transfer'
+export { Transfer as KbTransfer } from './components/Transfer'
+export * from './components/Cascader'
+export { Cascader as KbCascader } from './components/Cascader'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -152,6 +162,11 @@ import { DatePicker } from './components/DatePicker'
 import { Upload } from './components/Upload'
 import { Tree } from './components/Tree'
 import { ColorPicker } from './components/ColorPicker'
+import { InputPassword } from './components/InputPassword'
+import { CountUp } from './components/CountUp'
+import { List } from './components/List'
+import { Transfer } from './components/Transfer'
+import { Cascader } from './components/Cascader'
 
 // 由 vite.config.ts 的 define 注入（与 package.json version 保持同步）
 declare const __KB_VERSION__: string
@@ -208,6 +223,11 @@ const components = [
   Upload,
   Tree,
   ColorPicker,
+  InputPassword,
+  CountUp,
+  List,
+  Transfer,
+  Cascader,
 ]
 
 const install: Plugin = (app: App) => {

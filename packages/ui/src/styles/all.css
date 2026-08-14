@@ -50,6 +50,11 @@
 @import url('../components/Upload/style.css');
 @import url('../components/Tree/style.css');
 @import url('../components/ColorPicker/style.css');
+@import url('../components/InputPassword/style.css');
+@import url('../components/CountUp/style.css');
+@import url('../components/List/style.css');
+@import url('../components/Transfer/style.css');
+@import url('../components/Cascader/style.css');
 @import url('./themes/violet.css');
 @import url('./themes/teal.css');
 @import url('./themes/rose.css');
@@ -84,3 +89,9 @@
 @import url('./themes/coffee.css');
 @import url('./themes/matcha.css');
 @import url('./themes/morandi.css');
+@import url('./themes/memphis.css');
+@import url('./themes/pop.css');
+@import url('./themes/minimal.css');
+@import url('./themes/pastel.css');
+@import url('./themes/neonlight.css');
+@import url('./themes/sunset.css');

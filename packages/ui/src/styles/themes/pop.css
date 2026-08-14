@@ -1,0 +1,33 @@
+/* 主题：波普（亮黄红蓝粗边框） */
+[data-theme='pop'] {
+  --kb-color-primary: #ff2d55;
+  --kb-color-success: #00c7be;
+  --kb-color-warning: #ffcc00;
+  --kb-color-danger: #ff2d55;
+  --kb-color-info: #0095ff;
+  --kb-color-bg: #fff9e6;
+  --kb-color-bg-elevated: #fff0b3;
+  --kb-color-border: #000000;
+  --kb-color-text-1: #000000;
+  --kb-color-text-2: #333333;
+  --kb-color-text-3: #999999;
+  --kb-radius-sm: 0;
+  --kb-radius-md: 0;
+  --kb-radius-lg: 0;
+  --kb-radius-round: 0;
+  --kb-shadow-1: none;
+  --kb-shadow-2: none;
+  --kb-color-primary-gradient: var(--kb-color-primary);
+  --kb-font-family:
+    'Impact', 'Arial Black', sans-serif;
+}
+
+[data-theme='pop'] .kb-button:not(.kb-button--plain) {
+  border: 3px solid var(--kb-color-text-1);
+  text-transform: uppercase;
+}
+
+[data-theme='pop'] .kb-card,
+[data-theme='pop'] .kb-dialog {
+  border: 3px solid var(--kb-color-text-1);
+}
