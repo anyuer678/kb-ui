@@ -17,8 +17,8 @@ withDefaults(defineProps<TimelineProps>(), {
 </script>
 
 <template>
-  <div class="kb-timeline">
-    <div v-for="(item, index) in items" :key="index" class="kb-timeline__item">
+  <div class="kb-timeline" role="list">
+    <div v-for="(item, index) in items" :key="index" class="kb-timeline__item" role="listitem">
       <div class="kb-timeline__node">
         <span class="kb-timeline__dot" :class="`kb-timeline__dot--${item.type ?? 'default'}`" />
         <span v-if="index < items.length - 1" class="kb-timeline__tail" />

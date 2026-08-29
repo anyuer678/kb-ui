@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue'
+import { computed, inject, useId } from 'vue'
 import type { FormContext } from './Form.vue'
 
 defineOptions({ name: 'KbFormItem' })
@@ -17,6 +17,8 @@ const props = withDefaults(defineProps<FormItemProps>(), {
 
 const context = inject<FormContext | null>('kbFormContext', null)
 
+const fieldId = useId()
+
 const error = computed(() => (context && props.prop ? context.errors[props.prop] : null))
 
 const classes = computed(() => [
@@ -27,8 +29,8 @@ const classes = computed(() => [
 
 <template>
   <div :class="classes">
-    <label v-if="label" class="kb-form-item__label">{{ label }}</label>
-    <div class="kb-form-item__content">
+    <label v-if="label" :id="`label-${fieldId}`" class="kb-form-item__label">{{ label }}</label>
+    <div :role="label ? 'group' : undefined" :aria-labelledby="label ? `label-${fieldId}` : undefined" class="kb-form-item__content">
       <slot />
       <div v-if="error" class="kb-form-item__error">{{ error }}</div>
     </div>

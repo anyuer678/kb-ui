@@ -19,9 +19,9 @@ const classes = computed(() => ['kb-list', { 'kb-list--bordered': props.bordered
 </script>
 
 <template>
-  <div :class="classes">
+  <div :class="classes" role="list">
     <div v-if="items.length">
-      <div v-for="(item, index) in items" :key="index" class="kb-list__item">
+      <div v-for="(item, index) in items" :key="index" class="kb-list__item" role="listitem">
         <slot name="item" :item="item" :index="index">{{ item }}</slot>
       </div>
     </div>

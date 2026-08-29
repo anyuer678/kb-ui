@@ -65,7 +65,7 @@ defineExpose({ validate, validateField })
 </script>
 
 <template>
-  <form :class="classes" @submit.prevent>
+  <form :class="classes" role="form" @submit.prevent>
     <slot />
   </form>
 </template>
