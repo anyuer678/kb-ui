@@ -1,4 +1,4 @@
-﻿name: Release
+name: Release
 
 on:
   push:
@@ -7,6 +7,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      # 仓库未配置 NPM_TOKEN 时跳过发布步，避免每次 push 都红着；
+      # 在 repo Settings → Secrets 配置 NPM_TOKEN 后此步自动激活
+      HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -20,7 +24,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Skip notice (NPM_TOKEN not configured)
+        if: env.HAS_NPM_TOKEN == 'false'
+        run: echo "NPM_TOKEN 未配置，跳过 changesets 发布；配置 secret 后自动恢复发布。"
+
       - name: Create Release Pull Request or Publish
+        if: env.HAS_NPM_TOKEN == 'true'
         uses: changesets/action@v1
         with:
           version: pnpm changeset:version
