@@ -30,6 +30,13 @@ function handleCancel() {
   open.value = false
 }
 
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    handleCancel()
+  }
+}
+
 function handleOutside(event: MouseEvent) {
   if (rootEl.value && !rootEl.value.contains(event.target as Node)) open.value = false
 }
@@ -39,9 +46,21 @@ onBeforeUnmount(() => document.removeEventListener('click', handleOutside))
 </script>
 
 <template>
-  <div ref="rootEl" class="kb-popconfirm" @click="open = !open">
+  <div
+    ref="rootEl"
+    class="kb-popconfirm"
+    :aria-expanded="open"
+    @click="open = !open"
+    @keydown="handleKeydown"
+  >
     <slot />
-    <div v-if="open" class="kb-popconfirm__panel" @click.stop>
+    <div
+      v-if="open"
+      class="kb-popconfirm__panel"
+      role="dialog"
+      aria-modal="false"
+      @click.stop
+    >
       <div class="kb-popconfirm__title">{{ title }}</div>
       <div class="kb-popconfirm__actions">
         <button class="kb-popconfirm__cancel" type="button" @click="handleCancel">

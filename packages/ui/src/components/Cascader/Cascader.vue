@@ -25,6 +25,18 @@ const emit = defineEmits<{ 'update:modelValue': [value: (string | number)[]] }>(
 
 const open = ref(false)
 const levels = ref<CascaderOption[][]>([])
+const panelId = `kb-cascader-${Math.random().toString(36).slice(2, 8)}`
+
+function closeMenu() {
+  open.value = false
+}
+
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeMenu()
+  }
+}
 
 const displayText = computed(() => {
   const parts: string[] = []
@@ -67,17 +79,34 @@ function select(option: CascaderOption, level: number) {
 
 <template>
   <div class="kb-cascader">
-    <div class="kb-cascader__trigger" tabindex="0" @click="open = !open; showLevel(0)">
+    <div
+      class="kb-cascader__trigger"
+      tabindex="0"
+      role="combobox"
+      aria-haspopup="true"
+      :aria-expanded="open"
+      :aria-controls="panelId"
+      @click="open = !open; showLevel(0)"
+      @keydown="handleKeydown"
+    >
       <span :class="{ 'kb-cascader__placeholder': displayText === placeholder }">{{ displayText }}</span>
       <span class="kb-cascader__arrow">▾</span>
     </div>
-    <div v-if="open" class="kb-cascader__panel">
-      <div v-for="(list, level) in levels" :key="level" class="kb-cascader__column">
+    <div v-if="open" :id="panelId" class="kb-cascader__panel" role="dialog" aria-label="级联选择">
+      <div
+        v-for="(list, level) in levels"
+        :key="level"
+        class="kb-cascader__column"
+        role="listbox"
+        :aria-label="`第 ${level + 1} 级`"
+      >
         <div
           v-for="option in list"
           :key="option.value"
           class="kb-cascader__option"
           :class="{ 'kb-cascader__option--active': props.modelValue[level] === option.value }"
+          role="option"
+          :aria-selected="props.modelValue[level] === option.value"
           @click="select(option, level)"
         >
           {{ option.label }}
