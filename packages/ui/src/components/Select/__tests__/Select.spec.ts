@@ -60,3 +60,75 @@ describe('KbSelect', () => {
     expect(wrapper.emitted('update:modelValue')).toBeUndefined()
   })
 })
+
+describe('KbSelect 键盘导航与 ARIA', () => {
+  const trigger = (w: ReturnType<typeof mount>, key: string) =>
+    w.find('[role="combobox"]').trigger('keydown', { key })
+
+  it('ARIA：combobox/listbox/option/aria-selected', async () => {
+    const wrapper = mount(KbSelect, { props: { options, modelValue: 'apple' } })
+    const box = wrapper.find('[role="combobox"]')
+    expect(box.attributes('aria-haspopup')).toBe('listbox')
+    expect(box.attributes('aria-expanded')).toBe('false')
+    await box.trigger('click')
+    expect(box.attributes('aria-expanded')).toBe('true')
+    const list = wrapper.find('[role="listbox"]')
+    expect(list.exists()).toBe(true)
+    const opts = wrapper.findAll('[role="option"]')
+    expect(opts).toHaveLength(2)
+    expect(opts[0].attributes('aria-selected')).toBe('true')
+  })
+
+  it('ArrowDown 展开并激活首项，再按移动，Enter 选中', async () => {
+    const wrapper = mount(KbSelect, { props: { options, modelValue: '' } })
+    await trigger(wrapper, 'ArrowDown')
+    expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+    expect(wrapper.find('.kb-select__option--active').text()).toContain('苹果')
+    await trigger(wrapper, 'ArrowDown')
+    await trigger(wrapper, 'Enter')
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual(['banana'])
+  })
+
+  it('Enter 在面板关闭时展开，Space 同效', async () => {
+    const wrapper = mount(KbSelect, { props: { options } })
+    await trigger(wrapper, 'Enter')
+    expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+    await trigger(wrapper, 'Escape')
+    expect(wrapper.find('[role="listbox"]').exists()).toBe(false)
+    await trigger(wrapper, ' ')
+    expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+  })
+
+  it('Escape 关闭面板且不选中', async () => {
+    const wrapper = mount(KbSelect, { props: { options } })
+    await trigger(wrapper, 'ArrowDown')
+    await trigger(wrapper, 'Escape')
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+    expect(wrapper.find('[role="listbox"]').exists()).toBe(false)
+  })
+
+  it('disabled 选项被键盘跳过', async () => {
+    const withDisabled = [
+      { label: '苹果', value: 'apple', disabled: true },
+      { label: '香蕉', value: 'banana' },
+    ]
+    const wrapper = mount(KbSelect, { props: { options: withDisabled } })
+    await trigger(wrapper, 'ArrowDown')
+    expect(wrapper.find('.kb-select__option--active').text()).toContain('香蕉')
+  })
+
+  it('Home/End 跳转首尾，ArrowUp 回绕上一可选项', async () => {
+    const wrapper = mount(KbSelect, { props: { options } })
+    await trigger(wrapper, 'ArrowDown')
+    await trigger(wrapper, 'End')
+    expect(wrapper.find('.kb-select__option--active').text()).toContain('香蕉')
+    await trigger(wrapper, 'Home')
+    expect(wrapper.find('.kb-select__option--active').text()).toContain('苹果')
+  })
+
+  it('已选中项打开面板时高亮该项', async () => {
+    const wrapper = mount(KbSelect, { props: { options, modelValue: 'banana' } })
+    await trigger(wrapper, 'ArrowDown')
+    expect(wrapper.find('.kb-select__option--active').text()).toContain('香蕉')
+  })
+})
