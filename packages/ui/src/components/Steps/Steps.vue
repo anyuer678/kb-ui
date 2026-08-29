@@ -28,12 +28,14 @@ const stateOf = computed(() => (index: number) => {
 </script>
 
 <template>
-  <div class="kb-steps">
+  <div class="kb-steps" role="list">
     <div
       v-for="(step, index) in steps"
       :key="index"
       class="kb-steps__item"
       :class="`kb-steps__item--${stateOf(index)}`"
+      role="listitem"
+      :aria-current="index === active ? 'step' : undefined"
     >
       <div class="kb-steps__head">
         <span class="kb-steps__circle">
