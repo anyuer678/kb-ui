@@ -80,7 +80,11 @@ function closePanel(): void {
 
 function toggle() {
   if (props.disabled) return
-  open.value ? closePanel() : openPanel('selected')
+  if (open.value) {
+    closePanel()
+  } else {
+    openPanel('selected')
+  }
 }
 
 function moveActive(delta: 1 | -1): void {
@@ -114,15 +118,27 @@ function handleKeydown(event: KeyboardEvent) {
     case 'Enter':
     case ' ':
       event.preventDefault()
-      open.value ? commitActive() : openPanel('selected')
+      if (open.value) {
+        commitActive()
+      } else {
+        openPanel('selected')
+      }
       break
     case 'ArrowDown':
       event.preventDefault()
-      open.value ? moveActive(1) : openPanel('selected')
+      if (open.value) {
+        moveActive(1)
+      } else {
+        openPanel('selected')
+      }
       break
     case 'ArrowUp':
       event.preventDefault()
-      open.value ? moveActive(-1) : openPanel('selected')
+      if (open.value) {
+        moveActive(-1)
+      } else {
+        openPanel('selected')
+      }
       break
     case 'Home':
       event.preventDefault()
