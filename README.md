@@ -1,15 +1,15 @@
 # KB UI
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Vue 3](https://img.shields.io/badge/Vue-3.5-42b883)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff)](https://vitejs.dev/)
 [![pnpm](https://img.shields.io/badge/pnpm-10-f69220)](https://pnpm.io/)
 [![组件](https://img.shields.io/badge/组件-55+-10b981)](https://github.com/anyuer678/kb-ui)
-[![主题](https://img.shields.io/badge/主题-48+-8b5cf6)](https://github.com/anyuer678/kb-ui)
+[![主题](https://img.shields.io/badge/主题-46-8b5cf6)](https://github.com/anyuer678/kb-ui)
 [![模块模板](https://img.shields.io/badge/模块模板-36+-f59e0b)](https://github.com/anyuer678/kb-ui)
 
-**一套自建的前端素材库与工程模板集**：Vue 3 组件库 + 36 个完整页面模块 + 48 套多风格主题 + 通用工具函数 + 7 种项目脚手架模板 + DevOps 资产，全部零运行时依赖、CSS 变量驱动。
+**一套自建的前端素材库与工程模板集**：Vue 3 组件库 + 36 个完整页面模块 + 46 套多风格主题 + 通用工具函数 + 7 种项目脚手架模板 + DevOps 资产，全部零运行时依赖、CSS 变量驱动。
 
 > ⚠️ 项目当前为**私有仓库**，组件库尚未发布到 npm（开发调试请使用 `file:` 链接或 workspace）。
 
@@ -23,7 +23,7 @@
 - **按需样式**：每个组件独立 `style.css`，构建产物 `dist/styles/*` 可单独引入
 - **零运行时依赖**：样式全部原生 CSS + 设计 token，无第三方样式框架
 
-### 主题系统（48 套）
+### 主题系统（46 套）
 - **双维度切换**：12 套颜色主题（violet/teal/rose/ink/neon…）+ 36 套风格主题（圆润/扁平/渐变/玻璃/赛博/终端/水墨/商务/孟菲斯/波普/极简/粉彩/鎏金/丹青…）
 - **CSS 变量驱动**：每个主题一个 `[data-theme]` 覆盖文件，运行时一行代码切换
 - **深色模式**：`[data-theme]` + `.dark` 组合，自动适配
@@ -66,7 +66,7 @@ pnpm install       # 安装全部依赖
 pnpm start         # 一键启动 playground(:8070) + docs(:8071)
 ```
 
-- **playground** http://localhost:8070 —— 48 主题切换 + 36 模块预览
+- **playground** http://localhost:8070 —— 46 主题切换 + 36 模块预览
 - **docs** http://localhost:8071 —— 组件文档（56 页，含 API 表格与真实示例）
 
 ### 用 create-kb 创建项目
@@ -117,7 +117,7 @@ pnpm docs:build       # 构建文档站
 
 ## 免责声明
 
-本项目按 **GPL-3.0** 协议以「现状」（AS IS）提供，作者与贡献者**不对使用本项目产生的任何直接、间接、偶然或后果性损失负责**。本项目以功能演示与学习交流为主要目的，架构设计、安全基线、容错机制与性能表现均未按生产级标准验证，**不适用于实际生产环境或关键业务场景**。任何部署于生产系统、对外提供服务或接入真实业务工作流的做法，均属使用者的自主决策行为，由此产生的任何不良后果，作者均不承担任何责任。
+本项目按 **MIT** 协议以「现状」（AS IS）提供，作者与贡献者**不对使用本项目产生的任何直接、间接、偶然或后果性损失负责**。本项目以功能演示与学习交流为主要目的，架构设计、安全基线、容错机制与性能表现均未按生产级标准验证，**不适用于实际生产环境或关键业务场景**。任何部署于生产系统、对外提供服务或接入真实业务工作流的做法，均属使用者的自主决策行为，由此产生的任何不良后果，作者均不承担任何责任。
 
 ## License
 
@@ -126,5 +126,5 @@ pnpm docs:build       # 构建文档站
 ### 协议要点
 
 - ✅ 自由使用、修改、分发
-- ⚠️ 衍生作品必须以相同许可证（GPL v3）开源
+- ✅ MIT 许可证：允许自由使用、修改与分发（保留版权声明即可）
 - ❌ 禁止闭源商业化
