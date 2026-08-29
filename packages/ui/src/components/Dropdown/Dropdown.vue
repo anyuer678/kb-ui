@@ -43,11 +43,19 @@ function closeMenu() {
 }
 
 function toggle() {
-  if (props.trigger === 'click') {
-    open.value ? closeMenu() : openMenu()
+  if (open.value) {
+    closeMenu()
   } else {
-    open.value ? closeMenu() : openMenu()
+    openMenu()
   }
+}
+
+function handleEnter() {
+  if (props.trigger === 'hover') openMenu()
+}
+
+function handleLeave() {
+  if (props.trigger === 'hover') closeMenu()
 }
 
 function select(item: DropdownItem) {
@@ -76,11 +84,19 @@ function handleKeydown(event: KeyboardEvent) {
       break
     case 'ArrowDown':
       event.preventDefault()
-      open.value ? moveActive(1) : openMenu()
+      if (open.value) {
+        moveActive(1)
+      } else {
+        openMenu()
+      }
       break
     case 'ArrowUp':
       event.preventDefault()
-      open.value ? moveActive(-1) : openMenu()
+      if (open.value) {
+        moveActive(-1)
+      } else {
+        openMenu()
+      }
       break
     case 'Escape':
       event.preventDefault()
@@ -101,8 +117,8 @@ onBeforeUnmount(() => document.removeEventListener('click', handleOutside))
   <div
     ref="rootEl"
     class="kb-dropdown"
-    @mouseenter="trigger === 'hover' && openMenu()"
-    @mouseleave="trigger === 'hover' && closeMenu()"
+    @mouseenter="handleEnter"
+    @mouseleave="handleLeave"
     @click="toggle"
     @keydown="handleKeydown"
   >
