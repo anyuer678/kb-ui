@@ -7,6 +7,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     env:
       # 仓库未配置 NPM_TOKEN 时跳过发布步，避免每次 push 都红着；
       # 在 repo Settings → Secrets 配置 NPM_TOKEN 后此步自动激活
