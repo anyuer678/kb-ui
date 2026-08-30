@@ -33,12 +33,24 @@ jobs:
         if: env.HAS_NPM_TOKEN == 'true'
         run: pnpm -F kb-ui-vue build
 
-      - name: Version packages
+      # 仅当存在待发布 changeset 时才执行 version+publish；否则干净通过
+      - name: Check changesets exist
         if: env.HAS_NPM_TOKEN == 'true'
+        id: changesets
+        run: |
+          if ls .changeset/*.md >/dev/null 2>&1 && [ "$(ls .changeset/*.md 2>/dev/null | grep -v README.md | wc -l)" -gt 0 ]; then
+            echo "has_changesets=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changesets=false" >> "$GITHUB_OUTPUT"
+            echo "无待发布 changeset，跳过 version/publish"
+          fi
+
+      - name: Version packages
+        if: env.HAS_NPM_TOKEN == 'true' && steps.changesets.outputs.has_changesets == 'true'
         run: pnpm changeset version
 
       - name: Publish to npm
-        if: env.HAS_NPM_TOKEN == 'true'
+        if: env.HAS_NPM_TOKEN == 'true' && steps.changesets.outputs.has_changesets == 'true'
         run: pnpm changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
