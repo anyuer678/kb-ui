@@ -1,5 +1,11 @@
 # @kb/ui
 
+## 0.3.0
+
+### Minor Changes
+
+- 6303dc5: 首次正式发布到 npm：55+ Vue 3 组件、46 套主题、组件实现深度标注
+
 ## 0.2.0
 
 ### Minor Changes
