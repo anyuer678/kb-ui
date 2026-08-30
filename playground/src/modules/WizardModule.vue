@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbSteps, KbButton, KbInput, KbInputNumber, KbTag, message } from '@kb/ui'
+import { KbSteps, KbButton, KbInput, KbInputNumber, KbTag, message } from 'kb-ui-vue'
 
 const active = ref(0)
 const form = ref({ name: '', age: 18, email: '' })

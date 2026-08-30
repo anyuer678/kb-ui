@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbCard, KbTag, KbButton, KbBadge, KbEmpty, message } from '@kb/ui'
+import { KbCard, KbTag, KbButton, KbBadge, KbEmpty, message } from 'kb-ui-vue'
 
 const active = ref('all')
 const cats = [

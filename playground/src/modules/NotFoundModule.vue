@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbButton, KbResult, KbSpace } from '@kb/ui'
+import { KbButton, KbResult, KbSpace } from 'kb-ui-vue'
 
 function goHome() {
   window.location.hash = ''

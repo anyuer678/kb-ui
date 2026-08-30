@@ -11,7 +11,7 @@ import {
   KbButton,
   KbDivider,
   message,
-} from '@kb/ui'
+} from 'kb-ui-vue'
 
 const form = ref({
   name: '',

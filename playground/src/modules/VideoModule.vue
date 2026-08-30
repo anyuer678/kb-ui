@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbCard, KbProgress, message } from '@kb/ui'
+import { KbCard, KbProgress, message } from 'kb-ui-vue'
 
 const videos = [
   { title: 'Vue 3 组件库开发实录', author: '张三', duration: '24:30', view: '1.2万', cover: '#3b82f6' },

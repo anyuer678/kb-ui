@@ -10,7 +10,7 @@ import {
   KbDropdown,
   KbEmpty,
   message,
-} from '@kb/ui'
+} from 'kb-ui-vue'
 
 // 模拟数据源
 const allData = Array.from({ length: 37 }, (_, i) => ({

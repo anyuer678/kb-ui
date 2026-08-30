@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbTag, KbButton, message } from '@kb/ui'
+import { KbTag, KbButton, message } from 'kb-ui-vue'
 
 const images = Array.from({ length: 9 }, (_, i) => ({
   id: i + 1,

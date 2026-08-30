@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbCard, KbStatistic, KbProgress } from '@kb/ui'
+import { KbCard, KbStatistic, KbProgress } from 'kb-ui-vue'
 
 const weekly = [42, 68, 55, 90, 76, 83, 61]
 const max = 100

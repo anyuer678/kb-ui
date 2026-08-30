@@ -17,7 +17,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@kb/ui": "workspace:*",
+    "kb-ui-vue": "workspace:*",
     "commander": "^12.0.0",
     "prompts": "^2.4.2"
   },

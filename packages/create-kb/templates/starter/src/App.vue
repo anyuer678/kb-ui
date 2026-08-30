@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { message } from '@kb/ui'
+import { message } from 'kb-ui-vue'
 
 const dark = ref(false)
 

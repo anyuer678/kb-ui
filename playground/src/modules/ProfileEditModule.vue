@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbForm, KbFormItem, KbInput, KbInputPassword, KbButton, KbSelect, KbSwitch, message } from '@kb/ui'
+import { KbForm, KbFormItem, KbInput, KbInputPassword, KbButton, KbSelect, KbSwitch, message } from 'kb-ui-vue'
 
 const form = ref({ name: '', email: '', password: '', role: '', notify: true })
 const rules = {

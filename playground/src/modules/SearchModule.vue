@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbSearch, KbTag, message } from '@kb/ui'
+import { KbSearch, KbTag, message } from 'kb-ui-vue'
 
 const results = ref([
   { title: '组件库主题系统设计', snippet: 'CSS 变量驱动的多主题架构…', tag: '组件库' },

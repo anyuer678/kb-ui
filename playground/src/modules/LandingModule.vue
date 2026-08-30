@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbButton, KbTag, KbSpace, message } from '@kb/ui'
+import { KbButton, KbTag, KbSpace, message } from 'kb-ui-vue'
 
 function start() {
   message.success('开始使用（演示）')

@@ -8,7 +8,7 @@ import {
   KbAlert,
   KbButton,
   message,
-} from '@kb/ui'
+} from 'kb-ui-vue'
 
 const stats = [
   { title: '总用户', value: 128456, color: 'var(--kb-color-primary)' },

@@ -9,7 +9,7 @@ import {
   KbRadio,
   KbButton,
   message,
-} from '@kb/ui'
+} from 'kb-ui-vue'
 
 const theme = ref('auto')
 const language = ref('zh')

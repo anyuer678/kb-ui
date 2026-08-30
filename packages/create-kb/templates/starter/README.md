@@ -19,7 +19,7 @@ pnpm preview   # 预览构建产物
 全量引入 @kb/ui（`src/main.ts`）：
 
 ```ts
-import KbUi from '@kb/ui'
+import KbUi from 'kb-ui-vue'
 import '@kb/ui/styles/index.css'
 
 createApp(App).use(KbUi).mount('#app')

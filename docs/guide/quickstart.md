@@ -14,7 +14,7 @@ npm install @kb/ui
 
 ```ts
 import { createApp } from 'vue'
-import KbUi from '@kb/ui'
+import KbUi from 'kb-ui-vue'
 import '@kb/ui/styles/index.css'
 
 createApp(App).use(KbUi).mount('#app')
@@ -23,7 +23,7 @@ createApp(App).use(KbUi).mount('#app')
 ### 按需引入（适合注重体积的项目）
 
 ```ts
-import { KbButton } from '@kb/ui'
+import { KbButton } from 'kb-ui-vue'
 import '@kb/ui/styles/Button.css'
 ```
 
@@ -40,7 +40,7 @@ import '@kb/ui/styles/Button.css'
 </template>
 
 <script setup lang="ts">
-import { message } from '@kb/ui'
+import { message } from 'kb-ui-vue'
 </script>
 ```
 

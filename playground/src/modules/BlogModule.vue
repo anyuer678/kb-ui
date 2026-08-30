@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbCard, KbTag, KbPagination, message } from '@kb/ui'
+import { KbCard, KbTag, KbPagination, message } from 'kb-ui-vue'
 
 const posts = Array.from({ length: 12 }, (_, i) => ({
   id: i + 1,

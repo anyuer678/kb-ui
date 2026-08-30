@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbAvatar, KbCard, KbTag, message } from '@kb/ui'
+import { KbAvatar, KbCard, KbTag, message } from 'kb-ui-vue'
 
 const members = [
   { name: '林一', role: '架构师', color: '#3b82f6' },

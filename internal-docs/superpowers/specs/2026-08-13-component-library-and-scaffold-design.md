@@ -111,7 +111,7 @@ P0 每个组件都必须有：实现、样式、类型、单元测试、文档�
 
 - 全部使用 `<script setup lang="ts">` + `defineOptions({ name: 'KbButton' })`（保证组件名可被 devtools/递归组件识别）。
 - props 用 `withDefaults(defineProps<Props>())` 强类型；事件用 `defineEmits` 声明；`v-model` 用 `modelValue` 约定（`update:modelValue`）。
-- 对外暴露统一入口：具名导出（`import { KbButton } from '@kb/ui'`）+ 全量注册插件（`app.use(KbUi)`）。
+- 对外暴露统一入口：具名导出（`import { KbButton } from 'kb-ui-vue'`）+ 全量注册插件（`app.use(KbUi)`）。
 - 每个组件导出自带类型：`KbButtonProps` 等，供用户 `defineProps<KbButtonProps>()` 复用。
 - 组件内部 `provide/inject` 用于 Form/Grid 等复合组件上下文，key 使用 `Symbol` 避免冲突。
 
@@ -165,7 +165,7 @@ dist/
 
 ```jsonc
 {
-  "name": "@kb/ui",
+  "name": "kb-ui-vue",
   "version": "0.1.0",
   "type": "module",
   "files": ["dist"],

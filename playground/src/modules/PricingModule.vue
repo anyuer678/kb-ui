@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbCard, KbButton, KbTag, message } from '@kb/ui'
+import { KbCard, KbButton, KbTag, message } from 'kb-ui-vue'
 
 const plans = [
   { name: '免费版', price: 0, features: ['50 个项目', '基础组件', '社区支持'], highlight: false },

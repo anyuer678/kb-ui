@@ -8,7 +8,7 @@ import {
   KbButton,
   KbDivider,
   message,
-} from '@kb/ui'
+} from 'kb-ui-vue'
 
 const skills = [
   { label: 'Vue.js', value: 90 },

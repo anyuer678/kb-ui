@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbTag, KbButton, message } from '@kb/ui'
+import { KbTag, KbButton, message } from 'kb-ui-vue'
 
 const columns = ref<{ key: string; title: string; color: 'info' | 'warning' | 'success'; items: { id: number; text: string }[] }[]>([
   { key: 'todo', title: '待办', color: 'info', items: [{ id: 1, text: '设计评审' }, { id: 2, text: '接口联调' }] },

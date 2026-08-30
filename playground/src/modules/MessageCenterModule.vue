@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbTabs, KbTag, KbEmpty, KbBadge, message } from '@kb/ui'
+import { KbTabs, KbTag, KbEmpty, KbBadge, message } from 'kb-ui-vue'
 
 interface Notice {
   title: string

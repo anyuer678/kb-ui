@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { KbCalendar, KbCard, KbTag, message } from '@kb/ui'
+import { KbCalendar, KbCard, KbTag, message } from 'kb-ui-vue'
 
 const selectedDate = ref('2026-08-15')
 const events: { date: string; title: string; type: 'success' | 'primary' | 'danger' | 'warning' }[] = [
