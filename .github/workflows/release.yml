@@ -9,10 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
     env:
-      # 仓库未配置 NPM_TOKEN 时跳过发布步，避免每次 push 都红着；
-      # 在 repo Settings → Secrets 配置 NPM_TOKEN 后此步自动激活
       HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
@@ -23,20 +20,25 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
+          registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Skip notice (NPM_TOKEN not configured)
         if: env.HAS_NPM_TOKEN == 'false'
-        run: echo "NPM_TOKEN 未配置，跳过 changesets 发布；配置 secret 后自动恢复发布。"
+        run: echo "NPM_TOKEN 未配置，跳过发布。"
 
-      - name: Create Release Pull Request or Publish
+      - name: Build
         if: env.HAS_NPM_TOKEN == 'true'
-        uses: changesets/action@v1
-        with:
-          version: pnpm changeset:version
-          publish: pnpm changeset:publish
+        run: pnpm -F kb-ui-vue build
+
+      - name: Version packages
+        if: env.HAS_NPM_TOKEN == 'true'
+        run: pnpm changeset version
+
+      - name: Publish to npm
+        if: env.HAS_NPM_TOKEN == 'true'
+        run: pnpm changeset publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
