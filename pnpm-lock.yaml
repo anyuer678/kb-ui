@@ -35,7 +35,7 @@ importers:
 
   docs:
     dependencies:
-      '@kb/ui':
+      kb-ui-vue:
         specifier: workspace:*
         version: link:../packages/ui
       vue:
@@ -78,12 +78,12 @@ importers:
 
   packages/create-kb:
     dependencies:
-      '@kb/ui':
-        specifier: workspace:*
-        version: link:../ui
       commander:
         specifier: ^12.0.0
         version: 12.1.0
+      kb-ui-vue:
+        specifier: workspace:*
+        version: link:../ui
       prompts:
         specifier: ^2.4.2
         version: 2.4.2
@@ -151,7 +151,7 @@ importers:
 
   playground:
     dependencies:
-      '@kb/ui':
+      kb-ui-vue:
         specifier: workspace:*
         version: link:../packages/ui
       vue:
