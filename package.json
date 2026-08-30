@@ -19,7 +19,9 @@
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
-    "e2e": "node scripts/e2e.mjs"
+    "e2e": "node scripts/e2e.mjs",
+    "visual:test": "playwright test --config packages/ui/visual/playwright.config.ts",
+    "visual:update": "playwright test --config packages/ui/visual/playwright.config.ts --update-snapshots"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.0",
