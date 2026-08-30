@@ -42,6 +42,6 @@ describe('KbTable', () => {
 
   it('stripe 应用条纹 class', () => {
     const wrapper = mount(KbTable, { props: { data, columns, stripe: true } })
-    expect(wrapper.classes()).toContain('kb-table--stripe')
+    expect(wrapper.find('table').classes()).toContain('kb-table--stripe')
   })
 })
