@@ -34,6 +34,9 @@ jobs:
       - name: Test
         run: pnpm test
 
+      - name: Dependency audit
+        run: pnpm audit --omit=dev --audit-level=high
+
       - name: Changeset status
         run: pnpm changeset status
 
