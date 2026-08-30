@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbTree, KbTag, KbButton, KbEmpty, message } from '@kb/ui'
+import { KbTree, KbTag, KbButton, KbEmpty, message } from 'kb-ui-vue'
 
 const treeData = [
   { label: '文档', children: [{ label: '设计文档', children: [{ label: '架构.md' }, { label: 'API.md' }] }, { label: '规范' }] },

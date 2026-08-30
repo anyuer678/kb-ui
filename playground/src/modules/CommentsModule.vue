@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbInput, KbButton, KbAvatar, KbTag, message } from '@kb/ui'
+import { KbInput, KbButton, KbAvatar, KbTag, message } from 'kb-ui-vue'
 
 interface Comment {
   author: string

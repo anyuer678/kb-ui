@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbBadge, KbTag, message } from '@kb/ui'
+import { KbBadge, KbTag, message } from 'kb-ui-vue'
 
 const mails = [
   { from: 'GitHub', subject: '[kb-ui] 主题扩充 PR 已合并', time: '09:20', unread: true, tag: '系统' },

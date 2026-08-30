@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbCard, KbButton, KbTag, KbRate, message } from '@kb/ui'
+import { KbCard, KbButton, KbTag, KbRate, message } from 'kb-ui-vue'
 
 const products = [
   { name: 'KB 主题包', desc: '30 套风格主题一键换肤', price: 49, rating: 5, tag: '热门' },

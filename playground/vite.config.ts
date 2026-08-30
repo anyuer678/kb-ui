@@ -14,7 +14,7 @@ export default defineConfig({
   server: { port: 8070 },
   resolve: {
     alias: {
-      '@kb/ui': fileURLToPath(new URL('../packages/ui/src/index.ts', import.meta.url)),
+      'kb-ui-vue': fileURLToPath(new URL('../packages/ui/src/index.ts', import.meta.url)),
     },
   },
 })

@@ -5,7 +5,7 @@
 ## 基础用法
 
 ```ts
-import { message } from '@kb/ui'
+import { message } from 'kb-ui-vue'
 
 message.success('操作成功')
 message.error('出错了')

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbSlider, KbButton, KbTag } from '@kb/ui'
+import { KbSlider, KbButton, KbTag } from 'kb-ui-vue'
 
 const playing = ref(false)
 const progress = ref(35)

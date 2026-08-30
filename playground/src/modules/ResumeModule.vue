@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbCard, KbTag, KbProgress, KbDivider } from '@kb/ui'
+import { KbCard, KbTag, KbProgress, KbDivider } from 'kb-ui-vue'
 
 const skills = [
   { name: 'Vue 3', level: 90 },

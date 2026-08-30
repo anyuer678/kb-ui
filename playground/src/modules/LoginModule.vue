@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbButton, KbInput, KbCheckbox, message } from '@kb/ui'
+import { KbButton, KbInput, KbCheckbox, message } from 'kb-ui-vue'
 
 const email = ref('')
 const password = ref('')

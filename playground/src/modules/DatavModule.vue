@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbCard, KbStatistic, KbCountUp, KbTag, KbProgress } from '@kb/ui'
+import { KbCard, KbStatistic, KbCountUp, KbTag, KbProgress } from 'kb-ui-vue'
 
 const bars = [65, 82, 45, 90, 70]
 const labels = ['周一', '周二', '周三', '周四', '周五']

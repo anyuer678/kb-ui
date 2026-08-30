@@ -7,7 +7,7 @@ import {
   KbCheckbox,
   KbDivider,
   message,
-} from '@kb/ui'
+} from 'kb-ui-vue'
 
 const form = ref({
   username: '',

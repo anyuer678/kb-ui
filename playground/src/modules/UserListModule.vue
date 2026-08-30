@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbTable, KbTag, KbButton, KbSearch, KbAvatar, message } from '@kb/ui'
+import { KbTable, KbTag, KbButton, KbSearch, KbAvatar, message } from 'kb-ui-vue'
 
 const keyword = ref('')
 const users = ref([

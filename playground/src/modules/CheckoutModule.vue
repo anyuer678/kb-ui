@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbCard, KbButton, KbInputNumber, KbDivider, KbTag, message } from '@kb/ui'
+import { KbCard, KbButton, KbInputNumber, KbDivider, KbTag, message } from 'kb-ui-vue'
 
 interface CartItem {
   name: string

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbCard, KbStatistic, KbProgress, KbTable, KbSegmented } from '@kb/ui'
+import { KbCard, KbStatistic, KbProgress, KbTable, KbSegmented } from 'kb-ui-vue'
 
 const range = ref('week')
 const stats = [

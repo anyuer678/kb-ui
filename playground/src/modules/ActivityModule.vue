@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbTimeline, KbCard, message } from '@kb/ui'
+import { KbTimeline, KbCard, message } from 'kb-ui-vue'
 
 const activities: { content: string; time: string; type?: 'success' | 'primary' | 'warning' }[] = [
   { content: '张三 提交了代码', time: '5 分钟前', type: 'success' },

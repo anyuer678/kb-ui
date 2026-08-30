@@ -71,7 +71,7 @@ import {
   KbResult,
   notification,
   message,
-} from '@kb/ui'
+} from 'kb-ui-vue'
 
 // 表单示例状态
 const inputValue = ref('')
@@ -99,7 +99,7 @@ const tabItems = [
 const activeTab = ref('a')
 const collapseItems = [
   { title: '什么是 KB UI？', content: '一套自建的 Vue 3 组件库，使用原生 CSS 变量驱动主题。' },
-  { title: '如何按需引入？', content: 'import { KbButton } from "@kb/ui"; import "@kb/ui/styles/Button.css"' },
+  { title: '如何按需引入？', content: 'import { KbButton } from "kb-ui-vue"; import "@kb/ui/styles/Button.css"' },
   { title: '支持暗色模式吗？', content: '支持，给 <html> 设置 data-theme="dark" 即可切换。' },
 ]
 const currentPage = ref(1)

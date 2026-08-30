@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { KbTag, KbAvatar, KbDivider, KbSpace } from '@kb/ui'
+import { KbTag, KbAvatar, KbDivider, KbSpace } from 'kb-ui-vue'
 
 const tags = ['组件库', 'Vue 3', '设计系统']
 </script>

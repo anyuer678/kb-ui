@@ -53,7 +53,7 @@ packages:
     "build": "vue-tsc --noEmit && vite build",
     "typecheck": "vue-tsc --noEmit"
   },
-  "dependencies": { "@kb/ui": "workspace:*", "vue": "^3.5.0" },
+  "dependencies": { "kb-ui-vue": "workspace:*", "vue": "^3.5.0" },
   "devDependencies": { "@vitejs/plugin-vue": "^6.0.0", "typescript": "^5.9.0", "vite": "^8.0.0", "vue-tsc": "^3.0.0" }
 }
 ```
@@ -69,7 +69,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@kb/ui': fileURLToPath(new URL('../packages/ui/src/index.ts', import.meta.url)),
+      'kb-ui-vue': fileURLToPath(new URL('../packages/ui/src/index.ts', import.meta.url)),
     },
   },
 })
@@ -112,7 +112,7 @@ export default defineConfig({
 
 - [ ] **Step 1: docs/package.json**（vitepress + vue + @kb/ui；scripts: docs:dev/docs:build/docs:preview）
 - [ ] **Step 2: .vitepress/config.ts**——title/sidebar（指南 + 14 组件）
-- [ ] **Step 3: theme/index.ts**——`import DefaultTheme from 'vitepress/theme'; import KbUi from '@kb/ui'; export default { ...DefaultTheme, enhanceApp({ app }) { app.use(KbUi) } }` + 引入样式（@kb/ui 全量 css——docs 用打包后的 dist？开发时 @kb/ui 是 workspace 包，exports 指向 dist。docs 需要先 build ui。为开发方便，theme 里 import '@kb/ui/src/styles/index.css'？Vitepress 的 resolve 也能用 alias？docs 的 vite 配置通过 vitepress 自定义。简化：docs 依赖 @kb/ui workspace:*，Vitepress 会解析包 exports 的 dist（需先 pnpm build @kb/ui）。theme/index.ts import '@kb/ui/dist/index.css'？我们没有 dist/index.css（样式在 dist/styles/index.css）。
+- [ ] **Step 3: theme/index.ts**——`import DefaultTheme from 'vitepress/theme'; import KbUi from 'kb-ui-vue'; export default { ...DefaultTheme, enhanceApp({ app }) { app.use(KbUi) } }` + 引入样式（@kb/ui 全量 css——docs 用打包后的 dist？开发时 @kb/ui 是 workspace 包，exports 指向 dist。docs 需要先 build ui。为开发方便，theme 里 import '@kb/ui/src/styles/index.css'？Vitepress 的 resolve 也能用 alias？docs 的 vite 配置通过 vitepress 自定义。简化：docs 依赖 @kb/ui workspace:*，Vitepress 会解析包 exports 的 dist（需先 pnpm build @kb/ui）。theme/index.ts import '@kb/ui/dist/index.css'？我们没有 dist/index.css（样式在 dist/styles/index.css）。
   - 方案：theme 里 `import '@kb/ui/styles/index.css'`——exports "./styles/*": "./dist/styles/*"，所以 '@kb/ui/styles/index.css' → dist/styles/index.css ✓（含 tokens + dark）。组件样式不需要（文档示例用全量）。
 - [ ] **Step 4: index.md 首页** + quickstart.md（安装/引入/按需） + theme.md（CSS 变量定制 + 暗色）
 - [ ] **Step 5: 验证 `pnpm docs:build` + Commit**

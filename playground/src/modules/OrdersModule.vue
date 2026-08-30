@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KbTable, KbTag, KbSegmented, KbPagination, KbButton, message } from '@kb/ui'
+import { KbTable, KbTag, KbSegmented, KbPagination, KbButton, message } from 'kb-ui-vue'
 
 const status = ref('all')
 const orders = ref([
