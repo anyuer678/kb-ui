@@ -11,7 +11,7 @@
 
 **一套自建的前端素材库与工程模板集**：Vue 3 组件库 + 36 个完整页面模块 + 46 套多风格主题 + 通用工具函数 + 7 种项目脚手架模板 + DevOps 资产，全部零运行时依赖、CSS 变量驱动。
 
-> ⚠️ 项目当前为**私有仓库**，组件库尚未发布到 npm（开发调试请使用 `file:` 链接或 workspace）。
+> 📦 组件库已发布到 npm：[`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)（`npm i kb-ui-vue`）。`@kb/utils` 与脚手架包尚未发布（开发调试请使用 `file:` 链接或 workspace）。
 
 ---
 
@@ -129,10 +129,10 @@ pnpm docs:build       # 构建文档站
 
 ## License
 
-[GNU General Public License v3.0](LICENSE) — Copyright (C) 2026 anyuer678
+[MIT License](LICENSE) — Copyright (c) 2026 anyuer678
 
 ### 协议要点
 
-- ✅ 自由使用、修改、分发
-- ✅ MIT 许可证：允许自由使用、修改与分发（保留版权声明即可）
-- ❌ 禁止闭源商业化
+- ✅ 自由使用、修改、分发（保留版权声明与许可声明即可）
+- ✅ 可用于商业项目
+- ℹ️ 本项目按「现状」（AS IS）提供，作者不承担担保与责任（见上方免责声明）
