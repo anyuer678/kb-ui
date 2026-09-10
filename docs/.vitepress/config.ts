@@ -15,6 +15,7 @@ export default defineConfig({
         // pnpm workspace symlink 在 Vite 5.x 的 Rollup 解析器中不可靠，
         // 显式指向 packages/ui 以确保 docs 构建能找到入口
         'kb-ui-vue': resolve(dirname(fileURLToPath(import.meta.url)), '../../packages/ui'),
+        '@kb/ui': resolve(dirname(fileURLToPath(import.meta.url)), '../../packages/ui'),
       },
     },
   },
