@@ -9,6 +9,7 @@ export default defineConfig({
   // GitHub Pages 部署到 /kb-ui/ 子路径时通过 BASE_URL 覆盖
   base: process.env.BASE_URL ?? '/',
   vite: {
+    define: { __KB_VERSION__: JSON.stringify('0.2.0') },
     server: { port: 8071 },
     resolve: {
       alias: {
