@@ -1,6 +1,7 @@
 {
   "name": "kb-ui-vue",
   "version": "0.2.0",
+  "license": "MIT",
   "type": "module",
   "files": [
     "dist"
