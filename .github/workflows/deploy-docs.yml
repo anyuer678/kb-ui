@@ -37,10 +37,13 @@ jobs:
       - name: Build UI library (docs depends on dist styles)
         run: pnpm --filter @kb/ui build
 
+      - name: Re-link workspace packages
+        run: pnpm install --no-frozen-lockfile
+
       - name: Build docs site
         env:
           BASE_URL: /kb-ui/
-        run: pnpm docs:build
+        run: pnpm --filter kb-docs docs:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
