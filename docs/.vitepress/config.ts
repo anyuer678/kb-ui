@@ -1,4 +1,6 @@
 import { defineConfig } from 'vitepress'
+import { fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -6,7 +8,16 @@ export default defineConfig({
   description: '一套自建的 Vue 3 组件库',
   // GitHub Pages 部署到 /kb-ui/ 子路径时通过 BASE_URL 覆盖
   base: process.env.BASE_URL ?? '/',
-  vite: { server: { port: 8071 } },
+  vite: {
+    server: { port: 8071 },
+    resolve: {
+      alias: {
+        // pnpm workspace symlink 在 Vite 5.x 的 Rollup 解析器中不可靠，
+        // 显式指向 packages/ui 以确保 docs 构建能找到入口
+        'kb-ui-vue': resolve(dirname(fileURLToPath(import.meta.url)), '../../packages/ui'),
+      },
+    },
+  },
   themeConfig: {
     nav: [
       { text: '指南', link: '/guide/quickstart' },
