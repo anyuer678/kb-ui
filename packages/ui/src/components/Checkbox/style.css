@@ -57,6 +57,21 @@
   transform: rotate(45deg) scale(1);
 }
 
+.kb-checkbox--indeterminate .kb-checkbox__inner {
+  border-color: var(--kb-color-primary);
+  background: var(--kb-color-primary);
+}
+
+.kb-checkbox--indeterminate .kb-checkbox__inner::after {
+  top: 6px;
+  left: 3px;
+  width: 8px;
+  height: 0;
+  border-width: 2px 0 0;
+  border-color: var(--kb-color-bg);
+  transform: none;
+}
+
 .kb-checkbox__label {
   line-height: 1;
 }
