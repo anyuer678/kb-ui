@@ -49,6 +49,7 @@ import {
   KbRadio,
   KbSwitch,
   KbSelect,
+  KbDatePicker,
   KbTooltip,
   KbDialog,
   KbTable,
@@ -237,6 +238,11 @@ const tableColumns = [
   { prop: 'city', label: '城市' },
 ]
 
+// DatePicker 状态（单日期 / 范围 / 多选）
+const pickerDate = ref('2026-08-15')
+const pickerRange = ref<string[]>(['2026-08-10', '2026-08-20'])
+const pickerDates = ref<string[]>(['2026-08-03', '2026-08-12'])
+
 // Table 进阶示例状态（排序 / 分页 / 固定列 / 行选择）
 const tablePage = ref(1)
 const tableSelected = ref<(string | number)[]>([])
@@ -372,6 +378,18 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
         <KbSelect v-model="selectValue" :options="selectOptions" placeholder="请选择水果" />
         <span class="hint">已选：{{ selectValue || '（未选择）' }}</span>
       </KbSpace>
+
+      <h3>DatePicker · 单日期 / 范围 / 多选</h3>
+      <KbSpace wrap align="center">
+        <KbDatePicker v-model="pickerDate" clearable />
+        <KbDatePicker v-model="pickerRange" mode="range" clearable />
+        <KbDatePicker v-model="pickerDates" mode="multiple" clearable />
+      </KbSpace>
+      <p class="hint">
+        单日期：{{ pickerDate || '（空）' }} · 范围：{{
+          pickerRange.length === 2 ? pickerRange.join(' 至 ') : '（未选完整）'
+        }} · 多选：{{ pickerDates.length }} 天
+      </p>
     </section>
 
     <!-- 反馈组件 -->

@@ -64,6 +64,16 @@
   cursor: pointer;
 }
 
+.kb-calendar__day--in-range {
+  border-radius: 0;
+  background: color-mix(in srgb, var(--kb-color-primary) 14%, transparent);
+}
+
+.kb-calendar__day--range-end {
+  background: var(--kb-color-primary);
+  color: var(--kb-color-bg);
+}
+
 .kb-calendar__day:hover:not(.kb-calendar__day--active) {
   background: var(--kb-color-bg-elevated);
 }
