@@ -1,8 +1,14 @@
-name: Release
+﻿name: Release
 
+# 手动触发，避免"合并即发版"这种不可逆的外部动作被代码合并顺带引发。
+# 发版前建议先确认待发布包在 npm 上的作用域归属（例如 @kb/* 首次发布需要该作用域在账号名下）。
 on:
-  push:
-    branches: [master]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '仅演练：输出将要发布的包，不执行 version / publish'
+        type: boolean
+        default: false
 
 jobs:
   release:
@@ -45,12 +51,25 @@ jobs:
             echo "无待发布 changeset，跳过 version/publish"
           fi
 
+      - name: Dry run — list pending changesets
+        if: env.HAS_NPM_TOKEN == 'true' && inputs.dry_run
+        run: |
+          echo "待发布的 changeset："
+          for f in $(ls .changeset/*.md 2>/dev/null | grep -v 'README.md'); do
+            echo "--- $f"
+            cat "$f"
+          done
+
+      - name: Dry run notice
+        if: inputs.dry_run
+        run: echo "dry_run=true，未执行 version / publish。"
+
       - name: Version packages
-        if: env.HAS_NPM_TOKEN == 'true' && steps.changesets.outputs.has_changesets == 'true'
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true'
         run: pnpm changeset version
 
       - name: Publish to npm
-        if: env.HAS_NPM_TOKEN == 'true' && steps.changesets.outputs.has_changesets == 'true'
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true'
         run: pnpm changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
