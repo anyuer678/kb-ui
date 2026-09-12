@@ -20,6 +20,16 @@ export default [
       'vue/multi-word-component-names': 'off',
       'vue/require-default-prop': 'off',
       'no-undef': 'off',
+      // 下划线前缀表示「有意不使用」：Express 错误中间件必须保留 4 个参数、
+      // 解构时丢弃字段等场景都靠这个约定，避免被迫写 eslint-disable
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 ]
