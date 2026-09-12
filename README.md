@@ -28,8 +28,7 @@
 | 深度 | 组件 |
 |------|------|
 | ✅ 基础 | Alert, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Collapse, ColorPicker, CountUp, Descriptions, Dialog, Divider, Drawer, Dropdown, Empty, Icon, Input, InputNumber, InputPassword, List, Loading, Message, Notification, Pagination, Popconfirm, Popover, Progress, Radio, Rate, Result, Search, Segmented, Skeleton, Slider, Space, Statistic, Steps, Switch, Tag, Textarea, Tooltip, Upload, Watermark |
-| 🔧 进阶 | DatePicker（单日期/范围/多选）, Form（校验+动态字段）, Grid（响应式布局）, Select（搜索+键盘导航）, Table（排序/分页/固定列/行选择）, Tree（虚拟滚动/拖拽排序）, Tabs, Timeline |
-| 📋 演示级 | Cascader（嵌套选择可用，缺异步加载）, Transfer（双列表迁移，缺搜索/分页） |
+| 🔧 进阶 | Cascader（异步加载/清空）, DatePicker（单日期/范围/多选）, Form（校验+动态字段）, Grid（响应式布局）, Select（搜索+键盘导航）, Table（排序/分页/固定列/行选择）, Transfer（搜索/分页/全选）, Tree（虚拟滚动/拖拽排序）, Tabs, Timeline |
 
 ### 主题系统（46 套）
 - **双维度切换**：12 套颜色主题（violet/teal/rose/ink/neon…）+ 36 套风格主题（圆润/扁平/渐变/玻璃/赛博/终端/水墨/商务/孟菲斯/波普/极简/粉彩/鎏金/丹青…）
