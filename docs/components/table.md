@@ -40,6 +40,22 @@ const columns = [
 
 服务端排序场景用 `sortable: 'custom'`，组件只派发 `sort-change`，不干预数据顺序。
 
+服务端分页则再传一个 `total`（接口返回的总条数）：此时 `data` 就是当前页数据，组件不再做切片，
+分页器按 `total` / `pageSize` 计算页数。配合 `sortable: 'custom'` 即可完成「翻页/排序都回后端取数」：
+
+```vue
+<KbTable
+  :data="rows"
+  :columns="columns"
+  :total="total"
+  :page-size="20"
+  :current-page="page"
+  row-key="id"
+  @sort-change="onSort"
+  @update:current-page="onPageChange"
+/>
+```
+
 ```vue
 <template>
   <KbTable :data="rows" :columns="columns" @sort-change="fetchList" />
@@ -91,6 +107,7 @@ const columns = [
 | `rowKey` | `string` | — | 行唯一键字段名，不传则用行索引 |
 | `pageSize` | `number` | `0` | 每页条数，`0` 表示不分页 |
 | `currentPage` | `number` | `1` | 当前页（1-based），配合 `v-model:current-page` |
+| `total` | `number` | — | 总条数；**传入即视为服务端分页**，`data` 只放当前页，组件不再切片 |
 | `selection` | `boolean` | `false` | 是否显示行选择列 |
 | `selectedKeys` | `(string \| number)[]` | `[]` | 已选行的 key，配合 `v-model:selected-keys` |
 | `emptyText` | `string` | `'暂无数据'` | 数据为空时的文案 |

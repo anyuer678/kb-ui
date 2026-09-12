@@ -29,9 +29,9 @@ jobs:
         if: env.HAS_NPM_TOKEN == 'false'
         run: echo "NPM_TOKEN 未配置，跳过发布。"
 
-      - name: Build
+      - name: Build (all publishable packages)
         if: env.HAS_NPM_TOKEN == 'true'
-        run: pnpm -F kb-ui-vue build
+        run: pnpm build
 
       # 仅当存在待发布 changeset 时才执行 version+publish；否则干净通过
       - name: Check changesets exist

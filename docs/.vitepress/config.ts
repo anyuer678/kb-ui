@@ -23,6 +23,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '指南', link: '/guide/quickstart' },
+      { text: '后端', link: '/guide/backend' },
       { text: '组件', link: '/components/button' },
     ],
     sidebar: {
@@ -32,6 +33,7 @@ export default defineConfig({
           items: [
             { text: '快速上手', link: '/guide/quickstart' },
             { text: '主题定制', link: '/guide/theme' },
+            { text: '后端模块与请求层', link: '/guide/backend' },
           ],
         },
       ],
