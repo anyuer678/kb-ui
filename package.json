@@ -14,7 +14,7 @@
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
-    "build": "pnpm -r build",
+    "build": "pnpm --filter @kb/utils build && pnpm --filter @kb/api build && pnpm --filter kb-ui-vue build && pnpm --filter create-kb build && pnpm --filter kb-playground build",
     "dev": "pnpm --filter kb-playground dev",
     "docs:dev": "pnpm --filter kb-docs docs:dev",
     "docs:build": "pnpm --filter kb-docs docs:build",
