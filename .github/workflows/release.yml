@@ -69,7 +69,9 @@ jobs:
       - name: Verify npm auth
         if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run
         run: |
-          echo "npm 账号：$(npm whoami --registry=https://registry.npmjs.org)"
+          set -euo pipefail
+          ACCOUNT=$(npm whoami --registry=https://registry.npmjs.org)
+          echo "npm 账号：${ACCOUNT}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
