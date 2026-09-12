@@ -1,8 +1,12 @@
 import { createHttp } from '@kb/utils'
+import type { OptionItem, PageResult, RegionNode, RegionSummary, User } from '@kb/api'
 
 /**
  * 演示用的请求客户端：开发态由 Vite 代理 `/api` 到 `@kb/api`（默认 127.0.0.1:8082）。
  * 不需要真后端时，页面会落到 catch 分支展示错误提示，不影响其它组件演示。
+ *
+ * 接口的**类型**直接复用 `@kb/api` 的导出（`import type`，不进运行时代码），
+ * 这样前端与后端的契约只有一份定义，改后端就能被 vue-tsc 立刻发现。
  */
 export const http = createHttp({
   baseURL: '/api',
@@ -11,23 +15,12 @@ export const http = createHttp({
   retryBaseDelay: 300,
 })
 
-export interface PageResult<T> {
-  list: T[]
-  total: number
-  page: number
-  pageSize: number
-}
+export type { OptionItem, PageResult, RegionNode, RegionSummary }
 
-export interface ApiUser {
-  id: number
-  name: string
-  company: string
-  city: string
-  email: string
-  role: string
-  score: number
-}
+/** 与 `@kb/api` 的 `User` 同构，这里只换个更贴合前端的名字 */
+export type ApiUser = User
 
+/** `/api/users` 的查询入参（可选形态，与后端归一化后的 `PageQuery` 区分） */
 export interface UserQuery {
   page?: number
   pageSize?: number
@@ -49,19 +42,7 @@ export function fetchUsers(query: UserQuery = {}): Promise<PageResult<ApiUser>> 
   })
 }
 
-export interface RegionNode {
-  value: string
-  label: string
-  leaf: boolean
-  children?: RegionNode[]
-}
-
-export interface RegionSummary {
-  value: string
-  label: string
-  leaf: boolean
-}
-
+/** `GET /api/regions?parent=` 的响应（该组合形状由路由拼装，包里未单独导出） */
 export interface RegionChildren {
   parent: string | null
   list: RegionSummary[]
@@ -76,11 +57,6 @@ export function fetchRegions(parent?: string | null): Promise<RegionChildren> {
 /** GET /api/regions/tree —— 完整树（440 节点），供 Tree 虚拟滚动 */
 export function fetchRegionTree(): Promise<{ list: RegionNode[]; total: number }> {
   return http.get<{ list: RegionNode[]; total: number }>('/regions/tree')
-}
-
-export interface OptionItem {
-  key: string
-  label: string
 }
 
 /** GET /api/options —— 候选项分页 + 搜索，供 Transfer 取数 */

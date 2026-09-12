@@ -11,7 +11,7 @@
  *     → <target>/src/...（写入「自动生成」banner）
  *   packages/api/test/** → <target>/test/**
  *   src/index.ts 由本脚本生成（模板入口，端口默认 3000，与 docker-compose / web 代理一致）
- *   src/start.ts 不复制（那是 @kb/api 包自身的启动入口）
+ *   src/start.ts、src/cli.ts 不复制（那是 @kb/api 包自身的启动入口与 CLI）
  *
  * 用法
  *   node scripts/sync-api-template.mjs            # 写入模板
@@ -32,7 +32,7 @@ const targets = [
 ]
 
 /** 不从 @kb/api 复制的文件（模板有自己的入口） */
-const EXCLUDED = new Set(['src/index.ts', 'src/start.ts'])
+const EXCLUDED = new Set(['src/index.ts', 'src/start.ts', 'src/cli.ts'])
 
 const BANNER = [
   '/* eslint-disable */',

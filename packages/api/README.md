@@ -9,14 +9,19 @@
 ## 快速开始
 
 ```bash
-# 在仓库根目录
-pnpm --filter @kb/api dev      # tsx watch，默认 http://127.0.0.1:8082
+# 方式一：仓库内开发（tsx watch，改源码即时重启）
+pnpm --filter @kb/api dev               # 默认 http://127.0.0.1:8082
 
-# 或构建后作为普通依赖使用
+# 方式二：构建后用自带 CLI 起服务
 pnpm --filter @kb/api build
+npx kb-api                              # 端口默认 8082
+npx kb-api --port 9000 --host 0.0.0.0   # 换端口 / 对外暴露（容器内需要）
+
+# 方式三：装进你自己的项目当依赖
+pnpm add -D @kb/api
 ```
 
-环境变量 `PORT` 可覆盖端口。
+`kb-api --help` 可看全部参数；端口与地址也可用环境变量 `PORT` / `HOST` 覆盖，命令行参数优先级更高。`npm i -g @kb/api` 之后可以直接敲 `kb-api`。
 
 ## 接口一览
 
