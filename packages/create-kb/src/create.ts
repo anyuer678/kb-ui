@@ -14,14 +14,14 @@ function templatesRoot(): string {
   return join(__dirname, '../templates')
 }
 
-/** 读取 create-kb 依赖的 @kb/ui 版本（发布配套版本） */
+/** 读取 create-kb 依赖的 kb-ui-vue 版本（发布配套版本） */
 function kbVersion(): string {
   const require = createRequire(import.meta.url)
   try {
-    const pkg = require('@kb/ui/package.json') as { version: string }
+    const pkg = require('kb-ui-vue/package.json') as { version: string }
     return pkg.version
   } catch {
-    console.warn('⚠ 未读取到 @kb/ui 版本，模板将使用 "latest" 作为依赖版本')
+    console.warn('⚠ 未读取到 kb-ui-vue 版本，模板将使用 "latest" 作为依赖版本')
     return 'latest'
   }
 }

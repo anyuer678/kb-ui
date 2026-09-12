@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import LoginModule from './modules/LoginModule.vue'
 import DashboardModule from './modules/DashboardModule.vue'
 import ListModule from './modules/ListModule.vue'
@@ -49,10 +49,14 @@ import {
   KbRadio,
   KbSwitch,
   KbSelect,
+  KbDatePicker,
+  KbCascader,
+  KbTransfer,
   KbTooltip,
   KbDialog,
   KbTable,
   KbBadge,
+  KbTree,
   KbAvatar,
   KbProgress,
   KbCard,
@@ -72,6 +76,9 @@ import {
   notification,
   message,
 } from 'kb-ui-vue'
+import type { CascaderOption } from 'kb-ui-vue'
+import { fetchRegionTree, fetchRegions, fetchUsers } from './api'
+import type { ApiUser, RegionNode } from './api'
 
 // 表单示例状态
 const inputValue = ref('')
@@ -237,6 +244,189 @@ const tableColumns = [
   { prop: 'city', label: '城市' },
 ]
 
+// DatePicker 状态（单日期 / 范围 / 多选）
+const pickerDate = ref('2026-08-15')
+const pickerRange = ref<string[]>(['2026-08-10', '2026-08-20'])
+const pickerDates = ref<string[]>(['2026-08-03', '2026-08-12'])
+
+// Table 进阶示例状态（排序 / 分页 / 固定列 / 行选择）
+const tablePage = ref(1)
+const tableSelected = ref<(string | number)[]>([])
+const tableBigData = Array.from({ length: 46 }, (_, i) => ({
+  id: i + 1,
+  name: `用户 ${i + 1}`,
+  company: ['星尘科技', '云图数据', '南栀软件', '澜川网络'][i % 4],
+  city: ['北京', '上海', '广州', '成都', '杭州'][i % 5],
+  email: `user${i + 1}@example.com`,
+  role: ['管理员', '编辑', '访客'][i % 3],
+  score: (i * 37) % 100,
+}))
+const tableSortColumns = [
+  { prop: 'name', label: '姓名', width: 140 },
+  { prop: 'score', label: '评分（可排序）', width: 140, sortable: true },
+  { prop: 'city', label: '城市', width: 120 },
+]
+const tableFixedColumns = [
+  { prop: 'id', label: 'ID', width: 80, fixed: 'left' as const },
+  { prop: 'name', label: '姓名', width: 120, fixed: 'left' as const },
+  { prop: 'company', label: '公司', width: 300 },
+  { prop: 'email', label: '邮箱', width: 300 },
+  { prop: 'city', label: '城市', width: 180 },
+  { prop: 'role', label: '角色', width: 140, fixed: 'right' as const },
+]
+
+// Cascader / Transfer 示例状态
+const cascaderValue = ref<string[]>(['zj', 'hz'])
+const cascaderOptions = [
+  {
+    label: '浙江',
+    value: 'zj',
+    children: [
+      { label: '杭州', value: 'hz' },
+      { label: '宁波', value: 'nb' },
+    ],
+  },
+  {
+    label: '广东',
+    value: 'gd',
+    children: [{ label: '广州', value: 'gz' }],
+  },
+]
+// 异步加载：首次展开请求根级（node === null），之后每次点击按需拉子级
+function cascaderLazyLoad(
+  node: CascaderOption | null,
+  resolve: (children: CascaderOption[]) => void,
+) {
+  setTimeout(() => {
+    if (!node) {
+      resolve([
+        { label: '浙江', value: 'zj' },
+        { label: '江苏', value: 'js' },
+      ])
+      return
+    }
+    resolve([
+      { label: `${node.label}-子项 1`, value: `${node.value}-1` },
+      { label: `${node.label}-子项 2`, value: `${node.value}-2` },
+    ])
+  }, 400)
+}
+
+const transferValue = ref<string[]>(['k1'])
+const transferData = Array.from({ length: 24 }, (_, i) => ({
+  key: `k${i + 1}`,
+  label: `候选项目 ${i + 1}`,
+}))
+
+// Tree 示例状态（虚拟滚动 / 拖拽排序）
+const treeData = [
+  { label: '前端', children: [{ label: 'Vue' }, { label: 'React' }] },
+  { label: '后端', children: [{ label: 'Node' }, { label: 'Go' }] },
+  { label: '设计', children: [{ label: 'Figma' }] },
+]
+const treeHugeData = Array.from({ length: 1000 }, (_, i) => ({ label: `节点 ${i + 1}` }))
+const treeDragData = ref([
+  { label: '前端', children: [{ label: 'Vue' }, { label: 'React' }] },
+  { label: '后端', children: [{ label: 'Node' }] },
+  { label: '设计' },
+])
+const treeLastDrop = ref('')
+function onTreeDrop(payload: { dragNode: { label: string }; dropNode: { label: string }; position: string }) {
+  treeLastDrop.value = `${payload.dragNode.label} → ${payload.dropNode.label}（${payload.position}）`
+}
+
+// ===== 真实接口演示（@kb/api，开发态经 Vite 代理到 127.0.0.1:8082）=====
+const serverKeyword = ref('')
+const serverPage = ref(1)
+const serverSortProp = ref('')
+const serverSortOrder = ref<'asc' | 'desc' | null>(null)
+const serverUsers = ref<ApiUser[]>([])
+const serverTotal = ref(0)
+const serverLoading = ref(false)
+const serverError = ref('')
+const SERVER_PAGE_SIZE = 8
+
+const serverColumns = [
+  { prop: 'id', label: 'ID', width: 70 },
+  { prop: 'name', label: '姓名', width: 110, sortable: 'custom' as const },
+  { prop: 'company', label: '公司', width: 140 },
+  { prop: 'city', label: '城市', width: 100 },
+  { prop: 'role', label: '角色', width: 100 },
+  { prop: 'score', label: '评分（可排序）', width: 140, sortable: 'custom' as const },
+]
+
+async function loadUsers() {
+  serverLoading.value = true
+  serverError.value = ''
+  try {
+    const result = await fetchUsers({
+      page: serverPage.value,
+      pageSize: SERVER_PAGE_SIZE,
+      keyword: serverKeyword.value,
+      sortBy: serverSortProp.value || null,
+      order: serverSortOrder.value ?? 'asc',
+    })
+    serverUsers.value = result.list
+    serverTotal.value = result.total
+  } catch (error) {
+    serverError.value = error instanceof Error ? error.message : String(error)
+    serverUsers.value = []
+    serverTotal.value = 0
+  } finally {
+    serverLoading.value = false
+  }
+}
+
+/** Table sortable:'custom' —— 把排序交给服务端，回到第 1 页重新取数 */
+function onServerSort(prop: string, order: 'asc' | 'desc' | null) {
+  serverSortProp.value = order ? prop : ''
+  serverSortOrder.value = order
+  serverPage.value = 1
+  void loadUsers()
+}
+
+function onServerSearch() {
+  serverPage.value = 1
+  void loadUsers()
+}
+
+function onServerPageChange(page: number) {
+  serverPage.value = page
+  void loadUsers()
+}
+
+/** Cascader 远程懒加载：点一次拉一级 */
+function remoteCascaderLoad(
+  node: CascaderOption | null,
+  resolve: (children: CascaderOption[]) => void,
+) {
+  fetchRegions(node ? String(node.value) : null)
+    .then((result) => {
+      resolve(
+        result.list.map((item) => ({ label: item.label, value: item.value, leaf: item.leaf })),
+      )
+    })
+    .catch(() => resolve([]))
+}
+
+/** Tree 远程数据：一次性拉 440 节点完整树，配合虚拟滚动 */
+const remoteTreeData = ref<RegionNode[]>([])
+const remoteTreeError = ref('')
+async function loadRemoteTree() {
+  remoteTreeError.value = ''
+  try {
+    const result = await fetchRegionTree()
+    remoteTreeData.value = result.list
+  } catch (error) {
+    remoteTreeError.value = error instanceof Error ? error.message : String(error)
+  }
+}
+
+onMounted(() => {
+  void loadUsers()
+  void loadRemoteTree()
+})
+
 const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-left', 'arrow-right', 'search', 'menu', 'loading', 'chevron-down']
 </script>
 
@@ -346,6 +536,29 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
         <KbSelect v-model="selectValue" :options="selectOptions" placeholder="请选择水果" />
         <span class="hint">已选：{{ selectValue || '（未选择）' }}</span>
       </KbSpace>
+
+      <h3>Cascader · 基础 / 异步加载</h3>
+      <KbSpace wrap align="center">
+        <KbCascader v-model="cascaderValue" :options="cascaderOptions" clearable />
+        <KbCascader lazy :options="[]" :lazy-load="cascaderLazyLoad" placeholder="点击按需加载" />
+      </KbSpace>
+      <p class="hint">已选路径：{{ cascaderValue.join(' / ') || '（未选择）' }}</p>
+
+      <h3>Transfer · 搜索 + 分页</h3>
+      <KbTransfer v-model="transferValue" :data="transferData" filterable :page-size="6" />
+      <p class="hint">已选 {{ transferValue.length }} 项：{{ transferValue.join('、') || '（无）' }}</p>
+
+      <h3>DatePicker · 单日期 / 范围 / 多选</h3>
+      <KbSpace wrap align="center">
+        <KbDatePicker v-model="pickerDate" clearable />
+        <KbDatePicker v-model="pickerRange" mode="range" clearable />
+        <KbDatePicker v-model="pickerDates" mode="multiple" clearable />
+      </KbSpace>
+      <p class="hint">
+        单日期：{{ pickerDate || '（空）' }} · 范围：{{
+          pickerRange.length === 2 ? pickerRange.join(' 至 ') : '（未选完整）'
+        }} · 多选：{{ pickerDates.length }} 天
+      </p>
     </section>
 
     <!-- 反馈组件 -->
@@ -392,8 +605,99 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
       <h2>数据展示</h2>
       <KbDivider />
 
-      <h3>Table</h3>
+      <h3>Table · 基础</h3>
       <KbTable :data="tableData" :columns="tableColumns" stripe border />
+
+      <h3>Table · 排序 + 分页</h3>
+      <KbTable
+        v-model:current-page="tablePage"
+        :data="tableBigData"
+        :columns="tableSortColumns"
+        :page-size="10"
+        stripe
+        border
+      />
+      <p class="hint">当前第 {{ tablePage }} 页</p>
+
+      <h3>Table · 固定列（左右固定，列宽超容器时横向滚动）</h3>
+      <KbTable :data="tableBigData.slice(0, 6)" :columns="tableFixedColumns" border />
+
+      <h3>Table · 行选择（表头全选 / 半选）</h3>
+      <KbTable
+        v-model:selected-keys="tableSelected"
+        :data="tableData"
+        :columns="tableColumns"
+        selection
+        row-key="name"
+        border
+      />
+      <p class="hint">已选：{{ tableSelected.join('、') || '（无）' }}</p>
+
+      <h3>Table · 空状态（size=small）</h3>
+      <KbTable :data="[]" :columns="tableColumns" size="small" empty-text="暂无数据" border />
+
+      <h3>Tree · 基础（展开 / 折叠 / 选中）</h3>
+      <KbTree :data="treeData" default-expand-all />
+
+      <h3>Tree · 虚拟滚动（1000 节点，只渲染可视区）</h3>
+      <KbTree :data="treeHugeData" :height="240" />
+
+      <h3>Tree · 拖拽排序（支持 before / after / inner 三种落点）</h3>
+      <KbTree :data="treeDragData" draggable @drop="onTreeDrop" />
+      <p class="hint">最近落点：{{ treeLastDrop || '（拖动节点试试）' }}</p>
+    </section>
+
+    <!-- 真实接口（@kb/api） -->
+    <section class="block">
+      <h2>真实接口 · @kb/api</h2>
+      <KbDivider />
+      <p class="hint">
+        以下三个示例走真实 HTTP：先跑 <code>pnpm api</code> 起服务（默认 127.0.0.1:8082），
+        开发态由 Vite 把 <code>/api</code> 代理过去。
+      </p>
+
+      <h3>Table · 服务端分页 + 排序 + 搜索（500 条用户）</h3>
+      <KbSpace align="center" wrap>
+        <KbInput
+          v-model="serverKeyword"
+          placeholder="搜索姓名 / 公司 / 城市 / 邮箱"
+          clearable
+          style="width: 280px"
+          @keyup.enter="onServerSearch"
+        />
+        <KbButton type="primary" :disabled="serverLoading" @click="onServerSearch">
+          {{ serverLoading ? '查询中…' : '查询' }}
+        </KbButton>
+        <span class="hint">共 {{ serverTotal }} 条</span>
+      </KbSpace>
+      <KbTable
+        :data="serverUsers"
+        :columns="serverColumns"
+        :page-size="SERVER_PAGE_SIZE"
+        :total="serverTotal"
+        :current-page="serverPage"
+        row-key="id"
+        stripe
+        border
+        @sort-change="onServerSort"
+        @update:current-page="onServerPageChange"
+      />
+      <p v-if="serverError" class="hint hint--error">接口未启动？{{ serverError }}</p>
+      <p v-else class="hint">当前第 {{ serverPage }} 页，共 {{ serverTotal }} 条</p>
+
+      <h3>Cascader · 远程懒加载（/api/regions）</h3>
+      <KbCascader
+        lazy
+        :options="[]"
+        :lazy-load="remoteCascaderLoad"
+        placeholder="点击按需加载远程数据"
+        clearable
+        style="width: 280px"
+      />
+
+      <h3>Tree · 远程树数据（/api/regions/tree，440 节点 + 虚拟滚动）</h3>
+      <KbTree v-if="remoteTreeData.length" :data="remoteTreeData" :height="240" :item-height="30" />
+      <p v-else class="hint">{{ remoteTreeError || '加载中…' }}</p>
     </section>
 
     <!-- 展示组件 -->
@@ -676,6 +980,17 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
 .hint {
   color: var(--kb-color-text-3);
   font-size: var(--kb-font-size-sm);
+}
+
+.hint--error {
+  color: var(--kb-color-danger, #dc2626);
+}
+
+.hint code {
+  padding: 1px 5px;
+  border-radius: var(--kb-radius-sm);
+  background: color-mix(in srgb, var(--kb-color-primary) 12%, transparent);
+  font-family: var(--kb-font-family-mono, monospace);
 }
 
 .grid-box {

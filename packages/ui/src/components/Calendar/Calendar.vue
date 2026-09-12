@@ -3,12 +3,30 @@ import { computed, ref } from 'vue'
 
 defineOptions({ name: 'KbCalendar' })
 
+export interface CalendarDay {
+  date: Date
+  inMonth: boolean
+  isSelected: boolean
+  /** 落在 [start, end] 开区间内（range 模式） */
+  inRange: boolean
+  /** 是范围结束日（range 模式） */
+  isRangeEnd: boolean
+  /** 被额外标记为已选（multiple 模式） */
+  isMarked: boolean
+}
+
 export interface CalendarProps {
   modelValue?: string
+  /** 范围高亮 [start, end]，由 DatePicker 的 range 模式传入 */
+  range?: [string, string] | null
+  /** 额外高亮日期列表（YYYY-MM-DD），由 DatePicker 的 multiple 模式传入 */
+  marked?: string[]
 }
 
 const props = withDefaults(defineProps<CalendarProps>(), {
   modelValue: '',
+  range: null,
+  marked: () => [],
 })
 
 const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
@@ -21,14 +39,21 @@ const viewMonth = ref(selected.value.getMonth()) // 0-11
 
 const title = computed(() => `${viewYear.value} 年 ${viewMonth.value + 1} 月`)
 
+function fmt(date: Date): string {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+}
+
 /** 当月日期格（含补齐的邻月日期） */
-const days = computed<{ date: Date; inMonth: boolean; isSelected: boolean }[]>(() => {
+const days = computed<CalendarDay[]>(() => {
   const first = new Date(viewYear.value, viewMonth.value, 1)
   const startOffset = (first.getDay() + 6) % 7 // 周一起始
   const start = new Date(viewYear.value, viewMonth.value, 1 - startOffset)
-  const list: { date: Date; inMonth: boolean; isSelected: boolean }[] = []
+  const rangeStart = props.range?.[0] ?? ''
+  const rangeEnd = props.range?.[1] ?? ''
+  const list: CalendarDay[] = []
   for (let i = 0; i < 42; i++) {
     const date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i)
+    const value = fmt(date)
     list.push({
       date,
       inMonth: date.getMonth() === viewMonth.value,
@@ -36,16 +61,16 @@ const days = computed<{ date: Date; inMonth: boolean; isSelected: boolean }[]>((
         date.getFullYear() === selected.value.getFullYear() &&
         date.getMonth() === selected.value.getMonth() &&
         date.getDate() === selected.value.getDate(),
+      // YYYY-MM-DD 定长格式，字符串比较等价于日期比较
+      inRange: Boolean(rangeStart && rangeEnd && value > rangeStart && value < rangeEnd),
+      isRangeEnd: Boolean(rangeEnd && value === rangeEnd),
+      isMarked: props.marked.includes(value),
     })
   }
   return list
 })
 
-function fmt(date: Date): string {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
-}
-
-function selectDay(day: { date: Date }) {
+function selectDay(day: CalendarDay) {
   emit('update:modelValue', fmt(day.date))
 }
 
@@ -85,7 +110,9 @@ function nextMonth() {
         class="kb-calendar__day"
         :class="{
           'kb-calendar__day--outside': !day.inMonth,
-          'kb-calendar__day--active': day.isSelected,
+          'kb-calendar__day--active': day.isSelected || day.isMarked,
+          'kb-calendar__day--in-range': day.inRange,
+          'kb-calendar__day--range-end': day.isRangeEnd,
         }"
         type="button"
         @click="selectDay(day)"
