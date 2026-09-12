@@ -11,7 +11,7 @@
 
 **一套自建的前端素材库与工程模板集**：Vue 3 组件库 + 36 个完整页面模块 + 46 套多风格主题 + 通用工具函数（含 HTTP 请求层）+ 可复用的参考后端 + 7 种项目脚手架模板 + DevOps 资产，全部零运行时依赖、CSS 变量驱动。
 
-> 📦 组件库已发布到 npm：[`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)（`npm i kb-ui-vue`）。`@kb/utils`、`@kb/api` 与脚手架包尚未发布（开发调试请使用 `file:` 链接或 workspace）。
+> 📦 组件库已发布到 npm：[`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)（`npm i kb-ui-vue`）。`@kb/utils`、`@kb/api` 与脚手架包尚未发布（开发调试请使用 `file:` 链接或 workspace）——它们已加入 `.changeset/config.json` 的 `ignore`，待 `@kb` 作用域归属确认、`create-kb` 包名冲突解决后再发。
 
 ---
 
@@ -94,9 +94,14 @@ pnpm start:full    # 再额外拉起本地后端 @kb/api(:8082)，playground 的
 
 ### 用 create-kb 创建项目
 
+> ⚠️ npm 上的 `create-kb` 是**同名无关项目**（来源 `adamBoualleiguie/knowledge-base`，维护者 `kb-base`）。
+> 直接跑 `pnpm create kb my-app` 会拉到那个包，而不是本仓库的脚手架。
+> 脚手架尚未发布，请在本仓库内以本地方式使用：
+
 ```bash
-pnpm create kb my-app                 # 交互式选择模板
-pnpm create kb my-api --template api  # 直接指定模板（7 选 1）
+pnpm --filter create-kb build                       # 先构建 CLI
+node packages/create-kb/dist/index.js my-app        # 交互式选择模板
+node packages/create-kb/dist/index.js my-api --template api   # 直接指定模板（7 选 1）
 ```
 
 ### 修改后端源码后请同步模板
