@@ -50,6 +50,8 @@ import {
   KbSwitch,
   KbSelect,
   KbDatePicker,
+  KbCascader,
+  KbTransfer,
   KbTooltip,
   KbDialog,
   KbTable,
@@ -74,6 +76,7 @@ import {
   notification,
   message,
 } from 'kb-ui-vue'
+import type { CascaderOption } from 'kb-ui-vue'
 
 // 表单示例状态
 const inputValue = ref('')
@@ -270,6 +273,49 @@ const tableFixedColumns = [
   { prop: 'role', label: '角色', width: 140, fixed: 'right' as const },
 ]
 
+// Cascader / Transfer 示例状态
+const cascaderValue = ref<string[]>(['zj', 'hz'])
+const cascaderOptions = [
+  {
+    label: '浙江',
+    value: 'zj',
+    children: [
+      { label: '杭州', value: 'hz' },
+      { label: '宁波', value: 'nb' },
+    ],
+  },
+  {
+    label: '广东',
+    value: 'gd',
+    children: [{ label: '广州', value: 'gz' }],
+  },
+]
+// 异步加载：首次展开请求根级（node === null），之后每次点击按需拉子级
+function cascaderLazyLoad(
+  node: CascaderOption | null,
+  resolve: (children: CascaderOption[]) => void,
+) {
+  setTimeout(() => {
+    if (!node) {
+      resolve([
+        { label: '浙江', value: 'zj' },
+        { label: '江苏', value: 'js' },
+      ])
+      return
+    }
+    resolve([
+      { label: `${node.label}-子项 1`, value: `${node.value}-1` },
+      { label: `${node.label}-子项 2`, value: `${node.value}-2` },
+    ])
+  }, 400)
+}
+
+const transferValue = ref<string[]>(['k1'])
+const transferData = Array.from({ length: 24 }, (_, i) => ({
+  key: `k${i + 1}`,
+  label: `候选项目 ${i + 1}`,
+}))
+
 // Tree 示例状态（虚拟滚动 / 拖拽排序）
 const treeData = [
   { label: '前端', children: [{ label: 'Vue' }, { label: 'React' }] },
@@ -396,6 +442,17 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
         <KbSelect v-model="selectValue" :options="selectOptions" placeholder="请选择水果" />
         <span class="hint">已选：{{ selectValue || '（未选择）' }}</span>
       </KbSpace>
+
+      <h3>Cascader · 基础 / 异步加载</h3>
+      <KbSpace wrap align="center">
+        <KbCascader v-model="cascaderValue" :options="cascaderOptions" clearable />
+        <KbCascader lazy :options="[]" :lazy-load="cascaderLazyLoad" placeholder="点击按需加载" />
+      </KbSpace>
+      <p class="hint">已选路径：{{ cascaderValue.join(' / ') || '（未选择）' }}</p>
+
+      <h3>Transfer · 搜索 + 分页</h3>
+      <KbTransfer v-model="transferValue" :data="transferData" filterable :page-size="6" />
+      <p class="hint">已选 {{ transferValue.length }} 项：{{ transferValue.join('、') || '（无）' }}</p>
 
       <h3>DatePicker · 单日期 / 范围 / 多选</h3>
       <KbSpace wrap align="center">
