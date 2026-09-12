@@ -142,4 +142,17 @@ describe('KbTable', () => {
     expect(allInput.indeterminate).toBe(false)
     expect(allInput.checked).toBe(true)
   })
+
+  it('传入 total 开启服务端分页：data 即当前页，组件不再二次切片', () => {
+    // 模拟接口返回的第 5 页数据（共 46 条，每页 10 条）
+    const pageRows = Array.from({ length: 10 }, (_, i) => ({ name: `p5-${i}`, age: i }))
+    const wrapper = mount(KbTable, {
+      props: { data: pageRows, columns, pageSize: 10, total: 46, currentPage: 5 },
+    })
+    // 若按 data.length(=10) 做客户端切片，第 5 页会切空
+    expect(wrapper.findAll('tbody tr')).toHaveLength(10)
+    expect(wrapper.text()).toContain('p5-0')
+    // 分页器按 total 计算总页数
+    expect(wrapper.find('.kb-pagination').exists()).toBe(true)
+  })
 })

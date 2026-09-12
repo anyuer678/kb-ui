@@ -30,6 +30,8 @@ export interface TableProps {
   pageSize?: number
   /** 分页：当前页（1-based） */
   currentPage?: number
+  /** 分页：总条数；传入即视为服务端分页——data 只放当前页数据，组件不再二次切片 */
+  total?: number
   /** 是否显示行选择列 */
   selection?: boolean
   /** 已选行的 key，配合 v-model:selectedKeys */
@@ -45,6 +47,7 @@ const props = withDefaults(defineProps<TableProps>(), {
   rowKey: undefined,
   pageSize: 0,
   currentPage: 1,
+  total: undefined,
   selection: false,
   selectedKeys: () => [],
   emptyText: '暂无数据',
@@ -111,15 +114,21 @@ const keyedRows = computed(() =>
   sortedData.value.map((row, index) => ({ row, index, key: keyOf(row, index) })),
 )
 
+/** 服务端分页：传入 total 后 data 即为当前页数据，组件不再二次切片 */
+const serverSide = computed(() => props.total !== undefined)
+
+const totalCount = computed(() => props.total ?? keyedRows.value.length)
+
 const totalPages = computed(() =>
-  props.pageSize > 0 ? Math.max(1, Math.ceil(keyedRows.value.length / props.pageSize)) : 1,
+  props.pageSize > 0 ? Math.max(1, Math.ceil(totalCount.value / props.pageSize)) : 1,
 )
 
 /** 数据变少时 currentPage 可能越界，按最后一页展示，避免空白页 */
 const safePage = computed(() => Math.min(Math.max(1, props.currentPage), totalPages.value))
 
 const pageRows = computed(() => {
-  if (props.pageSize <= 0) return keyedRows.value
+  // 服务端分页时 data 已经是当前页，直接使用
+  if (serverSide.value || props.pageSize <= 0) return keyedRows.value
   const start = (safePage.value - 1) * props.pageSize
   return keyedRows.value.slice(start, start + props.pageSize)
 })
@@ -294,7 +303,7 @@ const selectionCellStyle = { width: `${SELECTION_WIDTH}px`, left: '0px' }
     </table>
     <div v-if="pageSize > 0 && totalPages > 1" class="kb-table__pagination">
       <KbPagination
-        :total="data.length"
+        :total="totalCount"
         :page-size="pageSize"
         :current-page="safePage"
         @update:current-page="emit('update:currentPage', $event)"
