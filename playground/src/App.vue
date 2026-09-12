@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import LoginModule from './modules/LoginModule.vue'
 import DashboardModule from './modules/DashboardModule.vue'
 import ListModule from './modules/ListModule.vue'
@@ -77,6 +77,8 @@ import {
   message,
 } from 'kb-ui-vue'
 import type { CascaderOption } from 'kb-ui-vue'
+import { fetchRegionTree, fetchRegions, fetchUsers } from './api'
+import type { ApiUser, RegionNode } from './api'
 
 // 表单示例状态
 const inputValue = ref('')
@@ -333,6 +335,98 @@ function onTreeDrop(payload: { dragNode: { label: string }; dropNode: { label: s
   treeLastDrop.value = `${payload.dragNode.label} → ${payload.dropNode.label}（${payload.position}）`
 }
 
+// ===== 真实接口演示（@kb/api，开发态经 Vite 代理到 127.0.0.1:8082）=====
+const serverKeyword = ref('')
+const serverPage = ref(1)
+const serverSortProp = ref('')
+const serverSortOrder = ref<'asc' | 'desc' | null>(null)
+const serverUsers = ref<ApiUser[]>([])
+const serverTotal = ref(0)
+const serverLoading = ref(false)
+const serverError = ref('')
+const SERVER_PAGE_SIZE = 8
+
+const serverColumns = [
+  { prop: 'id', label: 'ID', width: 70 },
+  { prop: 'name', label: '姓名', width: 110, sortable: 'custom' as const },
+  { prop: 'company', label: '公司', width: 140 },
+  { prop: 'city', label: '城市', width: 100 },
+  { prop: 'role', label: '角色', width: 100 },
+  { prop: 'score', label: '评分（可排序）', width: 140, sortable: 'custom' as const },
+]
+
+async function loadUsers() {
+  serverLoading.value = true
+  serverError.value = ''
+  try {
+    const result = await fetchUsers({
+      page: serverPage.value,
+      pageSize: SERVER_PAGE_SIZE,
+      keyword: serverKeyword.value,
+      sortBy: serverSortProp.value || null,
+      order: serverSortOrder.value ?? 'asc',
+    })
+    serverUsers.value = result.list
+    serverTotal.value = result.total
+  } catch (error) {
+    serverError.value = error instanceof Error ? error.message : String(error)
+    serverUsers.value = []
+    serverTotal.value = 0
+  } finally {
+    serverLoading.value = false
+  }
+}
+
+/** Table sortable:'custom' —— 把排序交给服务端，回到第 1 页重新取数 */
+function onServerSort(prop: string, order: 'asc' | 'desc' | null) {
+  serverSortProp.value = order ? prop : ''
+  serverSortOrder.value = order
+  serverPage.value = 1
+  void loadUsers()
+}
+
+function onServerSearch() {
+  serverPage.value = 1
+  void loadUsers()
+}
+
+function onServerPageChange(page: number) {
+  serverPage.value = page
+  void loadUsers()
+}
+
+/** Cascader 远程懒加载：点一次拉一级 */
+function remoteCascaderLoad(
+  node: CascaderOption | null,
+  resolve: (children: CascaderOption[]) => void,
+) {
+  fetchRegions(node ? String(node.value) : null)
+    .then((result) => {
+      resolve(
+        result.list.map((item) => ({ label: item.label, value: item.value, leaf: item.leaf })),
+      )
+    })
+    .catch(() => resolve([]))
+}
+
+/** Tree 远程数据：一次性拉 440 节点完整树，配合虚拟滚动 */
+const remoteTreeData = ref<RegionNode[]>([])
+const remoteTreeError = ref('')
+async function loadRemoteTree() {
+  remoteTreeError.value = ''
+  try {
+    const result = await fetchRegionTree()
+    remoteTreeData.value = result.list
+  } catch (error) {
+    remoteTreeError.value = error instanceof Error ? error.message : String(error)
+  }
+}
+
+onMounted(() => {
+  void loadUsers()
+  void loadRemoteTree()
+})
+
 const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-left', 'arrow-right', 'search', 'menu', 'loading', 'chevron-down']
 </script>
 
@@ -551,6 +645,59 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
       <h3>Tree · 拖拽排序（支持 before / after / inner 三种落点）</h3>
       <KbTree :data="treeDragData" draggable @drop="onTreeDrop" />
       <p class="hint">最近落点：{{ treeLastDrop || '（拖动节点试试）' }}</p>
+    </section>
+
+    <!-- 真实接口（@kb/api） -->
+    <section class="block">
+      <h2>真实接口 · @kb/api</h2>
+      <KbDivider />
+      <p class="hint">
+        以下三个示例走真实 HTTP：先跑 <code>pnpm api</code> 起服务（默认 127.0.0.1:8082），
+        开发态由 Vite 把 <code>/api</code> 代理过去。
+      </p>
+
+      <h3>Table · 服务端分页 + 排序 + 搜索（500 条用户）</h3>
+      <KbSpace align="center" wrap>
+        <KbInput
+          v-model="serverKeyword"
+          placeholder="搜索姓名 / 公司 / 城市 / 邮箱"
+          clearable
+          style="width: 280px"
+          @keyup.enter="onServerSearch"
+        />
+        <KbButton type="primary" :disabled="serverLoading" @click="onServerSearch">
+          {{ serverLoading ? '查询中…' : '查询' }}
+        </KbButton>
+        <span class="hint">共 {{ serverTotal }} 条</span>
+      </KbSpace>
+      <KbTable
+        :data="serverUsers"
+        :columns="serverColumns"
+        :page-size="SERVER_PAGE_SIZE"
+        :total="serverTotal"
+        :current-page="serverPage"
+        row-key="id"
+        stripe
+        border
+        @sort-change="onServerSort"
+        @update:current-page="onServerPageChange"
+      />
+      <p v-if="serverError" class="hint hint--error">接口未启动？{{ serverError }}</p>
+      <p v-else class="hint">当前第 {{ serverPage }} 页，共 {{ serverTotal }} 条</p>
+
+      <h3>Cascader · 远程懒加载（/api/regions）</h3>
+      <KbCascader
+        lazy
+        :options="[]"
+        :lazy-load="remoteCascaderLoad"
+        placeholder="点击按需加载远程数据"
+        clearable
+        style="width: 280px"
+      />
+
+      <h3>Tree · 远程树数据（/api/regions/tree，440 节点 + 虚拟滚动）</h3>
+      <KbTree v-if="remoteTreeData.length" :data="remoteTreeData" :height="240" :item-height="30" />
+      <p v-else class="hint">{{ remoteTreeError || '加载中…' }}</p>
     </section>
 
     <!-- 展示组件 -->
@@ -833,6 +980,17 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
 .hint {
   color: var(--kb-color-text-3);
   font-size: var(--kb-font-size-sm);
+}
+
+.hint--error {
+  color: var(--kb-color-danger, #dc2626);
+}
+
+.hint code {
+  padding: 1px 5px;
+  border-radius: var(--kb-radius-sm);
+  background: color-mix(in srgb, var(--kb-color-primary) 12%, transparent);
+  font-family: var(--kb-font-family-mono, monospace);
 }
 
 .grid-box {

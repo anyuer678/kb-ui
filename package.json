@@ -9,6 +9,8 @@
   },
   "scripts": {
     "start": "concurrently -k -n playground,docs -c cyan,magenta \"pnpm dev\" \"pnpm docs:dev\"",
+    "start:full": "concurrently -k -n api,playground,docs -c green,cyan,magenta \"pnpm api\" \"pnpm dev\" \"pnpm docs:dev\"",
+    "api": "pnpm --filter @kb/api dev",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
@@ -19,6 +21,8 @@
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
+    "sync:api-template": "node scripts/sync-api-template.mjs",
+    "sync:api-template:check": "node scripts/sync-api-template.mjs --check",
     "e2e": "node scripts/e2e.mjs",
     "visual:test": "playwright test --config packages/ui/visual/playwright.config.ts",
     "visual:update": "playwright test --config packages/ui/visual/playwright.config.ts --update-snapshots"
