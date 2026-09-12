@@ -3,15 +3,26 @@
   color: var(--kb-color-text-1);
 }
 
+.kb-tree__scroll {
+  overflow: auto;
+}
+
+.kb-tree__inner {
+  position: relative;
+}
+
 .kb-tree__row {
   display: flex;
   align-items: center;
   padding: 4px 0;
   border-radius: var(--kb-radius-sm);
+  cursor: default;
+  box-sizing: border-box;
 }
 
-.kb-tree__row:hover {
-  background: var(--kb-color-bg-elevated);
+.kb-tree__indent {
+  flex-shrink: 0;
+  height: 100%;
 }
 
 .kb-tree__toggle {
@@ -45,6 +56,34 @@
   color: var(--kb-color-primary);
 }
 
-.kb-tree__children {
-  margin-left: var(--kb-space-4);
+.kb-tree__row--selected {
+  background: color-mix(in srgb, var(--kb-color-primary) 8%, transparent);
+}
+
+.kb-tree__row--disabled,
+.kb-tree__row--disabled .kb-tree__label {
+  color: var(--kb-color-text-3);
+  cursor: not-allowed;
+}
+
+.kb-tree__row--dragover {
+  outline: 1px dashed color-mix(in srgb, var(--kb-color-primary) 50%, transparent);
+  outline-offset: -1px;
+}
+
+.kb-tree__row:hover {
+  background: var(--kb-color-bg-elevated);
+}
+
+.kb-tree__row--dragover.kb-tree__row--drop-before {
+  box-shadow: inset 0 2px 0 0 var(--kb-color-primary);
+}
+
+.kb-tree__row--dragover.kb-tree__row--drop-after {
+  box-shadow: inset 0 -2px 0 0 var(--kb-color-primary);
+}
+
+.kb-tree__row--dragover.kb-tree__row--drop-inner {
+  background: color-mix(in srgb, var(--kb-color-primary) 16%, transparent);
+  box-shadow: none;
 }

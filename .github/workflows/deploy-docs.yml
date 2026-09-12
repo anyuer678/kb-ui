@@ -35,7 +35,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build UI library (docs depends on dist styles)
-        run: pnpm --filter @kb/ui build
+        run: pnpm --filter kb-ui-vue build
 
       - name: Re-link workspace packages
         run: pnpm install --no-frozen-lockfile

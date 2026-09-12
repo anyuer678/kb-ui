@@ -3,9 +3,9 @@
 ## 安装
 
 ```bash
-pnpm add @kb/ui
+pnpm add kb-ui-vue
 # 或
-npm install @kb/ui
+npm install kb-ui-vue
 ```
 
 ## 引入方式

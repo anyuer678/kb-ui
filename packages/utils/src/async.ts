@@ -31,14 +31,22 @@ export function pLimit(limit: number): {
   return run as typeof run & { readonly activeCount: number; readonly pendingCount: number }
 }
 
-/** 自动重试：fn 失败时按指数退避重试 */
-export async function retry<T>(fn: () => Promise<T>, { times = 3, baseDelay = 200 }: { times?: number; baseDelay?: number } = {}): Promise<T> {
+/** 自动重试：fn 失败时按指数退避重试；可用 shouldRetry 判定哪些错误不该重试（如 4xx） */
+export async function retry<T>(
+  fn: () => Promise<T>,
+  {
+    times = 3,
+    baseDelay = 200,
+    shouldRetry,
+  }: { times?: number; baseDelay?: number; shouldRetry?: (error: unknown) => boolean } = {},
+): Promise<T> {
   let lastError: unknown
   for (let i = 0; i < times; i++) {
     try {
       return await fn()
     } catch (error) {
       lastError = error
+      if (shouldRetry && !shouldRetry(error)) throw error
       if (i < times - 1) await new Promise((r) => setTimeout(r, baseDelay * 2 ** i))
     }
   }
