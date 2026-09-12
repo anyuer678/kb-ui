@@ -110,3 +110,16 @@ pnpm --filter @kb/api test
 ```
 
 用 supertest 直接打真实 HTTP，覆盖分页、排序、搜索、树懒加载、校验失败、404 与 CORS 预检。
+
+## 发布状态
+
+`@kb/api` **尚未发布到 npm**，当前被放进 `.changeset/config.json` 的 `ignore` 列表，因此 changesets 不会给它升版本、也不会尝试发布。
+
+阻塞原因是作用域归属未确认：`@kb/*` 在 npm 上还没有任何已发布的包，无法据此判断该 scope 是否归本账号所有（账号 token 只有发布权限，`npm org ls kb` 会 403）。
+
+处理方式：
+
+- 确认 `@kb` scope 归自己所有后，把它从 `ignore` 里移除，下一个 release 即可随 changesets 正常发布；
+- 如果 scope 不归自己，需要换成用户名对应的 scope（例如 `@yuer678/api`），届时本项目里所有 `import ... from '@kb/api'`（docs、playground、create-kb 的 api / fullstack 模板）以及同步脚本都要一并替换。
+
+上面两点同样适用于 `@kb/utils`。
