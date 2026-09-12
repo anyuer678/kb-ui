@@ -54,6 +54,7 @@ import {
   KbDialog,
   KbTable,
   KbBadge,
+  KbTree,
   KbAvatar,
   KbProgress,
   KbCard,
@@ -269,6 +270,23 @@ const tableFixedColumns = [
   { prop: 'role', label: '角色', width: 140, fixed: 'right' as const },
 ]
 
+// Tree 示例状态（虚拟滚动 / 拖拽排序）
+const treeData = [
+  { label: '前端', children: [{ label: 'Vue' }, { label: 'React' }] },
+  { label: '后端', children: [{ label: 'Node' }, { label: 'Go' }] },
+  { label: '设计', children: [{ label: 'Figma' }] },
+]
+const treeHugeData = Array.from({ length: 1000 }, (_, i) => ({ label: `节点 ${i + 1}` }))
+const treeDragData = ref([
+  { label: '前端', children: [{ label: 'Vue' }, { label: 'React' }] },
+  { label: '后端', children: [{ label: 'Node' }] },
+  { label: '设计' },
+])
+const treeLastDrop = ref('')
+function onTreeDrop(payload: { dragNode: { label: string }; dropNode: { label: string }; position: string }) {
+  treeLastDrop.value = `${payload.dragNode.label} → ${payload.dropNode.label}（${payload.position}）`
+}
+
 const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-left', 'arrow-right', 'search', 'menu', 'loading', 'chevron-down']
 </script>
 
@@ -466,6 +484,16 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
 
       <h3>Table · 空状态（size=small）</h3>
       <KbTable :data="[]" :columns="tableColumns" size="small" empty-text="暂无数据" border />
+
+      <h3>Tree · 基础（展开 / 折叠 / 选中）</h3>
+      <KbTree :data="treeData" default-expand-all />
+
+      <h3>Tree · 虚拟滚动（1000 节点，只渲染可视区）</h3>
+      <KbTree :data="treeHugeData" :height="240" />
+
+      <h3>Tree · 拖拽排序（支持 before / after / inner 三种落点）</h3>
+      <KbTree :data="treeDragData" draggable @drop="onTreeDrop" />
+      <p class="hint">最近落点：{{ treeLastDrop || '（拖动节点试试）' }}</p>
     </section>
 
     <!-- 展示组件 -->
