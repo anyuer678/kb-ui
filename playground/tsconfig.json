@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "types": ["vite/client"],
     "paths": {
-      "@kb/utils": ["../packages/utils/src/index.ts"]
+      "@kb/utils": ["../packages/utils/src/index.ts"],
+      "@kb/api": ["../packages/api/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "vite.config.ts"]
