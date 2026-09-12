@@ -146,8 +146,10 @@ pnpm sync:api-template:check  # 校验模板与 packages/api 是否一致
 ## 版本与发布
 
 - 组件库与脚手架通过 [changesets](https://github.com/changesets/changesets) 管理版本与 changelog
-- 流程：`pnpm changeset` → 推代码 → CI 跑校验 → 打 tag / 合并后由 `release.yml` 发布
-- 首次发布前需在 GitHub Secrets 配置 `NPM_TOKEN`；未配置时发布任务会安全跳过
+- 流程：`pnpm changeset` → 推代码 → CI 跑校验 → 合并 → **手动**触发 `release.yml`（选 `dry_run` 可先演练）
+- 发版**不会**随合并自动进行，避免不可逆的外部动作被代码合并顺带触发
+- `NPM_TOKEN` 必须是带 publish 权限的 npm Automation token；未配置时发布任务会安全跳过
+- 哪些包参与发布由 `.changeset/config.json` 的 `ignore` 决定，完整清单、排障与发布后验证见 [`internal-docs/releasing.md`](internal-docs/releasing.md)
 
 ## 文档
 
