@@ -237,6 +237,32 @@ const tableColumns = [
   { prop: 'city', label: '城市' },
 ]
 
+// Table 进阶示例状态（排序 / 分页 / 固定列 / 行选择）
+const tablePage = ref(1)
+const tableSelected = ref<(string | number)[]>([])
+const tableBigData = Array.from({ length: 46 }, (_, i) => ({
+  id: i + 1,
+  name: `用户 ${i + 1}`,
+  company: ['星尘科技', '云图数据', '南栀软件', '澜川网络'][i % 4],
+  city: ['北京', '上海', '广州', '成都', '杭州'][i % 5],
+  email: `user${i + 1}@example.com`,
+  role: ['管理员', '编辑', '访客'][i % 3],
+  score: (i * 37) % 100,
+}))
+const tableSortColumns = [
+  { prop: 'name', label: '姓名', width: 140 },
+  { prop: 'score', label: '评分（可排序）', width: 140, sortable: true },
+  { prop: 'city', label: '城市', width: 120 },
+]
+const tableFixedColumns = [
+  { prop: 'id', label: 'ID', width: 80, fixed: 'left' as const },
+  { prop: 'name', label: '姓名', width: 120, fixed: 'left' as const },
+  { prop: 'company', label: '公司', width: 300 },
+  { prop: 'email', label: '邮箱', width: 300 },
+  { prop: 'city', label: '城市', width: 180 },
+  { prop: 'role', label: '角色', width: 140, fixed: 'right' as const },
+]
+
 const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-left', 'arrow-right', 'search', 'menu', 'loading', 'chevron-down']
 </script>
 
@@ -392,8 +418,36 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
       <h2>数据展示</h2>
       <KbDivider />
 
-      <h3>Table</h3>
+      <h3>Table · 基础</h3>
       <KbTable :data="tableData" :columns="tableColumns" stripe border />
+
+      <h3>Table · 排序 + 分页</h3>
+      <KbTable
+        v-model:current-page="tablePage"
+        :data="tableBigData"
+        :columns="tableSortColumns"
+        :page-size="10"
+        stripe
+        border
+      />
+      <p class="hint">当前第 {{ tablePage }} 页</p>
+
+      <h3>Table · 固定列（左右固定，列宽超容器时横向滚动）</h3>
+      <KbTable :data="tableBigData.slice(0, 6)" :columns="tableFixedColumns" border />
+
+      <h3>Table · 行选择（表头全选 / 半选）</h3>
+      <KbTable
+        v-model:selected-keys="tableSelected"
+        :data="tableData"
+        :columns="tableColumns"
+        selection
+        row-key="name"
+        border
+      />
+      <p class="hint">已选：{{ tableSelected.join('、') || '（无）' }}</p>
+
+      <h3>Table · 空状态（size=small）</h3>
+      <KbTable :data="[]" :columns="tableColumns" size="small" empty-text="暂无数据" border />
     </section>
 
     <!-- 展示组件 -->
