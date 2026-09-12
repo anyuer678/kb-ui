@@ -64,6 +64,15 @@ jobs:
         if: inputs.dry_run
         run: echo "dry_run=true，未执行 version / publish。"
 
+      # 提前校验 token：无发布权限时 npm registry 对 PUT 只回一个 404，
+      # 报在 publish 环节很难定位，whoami 能直接暴露"token 无效/不对账号"
+      - name: Verify npm auth
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run
+        run: |
+          echo "npm 账号：$(npm whoami --registry=https://registry.npmjs.org)"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Version packages
         if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true'
         run: pnpm changeset version
@@ -73,3 +82,22 @@ jobs:
         run: pnpm changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # version 只改工作区文件，不回写仓库的话 npm 上的版本会和仓库里的
+      # package.json / CHANGELOG 永久错位，下一次 release 还会重复发同一个版本
+      - name: Create git tags
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true'
+        run: pnpm changeset tag
+
+      - name: Commit and push release state
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "无版本变更需要回写"
+            exit 0
+          fi
+          git add -A
+          git commit -m "release: version packages"
+          git push --follow-tags origin HEAD:${GITHUB_REF_NAME}
