@@ -26,6 +26,7 @@ export const zhCN: ProjectLocale = {
   image: {
     loadFailed: '加载失败',
     preview: '预览图片',
+    previewDialog: '图片预览',
     zoomIn: '放大',
     zoomOut: '缩小',
     rotate: '旋转',
@@ -38,9 +39,23 @@ export const zhCN: ProjectLocale = {
     finish: '结束引导',
     skip: '跳过',
     close: '关闭引导',
+    label: '引导',
+  },
+  splitter: {
+    label: '调整面板大小',
+  },
+  contextMenu: {
+    label: '右键菜单',
   },
   timePicker: {
     placeholder: '请选择时间',
+    label: '时间选择',
+    hour: '时',
+    minute: '分',
+    second: '秒',
+  },
+  treeSelect: {
+    label: '树形选择',
   },
   empty: {
     description: '暂无数据',

@@ -39,6 +39,9 @@ const emit = defineEmits<{
 
 const { t } = useLocale()
 
+/** 下拉树的稳定 id，供选择框的 aria-controls 引用（ARIA 1.2 要求 combobox 必须带该属性） */
+const listId = `kb-treeselect-${Math.random().toString(36).slice(2, 8)}`
+
 const open = ref(false)
 const rootEl = ref<HTMLDivElement | null>(null)
 /** 展开的节点 value 集合 */
@@ -156,6 +159,8 @@ function handleKeydown(event: KeyboardEvent): void {
       role="combobox"
       tabindex="0"
       :aria-expanded="open"
+      :aria-label="t('treeSelect.label')"
+      :aria-controls="listId"
       @click="!disabled && (open = !open)"
       @keydown="handleKeydown"
     >
@@ -168,7 +173,7 @@ function handleKeydown(event: KeyboardEvent): void {
       <span class="kb-treeselect__arrow">▾</span>
     </div>
 
-    <div v-if="open" class="kb-treeselect__panel" role="tree">
+    <div v-if="open" :id="listId" class="kb-treeselect__panel" role="tree" :aria-label="t('treeSelect.label')">
       <div v-if="!flatNodes.length" class="kb-treeselect__empty">{{ t('common.noMatch') }}</div>
       <div
         v-for="item in flatNodes"

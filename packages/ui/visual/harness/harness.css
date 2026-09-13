@@ -1,0 +1,56 @@
+/*
+ * 视觉取样台样式：唯一目标是「确定性」——
+ * 固定画布、固定背景、关闭动画，确保同一份代码每次截图逐像素一致。
+ */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--kb-color-bg);
+  color: var(--kb-color-text-1);
+  font-family: var(--kb-font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 关掉一切动画/过渡：视觉基线不应对「动画进行到哪一帧」敏感 */
+*,
+*::before,
+*::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+/* 固定画布尺寸，与 playwright 的 viewport 保持一致（800×520） */
+.visual-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 800px;
+  height: 520px;
+  padding: 24px;
+  background: var(--kb-color-bg);
+}
+
+.specimen-note {
+  color: var(--kb-color-text-3);
+  font-size: var(--kb-font-size-sm);
+}
+
+.specimen-pane {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border-radius: var(--kb-radius-sm);
+  background: color-mix(in srgb, var(--kb-color-primary) 12%, transparent);
+  color: var(--kb-color-primary);
+  font-size: var(--kb-font-size-sm);
+}

@@ -25,6 +25,7 @@ export const enUS: ProjectLocale = {
   image: {
     loadFailed: 'Load failed',
     preview: 'Preview image',
+    previewDialog: 'Image preview',
     zoomIn: 'Zoom in',
     zoomOut: 'Zoom out',
     rotate: 'Rotate',
@@ -37,9 +38,23 @@ export const enUS: ProjectLocale = {
     finish: 'Finish',
     skip: 'Skip',
     close: 'Close tour',
+    label: 'Tour',
+  },
+  splitter: {
+    label: 'Resize panel',
+  },
+  contextMenu: {
+    label: 'Context menu',
   },
   timePicker: {
     placeholder: 'Please select time',
+    label: 'Time picker',
+    hour: 'Hour',
+    minute: 'Minute',
+    second: 'Second',
+  },
+  treeSelect: {
+    label: 'Tree select',
   },
   empty: {
     description: 'No data',
