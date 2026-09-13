@@ -1,0 +1,37 @@
+.kb-qrcode {
+  position: relative;
+  display: inline-flex;
+  line-height: 0;
+  background: transparent;
+}
+
+.kb-qrcode__svg {
+  display: block;
+}
+
+.kb-qrcode__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background: var(--kb-color-bg, #fff);
+  border-radius: var(--kb-radius-sm, 4px);
+}
+
+.kb-qrcode--empty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--kb-color-border, #d9d9d9);
+  border-radius: var(--kb-radius-md, 6px);
+  color: var(--kb-color-text-3, #999);
+  font-size: var(--kb-font-size-sm, 12px);
+}
+
+.kb-qrcode__placeholder {
+  line-height: 1.4;
+}

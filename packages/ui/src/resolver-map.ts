@@ -78,6 +78,11 @@ const SAME_NAME_ENTRIES = [
   'TimePicker',
   'Tour',
   'TreeSelect',
+  'FloatButton',
+  'Layout',
+  'Mentions',
+  'QRCode',
+  'VirtualList',
 ] as const
 
 /** 导出名与组件目录名不一致：导出名 → 目录名（即样式文件名） */

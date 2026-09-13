@@ -87,6 +87,13 @@ export interface TreeSelectLocale {
   label: string
 }
 
+export interface LayoutLocale {
+  /** 折叠触发器在展开状态下的无障碍标注 */
+  collapse: string
+  /** 折叠触发器在收起状态下的无障碍标注 */
+  expand: string
+}
+
 export interface EmptyLocale {
   /** 空状态描述 */
   description: string
@@ -226,6 +233,7 @@ export interface ProjectLocale {
   contextMenu: ContextMenuLocale
   timePicker: TimePickerLocale
   treeSelect: TreeSelectLocale
+  layout: LayoutLocale
   list: ListLocale
   table: TableLocale
   cascader: CascaderLocale
@@ -276,6 +284,8 @@ export type LocalePath =
   | 'timePicker.minute'
   | 'timePicker.second'
   | 'treeSelect.label'
+  | 'layout.collapse'
+  | 'layout.expand'
   | 'empty.description'
   | 'list.empty'
   | 'table.emptyText'
