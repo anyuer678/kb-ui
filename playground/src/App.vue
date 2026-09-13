@@ -1194,7 +1194,7 @@ const virtualItems = Array.from({ length: 1000 }, (_, i) => `列表项 ${i + 1}`
       </KbLayout>
 
       <h3>FloatButton 悬浮按钮 / FloatButtonGroup</h3>
-      <KbFloatButtonGroup shape="circle" direction="column" style="margin: 8px 0">
+      <KbFloatButtonGroup shape="circle" direction="top" style="margin: 8px 0">
         <KbFloatButton type="primary" round>＋</KbFloatButton>
         <KbFloatButton round>？</KbFloatButton>
       </KbFloatButtonGroup>
