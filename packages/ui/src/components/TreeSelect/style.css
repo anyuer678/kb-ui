@@ -1,0 +1,121 @@
+.kb-treeselect {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.kb-treeselect__control {
+  display: flex;
+  gap: var(--kb-space-1);
+  align-items: center;
+  height: 34px;
+  padding: 0 var(--kb-space-3);
+  font-size: var(--kb-font-size-md);
+  cursor: pointer;
+  background: var(--kb-color-bg);
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  transition: border-color var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-treeselect__control:hover {
+  border-color: var(--kb-color-text-3);
+}
+
+.kb-treeselect__control:focus-within,
+.kb-treeselect__control:focus {
+  border-color: var(--kb-color-primary);
+  outline: none;
+}
+
+.kb-treeselect__control--disabled {
+  cursor: not-allowed;
+  background: var(--kb-color-bg-elevated);
+}
+
+.kb-treeselect__text {
+  flex: 1;
+  overflow: hidden;
+  color: var(--kb-color-text-1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kb-treeselect__text--placeholder {
+  color: var(--kb-color-text-3);
+}
+
+.kb-treeselect__clear {
+  display: flex;
+  color: var(--kb-color-text-3);
+}
+
+.kb-treeselect__clear:hover {
+  color: var(--kb-color-text-2);
+}
+
+.kb-treeselect__arrow {
+  color: var(--kb-color-text-3);
+}
+
+.kb-treeselect__panel {
+  position: absolute;
+  z-index: var(--kb-z-index-modal);
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 260px;
+  margin-top: var(--kb-space-1);
+  padding: var(--kb-space-1) 0;
+  overflow-y: auto;
+  background: var(--kb-color-bg);
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  box-shadow: var(--kb-shadow-2);
+}
+
+.kb-treeselect__node {
+  display: flex;
+  gap: var(--kb-space-1);
+  align-items: center;
+  padding: var(--kb-space-2) var(--kb-space-3);
+  font-size: var(--kb-font-size-md);
+  color: var(--kb-color-text-1);
+  cursor: pointer;
+}
+
+.kb-treeselect__node:hover {
+  background: var(--kb-color-bg-elevated);
+}
+
+.kb-treeselect__node--selected {
+  color: var(--kb-color-primary);
+}
+
+.kb-treeselect__node--disabled {
+  color: var(--kb-color-text-3);
+  cursor: not-allowed;
+}
+
+.kb-treeselect__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  color: var(--kb-color-text-3);
+  transition: transform var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-treeselect__toggle--expanded {
+  transform: rotate(90deg);
+}
+
+.kb-treeselect__toggle--leaf {
+  visibility: hidden;
+}
+
+.kb-treeselect__empty {
+  padding: var(--kb-space-3);
+  font-size: var(--kb-font-size-sm);
+  color: var(--kb-color-text-3);
+  text-align: center;
+}

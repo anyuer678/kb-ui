@@ -1,0 +1,102 @@
+.kb-autocomplete {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.kb-autocomplete__control {
+  display: flex;
+  gap: var(--kb-space-1);
+  align-items: center;
+  width: 100%;
+  padding: 0 var(--kb-space-3);
+  background: var(--kb-color-bg);
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  transition: border-color var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-autocomplete__control:hover {
+  border-color: var(--kb-color-text-3);
+}
+
+.kb-autocomplete__control:focus-within {
+  border-color: var(--kb-color-primary);
+}
+
+.kb-autocomplete__control--small {
+  height: 28px;
+  font-size: var(--kb-font-size-sm);
+}
+
+.kb-autocomplete__control--medium {
+  height: 34px;
+  font-size: var(--kb-font-size-md);
+}
+
+.kb-autocomplete__control--large {
+  height: 40px;
+  font-size: var(--kb-font-size-lg);
+}
+
+.kb-autocomplete__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  color: var(--kb-color-text-1);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.kb-autocomplete__input:disabled {
+  color: var(--kb-color-text-3);
+  cursor: not-allowed;
+}
+
+.kb-autocomplete__clear {
+  display: flex;
+  color: var(--kb-color-text-3);
+  cursor: pointer;
+}
+
+.kb-autocomplete__clear:hover {
+  color: var(--kb-color-text-2);
+}
+
+.kb-autocomplete__panel {
+  position: absolute;
+  z-index: var(--kb-z-index-modal);
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 240px;
+  margin-top: var(--kb-space-1);
+  overflow-y: auto;
+  background: var(--kb-color-bg);
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  box-shadow: var(--kb-shadow-2);
+}
+
+.kb-autocomplete__option {
+  padding: var(--kb-space-2) var(--kb-space-3);
+  font-size: var(--kb-font-size-md);
+  color: var(--kb-color-text-1);
+  cursor: pointer;
+}
+
+.kb-autocomplete__option--active {
+  background: var(--kb-color-bg-elevated);
+}
+
+.kb-autocomplete__option--disabled {
+  color: var(--kb-color-text-3);
+  cursor: not-allowed;
+}
+
+.kb-autocomplete__empty {
+  padding: var(--kb-space-3);
+  font-size: var(--kb-font-size-sm);
+  color: var(--kb-color-text-3);
+  text-align: center;
+}

@@ -5,7 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff)](https://vitejs.dev/)
 [![pnpm](https://img.shields.io/badge/pnpm-10-f69220)](https://pnpm.io/)
-[![组件](https://img.shields.io/badge/组件-55+-10b981)](https://github.com/anyuer678/kb-ui)
+[![组件](https://img.shields.io/badge/组件-68-10b981)](https://github.com/anyuer678/kb-ui)
 [![主题](https://img.shields.io/badge/主题-46-8b5cf6)](https://github.com/anyuer678/kb-ui)
 [![模块模板](https://img.shields.io/badge/模块模板-36+-f59e0b)](https://github.com/anyuer678/kb-ui)
 
@@ -17,8 +17,11 @@
 
 ## 功能特性
 
-### 组件库（`kb-ui-vue`，55+ 组件）
-- **覆盖常用场景**：基础（Button/Icon/Tag/Space/Divider/Grid）、表单（Input/Select/Checkbox/Radio/Switch/Form/DatePicker/Upload/Tree/Cascader/Transfer…）、反馈（Dialog/Drawer/Message/Notification/Tooltip/Popover/Popconfirm…）、数据（Table/Calendar/Statistic/Descriptions/Timeline/Carousel…）
+### 组件库（`kb-ui-vue`，68 组件）
+- **覆盖常用场景**：基础（Button/Icon/Tag/Space/Divider/Grid）、表单（Input/Select/Checkbox/Radio/Switch/Form/DatePicker/TimePicker/AutoComplete/TreeSelect/Upload/Tree/Cascader/Transfer…）、反馈（Dialog/Drawer/Message/Notification/Tooltip/Popover/Popconfirm…）、数据（Table/Calendar/Statistic/Descriptions/Timeline/Carousel…）、图片（Image/ImagePreview）、滚动与浮层（Affix/BackTop/Anchor/Splitter/Tour/ContextMenu…）
+- **全局配置与国际化**：`ConfigProvider` 统一注入 `locale` / `size` / `zIndex` / `theme`；内置 `zh-CN` 与 `en-US` 语言包，运行时一行切换，含文案的组件已全部接入多语言
+- **按需引入**：`kb-ui-vue/resolver` 导出 `KbResolver`，配合 `unplugin-vue-components` 自动引入组件及其样式（自动处理 `Row/Col→Grid`、`FormItem→Form` 的样式复用）
+- **IDE 类型提示**：构建产出 `dist/global.d.ts`，模板中写 `<KbXxx>` 即可获得补全与类型检查
 - **函数式 API**：`message` / `notification` 命令式调用，开箱即用
 - **按需样式**：每个组件独立 `style.css`，构建产物 `dist/styles/*` 可单独引入
 - **零运行时依赖**：样式全部原生 CSS + 设计 token，无第三方样式框架
@@ -27,8 +30,16 @@
 
 | 深度 | 组件 |
 |------|------|
-| ✅ 基础 | Alert, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Collapse, ColorPicker, CountUp, Descriptions, Dialog, Divider, Drawer, Dropdown, Empty, Icon, Input, InputNumber, InputPassword, List, Loading, Message, Notification, Pagination, Popconfirm, Popover, Progress, Radio, Rate, Result, Search, Segmented, Skeleton, Slider, Space, Statistic, Steps, Switch, Tag, Textarea, Tooltip, Upload, Watermark |
-| 🔧 进阶 | Cascader（异步加载/清空）, DatePicker（单日期/范围/多选）, Form（校验+动态字段）, Grid（响应式布局）, Select（搜索+键盘导航）, Table（排序/分页/固定列/行选择/服务端分页）, Transfer（搜索/分页/全选）, Tree（虚拟滚动/拖拽排序）, Tabs, Timeline |
+| ✅ 基础 | Alert, Avatar, BackTop, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Collapse, ColorPicker, ConfigProvider, CountUp, Descriptions, Dialog, Divider, Drawer, Dropdown, Empty, Icon, Image, Input, InputNumber, InputPassword, List, Loading, Message, Notification, Pagination, Popconfirm, Popover, Progress, Radio, Rate, Result, Search, Segmented, Skeleton, Slider, Space, Statistic, Steps, Switch, Tag, Textarea, TimePicker, Tooltip, Upload, Watermark |
+| 🔧 进阶 | Affix（吸顶吸底，占位不跳动）, Anchor（滚动高亮导航）, AutoComplete（本地/远程建议）, Cascader（异步加载/清空）, ContextMenu（视口边界翻转）, DatePicker（单日期/范围/多选）, Form（校验+动态字段）, Grid（响应式布局）, ImagePreview（缩放/旋转/键盘切换）, Select（搜索+键盘导航）, Splitter（拖拽/键盘分栏）, Table（排序/分页/固定列/行选择/服务端分页）, Tabs, Timeline, Tour（分步引导）, Transfer（搜索/分页/全选）, Tree（虚拟滚动/拖拽排序）, TreeSelect（树形下拉/单选多选） |
+
+### 近期更新（68 组件 / 全局配置 / 按需引入）
+
+- **新增 11 个组件**：`AutoComplete`、`TreeSelect`、`TimePicker`（表单三件套）、`Image`、`ImagePreview`（图片预览）、`Affix`、`BackTop`、`Anchor`（滚动定位三件套）、`Splitter`、`Tour`、`ContextMenu`——每个都含独立 `style.css`、单元测试与文档页
+- **`ConfigProvider` + 国际化**：`locale` / `size` / `zIndex` / `theme` 统一注入；内置 `zh-CN`、`en-US` 语言包，`useLocale()` 返回响应式 `locale`，切换即时重渲染；Empty / List / Search / Popconfirm / Cascader / Calendar / Carousel / ColorPicker / InputPassword / Pagination / DatePicker / Table / Transfer / Upload / Dialog / Form 共 16 个组件完成文案国际化，主题同步到 `<html data-theme>`
+- **按需引入 + IDE 类型**：新增独立构建入口 `kb-ui-vue/resolver`（导出 `KbResolver`）与 `dist/global.d.ts`（70 条全局组件声明）
+- **文档**：新增 `guide/i18n.md`、`guide/on-demand.md`、`components/config-provider.md` 以及 11 个新组件文档页，侧边栏已挂载
+- **质量**：单测 427 例 / 70 个测试文件全绿，`vue-tsc --noEmit` 类型检查零错误，`vite build` + 样式 + 全局类型构建全部通过
 
 ### 主题系统（46 套）
 - **双维度切换**：12 套颜色主题（violet/teal/rose/ink/neon…）+ 36 套风格主题（圆润/扁平/渐变/玻璃/赛博/终端/水墨/商务/孟菲斯/波普/极简/粉彩/鎏金/丹青…）
@@ -76,7 +87,7 @@ CI（lint / typecheck / test / build / 模板一致性校验，见 `.github/work
 | 后端 | Express 5 + Zod 4（`@kb/api`） |
 | 构建 | Vite 8（lib mode）+ tsup |
 | 包管理 | pnpm 10 workspace monorepo |
-| 测试 | Vitest（300+ 例单测）+ Playwright（e2e） |
+| 测试 | Vitest（427 例单测）+ Playwright（e2e） |
 | 文档 | Vitepress 1.6 |
 | 版本管理 | changesets |
 
@@ -116,7 +127,7 @@ pnpm sync:api-template:check    # 只校验是否漂移（CI 会跑这一步）
 ```
 kb-ui/
 ├── packages/
-│   ├── ui/            # kb-ui-vue 组件库（55+ 组件）
+│   ├── ui/            # kb-ui-vue 组件库（68 组件）
 │   ├── utils/         # @kb/utils 工具函数库（含 HTTP 请求层）
 │   ├── api/           # @kb/api 参考后端（Express + Zod）
 │   ├── config/        # 共享工程配置（tsconfig/eslint/prettier/stylelint）
@@ -136,7 +147,7 @@ pnpm api              # 只起参考后端
 pnpm lint             # 全部包 lint
 pnpm typecheck        # 全部包类型检查
 pnpm test             # 全部包单元测试
-pnpm build            # 全部包构建（dist/styles 100 个样式文件）
+pnpm build            # 全部包构建（dist/styles 72 个样式文件）
 pnpm e2e              # 端到端测试（playground + docs）
 pnpm docs:build       # 构建文档站
 pnpm sync:api-template        # 同步 create-kb 后端模板

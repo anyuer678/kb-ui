@@ -2,8 +2,11 @@
 import { computed, ref } from 'vue'
 import { Checkbox as KbCheckbox } from '../Checkbox'
 import { Pagination as KbPagination } from '../Pagination'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbTable' })
+
+const { t } = useLocale()
 
 export interface TableColumn {
   prop: string
@@ -37,6 +40,7 @@ export interface TableProps {
   /** 已选行的 key，配合 v-model:selectedKeys */
   selectedKeys?: (string | number)[]
   /** 数据为空时的文案 */
+  /** 空数据文案，不传时取语言包中的 `table.emptyText` */
   emptyText?: string
 }
 
@@ -50,8 +54,11 @@ const props = withDefaults(defineProps<TableProps>(), {
   total: undefined,
   selection: false,
   selectedKeys: () => [],
-  emptyText: '暂无数据',
+  emptyText: '',
 })
+
+/** 显式传入优先，未传时回落到当前语言包 */
+const emptyLabel = computed(() => props.emptyText || t('table.emptyText'))
 
 const emit = defineEmits<{
   'update:currentPage': [page: number]
@@ -297,7 +304,7 @@ const selectionCellStyle = { width: `${SELECTION_WIDTH}px`, left: '0px' }
           </td>
         </tr>
         <tr v-if="pageRows.length === 0">
-          <td class="kb-table__empty" :colspan="colSpan">{{ emptyText }}</td>
+          <td class="kb-table__empty" :colspan="colSpan">{{ emptyLabel }}</td>
         </tr>
       </tbody>
     </table>

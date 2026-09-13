@@ -1,19 +1,25 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbPopconfirm' })
 
 export interface PopconfirmProps {
   title: string
-  /** 确定按钮文字 */
+  /** 确定按钮文字，不传时取语言包中的 `popconfirm.confirmText` */
   confirmText?: string
+  /** 取消按钮文字，不传时取语言包中的 `popconfirm.cancelText` */
   cancelText?: string
 }
 
-withDefaults(defineProps<PopconfirmProps>(), {
-  confirmText: '确定',
-  cancelText: '取消',
+const props = withDefaults(defineProps<PopconfirmProps>(), {
+  confirmText: '',
+  cancelText: '',
 })
+
+const { t } = useLocale()
+const confirmLabel = computed(() => props.confirmText || t('popconfirm.confirmText'))
+const cancelLabel = computed(() => props.cancelText || t('popconfirm.cancelText'))
 
 const emit = defineEmits<{ confirm: []; cancel: [] }>()
 
@@ -64,10 +70,10 @@ onBeforeUnmount(() => document.removeEventListener('click', handleOutside))
       <div class="kb-popconfirm__title">{{ title }}</div>
       <div class="kb-popconfirm__actions">
         <button class="kb-popconfirm__cancel" type="button" @click="handleCancel">
-          {{ cancelText }}
+          {{ cancelLabel }}
         </button>
         <button class="kb-popconfirm__ok" type="button" @click="handleConfirm">
-          {{ confirmText }}
+          {{ confirmLabel }}
         </button>
       </div>
     </div>

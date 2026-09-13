@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbPagination' })
+
+const { t } = useLocale()
 
 export interface PaginationProps {
   total: number
@@ -58,12 +61,12 @@ function jump(direction: 'prev' | 'next') {
 
 <template>
   <nav class="kb-pagination" aria-label="Pagination">
-    <span class="kb-pagination__total">共 {{ total }} 条</span>
+    <span class="kb-pagination__total">{{ t('pagination.total', total) }}</span>
     <button
       class="kb-pagination__prev"
       type="button"
       :disabled="current <= 1"
-      aria-label="上一页"
+      :aria-label="t('pagination.prev')"
       @click="jump('prev')"
     >
       ‹
@@ -84,7 +87,7 @@ function jump(direction: 'prev' | 'next') {
       class="kb-pagination__next"
       type="button"
       :disabled="current >= pageCount"
-      aria-label="下一页"
+      :aria-label="t('pagination.next')"
       @click="jump('next')"
     >
       ›

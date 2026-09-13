@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, provide, reactive } from 'vue'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbForm' })
+
+const { t } = useLocale()
 
 export interface FormRule {
   required?: boolean
@@ -35,13 +38,13 @@ function validateField(prop: string): string | null {
   const value = props.model[prop]
   for (const rule of fieldRules) {
     if (rule.required && (value === undefined || value === null || value === '')) {
-      return rule.message ?? `${prop} 为必填项`
+      return rule.message ?? t('form.required', prop)
     }
     if (rule.pattern && !rule.pattern.test(String(value ?? ''))) {
-      return rule.message ?? `${prop} 格式不正确`
+      return rule.message ?? t('form.pattern', prop)
     }
     if (rule.validator && !rule.validator(value)) {
-      return rule.message ?? `${prop} 不合法`
+      return rule.message ?? t('form.invalid', prop)
     }
   }
   return null

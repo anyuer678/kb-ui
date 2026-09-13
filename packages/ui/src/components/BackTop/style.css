@@ -1,0 +1,39 @@
+.kb-backtop {
+  position: fixed;
+  z-index: var(--kb-z-index-backtop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--kb-color-text-2);
+  cursor: pointer;
+  background: var(--kb-color-bg);
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  box-shadow: var(--kb-shadow-2);
+  transition:
+    color var(--kb-transition-duration) var(--kb-transition-timing),
+    border-color var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-backtop:hover {
+  color: var(--kb-color-primary);
+  border-color: var(--kb-color-primary);
+}
+
+.kb-backtop:focus-visible {
+  outline: 2px solid var(--kb-color-primary);
+  outline-offset: 2px;
+}
+
+.kb-backtop-fade-enter-active,
+.kb-backtop-fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.kb-backtop-fade-enter-from,
+.kb-backtop-fade-leave-to {
+  opacity: 0;
+}

@@ -1,0 +1,51 @@
+.kb-contextmenu {
+  display: contents;
+}
+
+.kb-contextmenu__panel {
+  position: fixed;
+  z-index: var(--kb-z-index-message);
+  min-width: 160px;
+  padding: var(--kb-space-1) 0;
+  background: var(--kb-color-bg);
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-md);
+  box-shadow: var(--kb-shadow-2);
+}
+
+.kb-contextmenu__item {
+  display: flex;
+  gap: var(--kb-space-2);
+  align-items: center;
+  padding: var(--kb-space-2) var(--kb-space-3);
+  font-size: var(--kb-font-size-md);
+  color: var(--kb-color-text-1);
+  cursor: pointer;
+}
+
+.kb-contextmenu__item:hover {
+  background: var(--kb-color-bg-elevated);
+}
+
+.kb-contextmenu__item--disabled {
+  color: var(--kb-color-text-3);
+  cursor: not-allowed;
+}
+
+.kb-contextmenu__item--disabled:hover {
+  background: transparent;
+}
+
+/* 上方分隔线，用于给菜单项分组 */
+.kb-contextmenu__item--divided {
+  margin-top: var(--kb-space-1);
+  border-top: 1px solid var(--kb-color-border);
+}
+
+.kb-contextmenu__icon {
+  color: var(--kb-color-text-3);
+}
+
+.kb-contextmenu__label {
+  flex: 1;
+}

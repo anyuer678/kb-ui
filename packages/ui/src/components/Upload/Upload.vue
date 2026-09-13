@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbUpload' })
+
+const { t } = useLocale()
 
 export type UploadStatus = 'pending' | 'uploading' | 'success' | 'error'
 
@@ -129,10 +132,10 @@ function removeAt(index: number) {
         type="file"
         :accept="accept"
         :multiple="multiple"
-        aria-label="选择文件"
+        :aria-label="t('upload.chooseFile')"
         @change="handleChange"
       />
-      选择文件
+      {{ t('upload.chooseFile') }}
     </label>
     <div v-if="items.length" class="kb-upload__list">
       <div v-for="(file, i) in items" :key="`${file.name}-${i}`" class="kb-upload__item">
@@ -140,15 +143,22 @@ function removeAt(index: number) {
         <span class="kb-upload__name">{{ file.name }}</span>
         <span class="kb-upload__size">{{ formatSize(file.size) }}</span>
         <span v-if="file.status === 'uploading'" class="kb-upload__status">
-          上传中 {{ file.progress ?? 0 }}%
+          {{ t('upload.uploading', file.progress ?? 0) }}
         </span>
         <span v-else-if="file.status === 'success'" class="kb-upload__status kb-upload__status--success">
-          已上传
+          {{ t('upload.uploaded') }}
         </span>
         <span v-else-if="file.status === 'error'" class="kb-upload__status kb-upload__status--error">
-          上传失败
+          {{ t('upload.failed') }}
         </span>
-        <button class="kb-upload__delete" type="button" aria-label="删除" @click="removeAt(i)">×</button>
+        <button
+          class="kb-upload__delete"
+          type="button"
+          :aria-label="t('upload.remove')"
+          @click="removeAt(i)"
+        >
+          ×
+        </button>
       </div>
     </div>
   </div>

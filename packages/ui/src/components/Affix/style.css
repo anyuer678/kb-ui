@@ -1,0 +1,8 @@
+.kb-affix {
+  /* 占位尺寸由脚本按内容实测后写入，这里只保证不参与收缩 */
+  box-sizing: border-box;
+}
+
+.kb-affix__inner--fixed {
+  z-index: var(--kb-z-index-affix);
+}

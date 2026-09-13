@@ -1,0 +1,99 @@
+.kb-image-preview {
+  position: fixed;
+  inset: 0;
+  z-index: var(--kb-z-index-preview);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 80%);
+}
+
+.kb-image-preview__image {
+  max-width: 90vw;
+  max-height: 90vh;
+  transition: transform var(--kb-transition-duration) var(--kb-transition-timing);
+  user-select: none;
+}
+
+.kb-image-preview__close {
+  position: absolute;
+  top: var(--kb-space-5);
+  right: var(--kb-space-5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: #fff;
+  cursor: pointer;
+  background: rgb(255 255 255 / 12%);
+  border: none;
+  border-radius: var(--kb-radius-round);
+}
+
+.kb-image-preview__close:hover {
+  background: rgb(255 255 255 / 24%);
+}
+
+.kb-image-preview__nav {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: #fff;
+  cursor: pointer;
+  background: rgb(255 255 255 / 12%);
+  border: none;
+  border-radius: var(--kb-radius-round);
+  transform: translateY(-50%);
+}
+
+.kb-image-preview__nav:hover {
+  background: rgb(255 255 255 / 24%);
+}
+
+.kb-image-preview__nav--prev {
+  left: var(--kb-space-5);
+}
+
+.kb-image-preview__nav--next {
+  right: var(--kb-space-5);
+}
+
+.kb-image-preview__toolbar {
+  position: absolute;
+  bottom: var(--kb-space-5);
+  left: 50%;
+  display: flex;
+  gap: var(--kb-space-2);
+  align-items: center;
+  padding: var(--kb-space-2) var(--kb-space-3);
+  background: rgb(0 0 0 / 55%);
+  border-radius: var(--kb-radius-round);
+  transform: translateX(-50%);
+}
+
+.kb-image-preview__toolbar button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: #fff;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-radius: var(--kb-radius-sm);
+}
+
+.kb-image-preview__toolbar button:hover {
+  background: rgb(255 255 255 / 16%);
+}
+
+.kb-image-preview__counter {
+  font-size: var(--kb-font-size-sm);
+  color: rgb(255 255 255 / 80%);
+}
