@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbCascader' })
 
@@ -17,6 +18,7 @@ export type CascaderValue = (string | number)[]
 export interface CascaderProps {
   options?: CascaderOption[]
   modelValue?: CascaderValue
+  /** 占位文案，不传时取语言包中的 `cascader.placeholder` */
   placeholder?: string
   /** 已选路径的展示分隔符 */
   separator?: string
@@ -31,12 +33,16 @@ export interface CascaderProps {
 const props = withDefaults(defineProps<CascaderProps>(), {
   options: () => [],
   modelValue: () => [],
-  placeholder: '请选择',
+  placeholder: '',
   separator: ' / ',
   disabled: false,
   clearable: false,
   lazy: false,
 })
+
+const { t } = useLocale()
+/** 显式传入优先，未传时回落到当前语言包 */
+const displayPlaceholder = computed(() => props.placeholder || t('cascader.placeholder'))
 
 const emit = defineEmits<{ 'update:modelValue': [value: CascaderValue] }>()
 
@@ -61,7 +67,7 @@ const showClear = computed(
 )
 
 const displayText = computed(() => {
-  if (!props.modelValue.length) return props.placeholder
+  if (!props.modelValue.length) return displayPlaceholder.value
   const parts: string[] = []
   let list: CascaderOption[] = rootList.value
   for (const value of props.modelValue) {
@@ -76,7 +82,7 @@ const displayText = computed(() => {
     parts.push(found.label)
     list = found.children ?? []
   }
-  return parts.length ? parts.join(props.separator) : props.placeholder
+  return parts.length ? parts.join(props.separator) : displayPlaceholder.value
 })
 
 function cacheLabels(list: CascaderOption[]) {
@@ -192,7 +198,7 @@ function clear(event: MouseEvent) {
       @click="toggleOpen"
       @keydown="handleKeydown"
     >
-      <span :class="{ 'kb-cascader__placeholder': displayText === placeholder }">
+      <span :class="{ 'kb-cascader__placeholder': displayText === displayPlaceholder }">
         {{ displayText }}
       </span>
       <span class="kb-cascader__suffix">
@@ -200,20 +206,20 @@ function clear(event: MouseEvent) {
           v-if="showClear"
           class="kb-cascader__clear"
           role="button"
-          aria-label="清空"
+          :aria-label="t('common.clear')"
           @click="clear"
           >×</span
         >
         <span class="kb-cascader__arrow">▾</span>
       </span>
     </div>
-    <div v-if="open" :id="panelId" class="kb-cascader__panel" role="dialog" aria-label="级联选择">
+    <div v-if="open" :id="panelId" class="kb-cascader__panel" role="dialog" :aria-label="t('cascader.panel')">
       <div
         v-for="(list, level) in levels"
         :key="level"
         class="kb-cascader__column"
         role="listbox"
-        :aria-label="`第 ${level + 1} 级`"
+        :aria-label="t('cascader.level', level + 1)"
       >
         <div
           v-for="option in list"
@@ -229,7 +235,7 @@ function clear(event: MouseEvent) {
           @click="select(option, level)"
         >
           <span>{{ option.label }}</span>
-          <span v-if="option.leaf" class="kb-cascader__leaf-tag">可选</span>
+          <span v-if="option.leaf" class="kb-cascader__leaf-tag">{{ t('cascader.leafTag') }}</span>
           <span v-else-if="option.children?.length" class="kb-cascader__more">›</span>
         </div>
       </div>
@@ -238,7 +244,7 @@ function clear(event: MouseEvent) {
         class="kb-cascader__column"
         aria-busy="true"
       >
-        <div class="kb-cascader__loading">加载中…</div>
+        <div class="kb-cascader__loading">{{ t('cascader.loading') }}</div>
       </div>
     </div>
   </div>

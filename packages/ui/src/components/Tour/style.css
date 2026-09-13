@@ -1,0 +1,102 @@
+.kb-tour__mask {
+  position: fixed;
+  inset: 0;
+  z-index: var(--kb-z-index-tour);
+  background: rgb(0 0 0 / 45%);
+}
+
+/* 高亮框用超大描边制造「挖空」效果，避免额外遮罩层 */
+.kb-tour__highlight {
+  position: fixed;
+  z-index: calc(var(--kb-z-index-tour) + 1);
+  pointer-events: none;
+  border-radius: var(--kb-radius-md);
+  box-shadow: 0 0 0 9999px rgb(0 0 0 / 45%);
+  transition:
+    top var(--kb-transition-duration) var(--kb-transition-timing),
+    left var(--kb-transition-duration) var(--kb-transition-timing),
+    width var(--kb-transition-duration) var(--kb-transition-timing),
+    height var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-tour__bubble {
+  position: fixed;
+  z-index: calc(var(--kb-z-index-tour) + 2);
+  box-sizing: border-box;
+  width: 320px;
+  padding: var(--kb-space-4);
+  background: var(--kb-color-bg);
+  border-radius: var(--kb-radius-lg);
+  box-shadow: var(--kb-shadow-3, 0 8px 24px rgb(0 0 0 / 16%));
+}
+
+.kb-tour__close {
+  position: absolute;
+  top: var(--kb-space-2);
+  right: var(--kb-space-2);
+  display: flex;
+  color: var(--kb-color-text-3);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.kb-tour__close:hover {
+  color: var(--kb-color-text-2);
+}
+
+.kb-tour__title {
+  margin: 0 0 var(--kb-space-2);
+  font-size: var(--kb-font-size-lg);
+  color: var(--kb-color-text-1);
+}
+
+.kb-tour__description {
+  margin: 0;
+  font-size: var(--kb-font-size-md);
+  line-height: 1.6;
+  color: var(--kb-color-text-2);
+}
+
+.kb-tour__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--kb-space-4);
+}
+
+.kb-tour__progress {
+  font-size: var(--kb-font-size-sm);
+  color: var(--kb-color-text-3);
+}
+
+.kb-tour__actions {
+  display: flex;
+  gap: var(--kb-space-2);
+}
+
+.kb-tour__btn {
+  padding: var(--kb-space-1) var(--kb-space-3);
+  font-size: var(--kb-font-size-sm);
+  color: var(--kb-color-text-2);
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--kb-color-border);
+  border-radius: var(--kb-radius-sm);
+}
+
+.kb-tour__btn:hover {
+  color: var(--kb-color-primary);
+  border-color: var(--kb-color-primary);
+}
+
+.kb-tour__btn--primary {
+  color: #fff;
+  background: var(--kb-color-primary);
+  border-color: var(--kb-color-primary);
+}
+
+.kb-tour__btn--primary:hover {
+  color: #fff;
+  opacity: 0.9;
+}

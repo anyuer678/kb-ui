@@ -22,11 +22,22 @@ const ICONS: Record<string, string> = {
   error: 'M18 6 6 18M6 6l12 12',
   'arrow-left': 'M19 12H5M12 19l-7-7 7-7',
   'arrow-right': 'M5 12h14M12 5l7 7-7 7',
+  'arrow-up': 'M12 19V5M5 12l7-7 7 7',
+  'arrow-down': 'M12 5v14M19 12l-7 7-7-7',
   search: 'M21 21l-4.35-4.35M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z',
   menu: 'M4 6h16M4 12h16M4 18h16',
   loading:
     'M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83',
   'chevron-down': 'm6 9 6 6 6-6',
+  'chevron-up': 'm18 15-6-6-6 6',
+  'chevron-left': 'm15 18-6-6 6-6',
+  'chevron-right': 'm9 18 6-6-6-6',
+  plus: 'M12 5v14M5 12h14',
+  minus: 'M5 12h14',
+  'zoom-in': 'M21 21l-4.35-4.35M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM11 8v6M8 11h6',
+  'zoom-out': 'M21 21l-4.35-4.35M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM8 11h6',
+  'rotate-cw': 'M21 12a9 9 0 1 1-3.5-7.1M21 3v6h-6',
+  'more-horizontal': 'M12 12h.01M19 12h.01M5 12h.01',
 }
 
 const pathData = computed(() => ICONS[props.name])

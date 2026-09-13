@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Icon } from '../Icon'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbInputPassword' })
+
+const { t } = useLocale()
 
 export interface InputPasswordProps {
   modelValue?: string
@@ -37,7 +40,7 @@ function handleInput(event: Event) {
     <button
       class="kb-input-password__toggle"
       type="button"
-      :aria-label="visible ? '隐藏密码' : '显示密码'"
+      :aria-label="visible ? t('inputPassword.hide') : t('inputPassword.show')"
       @click="visible = !visible"
     >
       <Icon :name="visible ? 'info' : 'warning'" :size="16" />
