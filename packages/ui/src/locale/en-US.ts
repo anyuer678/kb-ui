@@ -56,6 +56,10 @@ export const enUS: ProjectLocale = {
   treeSelect: {
     label: 'Tree select',
   },
+  layout: {
+    collapse: 'Collapse sidebar',
+    expand: 'Expand sidebar',
+  },
   empty: {
     description: 'No data',
   },

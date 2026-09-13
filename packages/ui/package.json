@@ -47,11 +47,13 @@
     "lint": "eslint . && stylelint \"src/**/*.css\" --allow-empty-input"
   },
   "devDependencies": {
+    "@types/qrcode": "^1.5.5",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vitest/coverage-v8": "^4.1.10",
     "@vue/test-utils": "^2.4.11",
     "axe-core": "^4.13.0",
     "jsdom": "^30.0.1",
+    "qrcode": "^1.5.4",
     "typescript": "^5.9.3",
     "vite": "^8.2.1",
     "vite-plugin-dts": "^5.0.3",

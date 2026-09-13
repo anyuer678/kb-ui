@@ -135,6 +135,16 @@ export * from './components/Tour'
 export { Tour as KbTour } from './components/Tour'
 export * from './components/ContextMenu'
 export { ContextMenu as KbContextMenu } from './components/ContextMenu'
+export * from './components/FloatButton'
+export { FloatButton as KbFloatButton, FloatButtonGroup as KbFloatButtonGroup } from './components/FloatButton'
+export * from './components/Layout'
+export { Layout as KbLayout, Header as KbHeader, Sider as KbSider, Content as KbContent, Footer as KbFooter } from './components/Layout'
+export * from './components/Mentions'
+export { Mentions as KbMentions } from './components/Mentions'
+export * from './components/VirtualList'
+export { VirtualList as KbVirtualList } from './components/VirtualList'
+export * from './components/QRCode'
+export { QRCode as KbQRCode } from './components/QRCode'
 
 /** 语言包与全局配置相关导出，供 ConfigProvider 消费或自定义语言包 */
 export { defaultLocale, getLocale, locales, zhCN, enUS } from './locale'
@@ -210,6 +220,11 @@ import { ImagePreview } from './components/ImagePreview'
 import { Splitter } from './components/Splitter'
 import { Tour } from './components/Tour'
 import { ContextMenu } from './components/ContextMenu'
+import { FloatButton, FloatButtonGroup } from './components/FloatButton'
+import { Layout, Header, Sider, Content, Footer } from './components/Layout'
+import { Mentions } from './components/Mentions'
+import { VirtualList } from './components/VirtualList'
+import { QRCode } from './components/QRCode'
 
 // 由 vite.config.ts 的 define 注入（与 package.json version 保持同步）
 declare const __KB_VERSION__: string
@@ -283,6 +298,16 @@ const components = [
   TimePicker,
   Tour,
   TreeSelect,
+  FloatButton,
+  FloatButtonGroup,
+  Layout,
+  Header,
+  Sider,
+  Content,
+  Footer,
+  Mentions,
+  VirtualList,
+  QRCode,
 ]
 
 const install: Plugin = (app: App) => {

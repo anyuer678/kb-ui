@@ -87,6 +87,16 @@ import {
   KbTimePicker,
   KbTour,
   KbTreeSelect,
+  KbLayout,
+  KbHeader,
+  KbSider,
+  KbContent,
+  KbFooter,
+  KbFloatButton,
+  KbFloatButtonGroup,
+  KbMentions,
+  KbVirtualList,
+  KbQRCode,
   notification,
   message,
 } from 'kb-ui-vue'
@@ -537,6 +547,16 @@ const statistics = [
 ]
 
 const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-left', 'arrow-right', 'search', 'menu', 'loading', 'chevron-down']
+
+// 本轮新增组件（v0.3.x 扩展 Ⅱ）：布局 / 悬浮按钮 / @提及 / 虚拟列表 / 二维码
+const mentionValue = ref('')
+const mentionOptions = [
+  { value: 'alice', label: 'Alice' },
+  { value: 'bob', label: 'Bob' },
+  { value: 'carol', label: 'Carol' },
+  { value: 'dave', label: 'Dave' },
+]
+const virtualItems = Array.from({ length: 1000 }, (_, i) => `列表项 ${i + 1}`)
 </script>
 
 <template>
@@ -1153,6 +1173,59 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
         </KbSpace>
       </KbConfigProvider>
       <p class="hint">切换语言后，组件内置文案（如空状态描述）会跟随变化。</p>
+    </section>
+
+    <!-- 本轮新增组件（v0.3.x 扩展 Ⅱ） -->
+    <section id="section-new2" class="block">
+      <h2>本轮新增组件</h2>
+      <KbDivider />
+      <p class="hint">
+        本轮新增 5 个组件：Layout 布局、FloatButton 悬浮按钮、Mentions @提及、VirtualList 虚拟列表、QRCode 二维码。
+      </p>
+
+      <h3>Layout 布局（Header / Sider / Content / Footer）</h3>
+      <KbLayout style="height: 220px; border: 1px solid var(--kb-color-border); border-radius: var(--kb-radius-md)">
+        <KbHeader style="background: var(--kb-color-bg-elevated); padding: 0 12px; display: flex; align-items: center">Header</KbHeader>
+        <KbLayout>
+          <KbSider width="120" style="background: color-mix(in srgb, var(--kb-color-primary) 10%, transparent); padding: 12px">Sider</KbSider>
+          <KbContent style="padding: 12px">Content 区域，可放置任意内容。</KbContent>
+        </KbLayout>
+        <KbFooter style="background: var(--kb-color-bg-elevated); padding: 0 12px; display: flex; align-items: center">Footer</KbFooter>
+      </KbLayout>
+
+      <h3>FloatButton 悬浮按钮 / FloatButtonGroup</h3>
+      <KbFloatButtonGroup shape="circle" direction="column" style="margin: 8px 0">
+        <KbFloatButton type="primary" round>＋</KbFloatButton>
+        <KbFloatButton round>？</KbFloatButton>
+      </KbFloatButtonGroup>
+      <p class="hint">（悬浮按钮组以内联方式演示，实际使用时可固定到视口角落）</p>
+
+      <h3>Mentions @提及</h3>
+      <KbMentions
+        v-model="mentionValue"
+        :options="mentionOptions"
+        placeholder="输入 @ 试试"
+        style="max-width: 360px"
+      />
+      <p class="hint">当前值：{{ mentionValue || '（空）' }}</p>
+
+      <h3>VirtualList 虚拟列表（1000 项，仅渲染可视区）</h3>
+      <KbVirtualList
+        :items="virtualItems"
+        :item-height="36"
+        :height="220"
+        style="border: 1px solid var(--kb-color-border); border-radius: var(--kb-radius-md)"
+      >
+        <template #item="{ item, index }">
+          <div style="padding: 0 12px; line-height: 36px; border-bottom: 1px solid var(--kb-color-border)">
+            #{{ index + 1 }} {{ item }}
+          </div>
+        </template>
+      </KbVirtualList>
+
+      <h3>QRCode 二维码</h3>
+      <KbQRCode value="https://kb-ui.dev" :size="160" />
+      <p class="hint">用手机扫描即可打开链接（默认纠错等级 M，UTF-8 字节编码）。</p>
     </section>
   </div>
 </template>
