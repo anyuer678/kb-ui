@@ -60,14 +60,12 @@ jobs:
         run: pnpm changeset status --since=origin/master
 
   visual:
-    name: Visual regression (advisory)
+    name: Visual regression
     runs-on: windows-latest
     timeout-minutes: 25
     # 快照与「操作系统 + 字体渲染 + 浏览器版本」强相关：基线是在 Windows 上生成的，
-    # 放到 ubuntu runner 上必然对不上。所以这里跑 windows-latest，
-    # 且先以「只报告、不拦截」的方式接入（continue-on-error）。
-    # 等基线在该 runner 上稳定跑绿后，删掉下面这行即可升级为强制门禁。
-    continue-on-error: true
+    # 放到 ubuntu runner 上必然对不上，所以这里固定跑 windows-latest。
+    # 该 job 已在此 runner 上连续跑绿，因此升级为强制门禁（原为 continue-on-error）。
     steps:
       - uses: actions/checkout@v7
 
@@ -96,3 +94,28 @@ jobs:
             packages/ui/visual/playwright-report
             packages/ui/visual/test-results
           retention-days: 7
+
+  e2e:
+    name: E2E (playground + docs)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      # --serve：脚本自己拉起 playground(:8070) 与 docs(:8071)，跑完再关掉
+      # 注意用的是 Playwright 自带 Chromium，不依赖 runner 上预装 Edge（旧版写死 msedge，CI 上根本跑不起来）
+      - name: Run end-to-end checks
+        run: pnpm e2e --serve

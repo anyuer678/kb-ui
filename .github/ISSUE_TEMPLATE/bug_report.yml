@@ -1,0 +1,70 @@
+name: 缺陷报告
+description: 组件行为与预期不符、样式错乱、类型报错等
+title: '[Bug] '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: 提交前请先搜一下现有 issue，避免重复。
+
+  - type: input
+    id: component
+    attributes:
+      label: 涉及组件
+      description: 例如 KbSelect；不确定就填「其他」
+      placeholder: KbSelect
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 组件库版本
+      description: `kb-ui-vue` 的版本号（见 packages/ui/package.json）
+      placeholder: 0.3.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 最小复现代码或 playground 链接，能直接跑起来的那种
+      render: vue
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+      description: 有报错就贴完整堆栈，有截图就附上
+    validations:
+      required: true
+
+  - type: textarea
+    id: env
+    attributes:
+      label: 环境
+      value: |
+        - 操作系统：
+        - 浏览器及版本：
+        - Node 版本：
+        - Vue 版本：
+        - 是否 SSR（Nuxt 等）：
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: a11y
+    attributes:
+      label: 无障碍相关
+      options:
+        - label: 这个问题影响键盘操作或读屏软件（如缺 aria 属性、焦点无法移动）
