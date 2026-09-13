@@ -41,7 +41,7 @@
 - **按需引入 + IDE 类型**：新增独立构建入口 `kb-ui-vue/resolver`（导出 `KbResolver`）与 `dist/global.d.ts`（70 条全局组件声明）
 - **文档**：新增 `guide/i18n.md`、`guide/on-demand.md`、`components/config-provider.md` 以及 16 个新组件文档页（11 + 5），侧边栏已挂载
 - **质量门禁补强**：单测 606 例 / 77 个测试文件全绿；新增 **SSR 冒烟测试**（node 环境对全部组件跑 `renderToString`，拦截未做环境判断的 `window` / `document` 访问）、**axe-core 可访问性测试**（13 例，复现并修掉了 ContextMenu 键盘导航缺失、TimePicker / TreeSelect combobox 未命名等真实缺陷）、**覆盖率上报**（v8）与**体积预算校验**（含 tree-shaking 比例，见下）
-- **视觉回归重建**：原用例依赖 playground 路由，而该站是「单页 + 侧边 tab」结构并无路由，`/button` 等路径全部 404 —— 等于从未跑通。现改为独立的**确定性取样台**（`packages/ui/visual/harness`，固定 800×520 画布、关动画、内联占位图），覆盖 18 组件 × 3 主题共 **54 张基线**
+- **视觉回归重建**：原用例依赖 playground 路由，而该站是「单页 + 侧边 tab」结构并无路由，`/button` 等路径全部 404 —— 等于从未跑通。现改为独立的**确定性取样台**（`packages/ui/visual/harness`，固定 800×520 画布、关动画、内联占位图），覆盖 23 组件 × 3 主题共 **69 张基线**
 - **仓库治理**：新增 `CONTRIBUTING.md`、`SECURITY.md`、`CODE_OF_CONDUCT.md`、`.github/CODEOWNERS` 与 Dependabot 配置
 
 ### 质量与测试
@@ -51,7 +51,7 @@
 | 单元 / SSR / a11y | `pnpm test` | Vitest 606 例（含 81 例 SSR 冒烟、13 例 axe a11y） |
 | 覆盖率 | `pnpm test:coverage` | v8 provider，当前 87%+ 语句覆盖；**低于阈值直接失败**（85/72/84/87） |
 | 体积预算 | `pnpm check-size` | 产物原始 / gzip 上限 + 单组件引入的 tree-shaking 比例（当前约 3.6%，阈值 25%） |
-| 视觉回归 | `pnpm test:visual` | Playwright 快照比对，54 张基线；`pnpm test:visual:update` 重刷 |
+| 视觉回归 | `pnpm test:visual` | Playwright 快照比对，69 张基线；`pnpm test:visual:update` 重刷 |
 | 端到端 | `pnpm e2e` | 真实浏览器跑 48 项检查：老组件交互 + 17 个新组件 + 主题 token + 文档站（含 5 个新组件文档页渲染） |
 
 > 视觉基线与「操作系统 + 字体渲染 + 浏览器版本」强相关，必须在同一平台生成。本仓库基线在 **Windows** 上生成，CI 里 `visual` job 同样跑 `windows-latest`，已作为**强制门禁**接入。
@@ -105,7 +105,7 @@ CI（lint / typecheck / test / coverage / 体积预算 / build / 模板一致性
 | 后端 | Express 5 + Zod 4（`@kb/api`） |
 | 构建 | Vite 8（lib mode）+ tsup |
 | 包管理 | pnpm 10 workspace monorepo |
-| 测试 | Vitest（512 例单测 + SSR 冒烟 + axe a11y）+ Playwright（e2e + 视觉回归 54 基线） |
+| 测试 | Vitest（606 例单测 + SSR 冒烟 + axe a11y）+ Playwright（e2e + 视觉回归 69 基线） |
 | 文档 | Vitepress 1.6 |
 | 版本管理 | changesets |
 
@@ -145,7 +145,7 @@ pnpm sync:api-template:check    # 只校验是否漂移（CI 会跑这一步）
 ```
 kb-ui/
 ├── packages/
-│   ├── ui/            # kb-ui-vue 组件库（68 组件；visual/ 为视觉回归取样台与基线）
+│   ├── ui/            # kb-ui-vue 组件库（73 组件；visual/ 为视觉回归取样台与基线）
 │   ├── utils/         # @kb/utils 工具函数库（含 HTTP 请求层）
 │   ├── api/           # @kb/api 参考后端（Express + Zod）
 │   ├── config/        # 共享工程配置（tsconfig/eslint/prettier/stylelint）
