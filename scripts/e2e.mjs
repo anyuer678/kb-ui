@@ -304,6 +304,25 @@ try {
   )
   check('暗色主题 token 切换生效', darkBg === '#0f172a')
 
+  // Layout：栅格骨架渲染
+  check('Layout 渲染(>=1)', (await page.locator('.kb-layout').count()) > 0)
+  check('Layout 含 Sider', (await page.locator('.kb-layout__sider').count()) > 0)
+
+  // FloatButton：浮动按钮渲染
+  check('FloatButton 渲染(>=1)', (await page.locator('.kb-float-button').count()) > 0)
+
+  // Mentions：@ 提及输入框渲染
+  check('Mentions 渲染', (await page.locator('.kb-mentions').count()) > 0)
+
+  // VirtualList：可视列表渲染
+  check('VirtualList 渲染', (await page.locator('.kb-virtual-list').count()) > 0)
+
+  // QRCode：二维码 svg path 渲染
+  await checkSafe('QRCode svg 渲染', async () => {
+    const pathCount = await page.locator('.kb-qrcode svg path').count()
+    return pathCount >= 1
+  })
+
   // 整个流程跑完，页面不应有未捕获异常
   check(`playground 无未捕获异常（${pageErrors.length}）`, pageErrors.length === 0)
 

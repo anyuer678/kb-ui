@@ -57,6 +57,11 @@
 @import url('../components/List/style.css');
 @import url('../components/Transfer/style.css');
 @import url('../components/Cascader/style.css');
+@import url('../components/FloatButton/style.css');
+@import url('../components/Layout/style.css');
+@import url('../components/Mentions/style.css');
+@import url('../components/QRCode/style.css');
+@import url('../components/VirtualList/style.css');
 @import url('./themes/violet.css');
 @import url('./themes/teal.css');
 @import url('./themes/rose.css');

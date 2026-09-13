@@ -57,6 +57,10 @@ export const zhCN: ProjectLocale = {
   treeSelect: {
     label: '树形选择',
   },
+  layout: {
+    collapse: '收起侧边栏',
+    expand: '展开侧边栏',
+  },
   empty: {
     description: '暂无数据',
   },
