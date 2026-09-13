@@ -1,0 +1,52 @@
+name: 功能建议 / 新组件
+description: 提一个新组件，或对现有组件提增强建议
+title: '[Feature] '
+labels: ['enhancement']
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 类型
+      options:
+        - 新组件
+        - 现有组件增强
+        - 文档改进
+        - 工程 / 工具链
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 要解决什么问题
+      description: 说清场景，而不是只说「想要 XX 组件」
+    validations:
+      required: true
+
+  - type: textarea
+    id: api
+    attributes:
+      label: 期望的 API 形态
+      description: 粗拟的 props / emits / slots 即可
+      render: vue
+    validations:
+      required: false
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: 参考实现
+      description: Ant Design Vue / Element Plus / Naive UI 等同类组件链接，说明本库要有哪些不同
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: criteria
+    attributes:
+      label: 新组件的准入标准（提新组件时请确认）
+      description: 见 CONTRIBUTING.md
+      options:
+        - label: 含独立 style.css，遵循 `kb-组件名` BEM 命名与 CSS 变量主题
+        - label: 含单元测试，且通过 SSR 冒烟与 axe a11y 扫描
+        - label: 含文档页，并已挂到 vitepress 侧边栏
+        - label: 已接入 playground 演示

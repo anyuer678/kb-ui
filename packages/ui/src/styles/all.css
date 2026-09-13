@@ -1,5 +1,7 @@
-/* 源码模式全量组件样式入口（仅开发/演示用，不发布）。
-   使用 dist 产物时请引入 @kb/ui/styles/index.css（构建时已聚合组件样式）。 */
+/* 源码模式下的全量组件样式入口（仅开发/演示用，不发布）。
+   注意：源码模式里 index.css 只有 tokens + dark，本文件才是组件样式，
+   所以 demo / 文档站需要同时引入 index.css 与 all.css（见 playground/src/main.ts）。
+   使用 dist 产物时则只需引入 styles/index.css —— 构建脚本已把组件样式聚合进去。 */
 @import url('../components/Button/style.css');
 @import url('../components/Icon/style.css');
 @import url('../components/Tag/style.css');
