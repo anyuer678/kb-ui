@@ -36,10 +36,10 @@
 ### 近期更新（73 组件 / 全局配置 / 按需引入 / 质量门禁）
 
 - **新增 11 个组件**：`AutoComplete`、`TreeSelect`、`TimePicker`（表单三件套）、`Image`、`ImagePreview`（图片预览）、`Affix`、`BackTop`、`Anchor`（滚动定位三件套）、`Splitter`、`Tour`、`ContextMenu`——每个都含独立 `style.css`、单元测试与文档页
-- **再新增 5 个组件**：`Layout`（Header/Sider/Content/Footer 组合布局）、`FloatButton` / `FloatButtonGroup`（悬浮按钮组）、`Mentions`（@ 提及输入）、`VirtualList`（定高虚拟滚动列表）、`QRCode`（零依赖自研二维码编码器，SVG 单 path 渲染，与参考库 `qrcode` 逐位交叉验证一致）——每个均含独立 `style.css`、单元测试与 playground 演示，并接入按需引入与 SSR 冒烟
+- **再新增 5 个组件**：`Layout`（Header/Sider/Content/Footer 组合布局）、`FloatButton` / `FloatButtonGroup`（悬浮按钮组）、`Mentions`（@ 提及输入）、`VirtualList`（定高虚拟滚动列表）、`QRCode`（零依赖自研二维码编码器，SVG 单 path 渲染，与参考库 `qrcode` 逐位交叉验证一致）——每个均含独立 `style.css`、单元测试、playground 演示与文档页，并接入按需引入与 SSR 冒烟
 - **`ConfigProvider` + 国际化**：`locale` / `size` / `zIndex` / `theme` 统一注入；内置 `zh-CN`、`en-US` 语言包，`useLocale()` 返回响应式 `locale`，切换即时重渲染；Empty / List / Search / Popconfirm / Cascader / Calendar / Carousel / ColorPicker / InputPassword / Pagination / DatePicker / Table / Transfer / Upload / Dialog / Form 共 16 个组件完成文案国际化，主题同步到 `<html data-theme>`
 - **按需引入 + IDE 类型**：新增独立构建入口 `kb-ui-vue/resolver`（导出 `KbResolver`）与 `dist/global.d.ts`（70 条全局组件声明）
-- **文档**：新增 `guide/i18n.md`、`guide/on-demand.md`、`components/config-provider.md` 以及 11 个新组件文档页，侧边栏已挂载
+- **文档**：新增 `guide/i18n.md`、`guide/on-demand.md`、`components/config-provider.md` 以及 16 个新组件文档页（11 + 5），侧边栏已挂载
 - **质量门禁补强**：单测 606 例 / 77 个测试文件全绿；新增 **SSR 冒烟测试**（node 环境对全部组件跑 `renderToString`，拦截未做环境判断的 `window` / `document` 访问）、**axe-core 可访问性测试**（13 例，复现并修掉了 ContextMenu 键盘导航缺失、TimePicker / TreeSelect combobox 未命名等真实缺陷）、**覆盖率上报**（v8）与**体积预算校验**（含 tree-shaking 比例，见下）
 - **视觉回归重建**：原用例依赖 playground 路由，而该站是「单页 + 侧边 tab」结构并无路由，`/button` 等路径全部 404 —— 等于从未跑通。现改为独立的**确定性取样台**（`packages/ui/visual/harness`，固定 800×520 画布、关动画、内联占位图），覆盖 18 组件 × 3 主题共 **54 张基线**
 - **仓库治理**：新增 `CONTRIBUTING.md`、`SECURITY.md`、`CODE_OF_CONDUCT.md`、`.github/CODEOWNERS` 与 Dependabot 配置
@@ -52,7 +52,7 @@
 | 覆盖率 | `pnpm test:coverage` | v8 provider，当前 87%+ 语句覆盖；**低于阈值直接失败**（85/72/84/87） |
 | 体积预算 | `pnpm check-size` | 产物原始 / gzip 上限 + 单组件引入的 tree-shaking 比例（当前约 3.6%，阈值 25%） |
 | 视觉回归 | `pnpm test:visual` | Playwright 快照比对，54 张基线；`pnpm test:visual:update` 重刷 |
-| 端到端 | `pnpm e2e` | 真实浏览器跑 43 项检查：老组件交互 + 17 个新组件 + 主题 token + 文档站 |
+| 端到端 | `pnpm e2e` | 真实浏览器跑 48 项检查：老组件交互 + 17 个新组件 + 主题 token + 文档站（含 5 个新组件文档页渲染） |
 
 > 视觉基线与「操作系统 + 字体渲染 + 浏览器版本」强相关，必须在同一平台生成。本仓库基线在 **Windows** 上生成，CI 里 `visual` job 同样跑 `windows-latest`，已作为**强制门禁**接入。
 
