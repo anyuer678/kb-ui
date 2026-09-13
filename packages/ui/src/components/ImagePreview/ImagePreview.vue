@@ -121,7 +121,15 @@ watch(
 
 <template>
   <Teleport :to="teleportTo" :disabled="!visible">
-    <div v-if="visible" class="kb-image-preview" role="dialog" aria-modal="true" @click.self="close" @wheel.prevent="handleWheel">
+    <div
+      v-if="visible"
+      class="kb-image-preview"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="t('image.previewDialog')"
+      @click.self="close"
+      @wheel.prevent="handleWheel"
+    >
       <button
         class="kb-image-preview__close"
         type="button"

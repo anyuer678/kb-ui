@@ -1,0 +1,61 @@
+version: 2
+updates:
+  # 工作区依赖（pnpm workspace，Dependabot 用 npm 生态识别 pnpm-lock.yaml）
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Shanghai
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    # 把同一批次的小版本/补丁更新合成一个 PR，避免刷屏
+    groups:
+      dev-minor-patch:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+      prod-minor-patch:
+        dependency-type: production
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # 这几个包的升级要人工验证构建与类型声明，避免自动 PR 干扰
+      - dependency-name: vite
+        update-types: [version-update:semver-major]
+      - dependency-name: vue
+        update-types: [version-update:semver-major]
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+
+  # GitHub Actions
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Shanghai
+    labels:
+      - dependencies
+      - github-actions
+    commit-message:
+      prefix: "chore(ci)"
+
+  # 参考后端与脚手架模板内的 Dockerfile 基础镜像
+  - package-ecosystem: docker
+    directory: /packages/create-kb/templates/fullstack
+    schedule:
+      interval: monthly
+    labels:
+      - dependencies
+      - docker
+    commit-message:
+      prefix: "chore(docker)"

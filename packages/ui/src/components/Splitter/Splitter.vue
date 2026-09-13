@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbSplitter' })
+
+const { t } = useLocale()
 
 export interface SplitterProps {
   /** 各面板的初始占比（百分比），长度即面板数量，默认两栏均分 */
@@ -111,6 +114,7 @@ const rootClass = computed(() => [
         :class="{ 'kb-splitter__bar--disabled': disabled }"
         role="separator"
         tabindex="0"
+        :aria-label="t('splitter.label')"
         :aria-orientation="isHorizontal() ? 'vertical' : 'horizontal'"
         :aria-valuenow="Math.round(size)"
         aria-valuemin="0"

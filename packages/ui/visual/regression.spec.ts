@@ -1,36 +1,69 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 
-// 10 个核心组件 × 3 个主题 = 30 张基线截图
-const THEMES = ['default', 'cyber', 'terminal']
-const COMPONENTS = [
-  { name: 'Button', path: '/button' },
-  { name: 'Dialog', path: '/dialog' },
-  { name: 'Select', path: '/select' },
-  { name: 'Table', path: '/table' },
-  { name: 'Form', path: '/form' },
-  { name: 'Tabs', path: '/tabs' },
-  { name: 'Message', path: '/message' },
-  { name: 'DatePicker', path: '/datepicker' },
-  { name: 'Switch', path: '/switch' },
-  { name: 'Input', path: '/input' },
+/**
+ * 视觉回归用例
+ *
+ * 每个用例加载取样台的一个「定格样本」（?c=<组件>&theme=<主题>），
+ * 固定 800×520 视口整屏截图，与 snapshots/ 下的基线逐像素比对。
+ *
+ * 更新基线：
+ *   pnpm test:visual:update          # 全量重刷
+ *   pnpm test:visual:update --grep Button   # 只刷某个组件
+ *
+ * 基线必须与运行平台一致（Windows ↔ Windows），详见 playwright.config.ts 注释。
+ */
+
+const VIEWPORT = { width: 800, height: 520 } as const
+
+const THEMES = ['default', 'cyber', 'terminal'] as const
+
+interface Specimen {
+  /** 与取样台 FIXTURES 的 key 一致 */
+  name: string
+  /** 浮层类组件：截图前先展开面板，并等待对应 role 出现 */
+  panelRole?: 'listbox' | 'tree'
+}
+
+const SPECIMENS: Specimen[] = [
+  { name: 'Button' },
+  { name: 'Input' },
+  { name: 'Select', panelRole: 'listbox' },
+  { name: 'Switch' },
+  { name: 'Checkbox' },
+  { name: 'Tag' },
+  { name: 'Badge' },
+  { name: 'Alert' },
+  { name: 'Card' },
+  { name: 'Table' },
+  { name: 'Tabs' },
+  { name: 'Progress' },
+  { name: 'Steps' },
+  { name: 'Pagination' },
+  { name: 'Image' },
+  { name: 'Dialog' },
+  { name: 'Splitter' },
+  { name: 'TreeSelect', panelRole: 'tree' },
 ]
 
+async function bootHarness(page: Page, name: string, theme: string) {
+  await page.setViewportSize(VIEWPORT)
+  await page.goto(`/?c=${encodeURIComponent(name)}&theme=${encodeURIComponent(theme)}`)
+  // 取样台挂载后置位 data-ready="1"，避免截到半成品
+  await page.waitForSelector('[data-ready="1"]')
+  await page.evaluate(() => document.fonts.ready)
+}
+
 for (const theme of THEMES) {
-  for (const comp of COMPONENTS) {
-    test(`visual: ${comp.name} [${theme}]`, async ({ page }) => {
-      // 设置主题
-      await page.goto(comp.path)
-      await page.evaluate((t) => {
-        document.documentElement.setAttribute('data-theme', t)
-      }, theme)
+  for (const specimen of SPECIMENS) {
+    test(`${specimen.name} · ${theme}`, async ({ page }) => {
+      await bootHarness(page, specimen.name, theme)
 
-      // 等待渲染稳定
-      await page.waitForTimeout(500)
+      if (specimen.panelRole) {
+        await page.getByRole('combobox').first().click()
+        await page.locator(`[role="${specimen.panelRole}"]`).first().waitFor({ state: 'visible' })
+      }
 
-      // 截图对比
-      await expect(page).toHaveScreenshot(`${comp.name.toLowerCase()}-${theme}.png`, {
-        maxDiffPixelRatio: 0.02,
-      })
+      await expect(page).toHaveScreenshot(`${specimen.name.toLowerCase()}-${theme}.png`)
     })
   }
 }
