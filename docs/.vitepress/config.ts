@@ -97,6 +97,8 @@ export default defineConfig({
             { text: 'Carousel 轮播图', link: '/components/carousel' },
             { text: 'Image 图片', link: '/components/image' },
             { text: 'ImagePreview 图片预览', link: '/components/image-preview' },
+            { text: 'VirtualList 虚拟列表', link: '/components/virtual-list' },
+            { text: 'QRCode 二维码', link: '/components/qrcode' },
           ],
         },
         {
@@ -130,7 +132,12 @@ export default defineConfig({
             { text: 'AutoComplete 自动补全', link: '/components/autocomplete' },
             { text: 'TreeSelect 树选择', link: '/components/tree-select' },
             { text: 'TimePicker 时间选择', link: '/components/time-picker' },
+            { text: 'Mentions 提及', link: '/components/mentions' },
           ],
+        },
+        {
+          text: '布局组件',
+          items: [{ text: 'Layout 布局', link: '/components/layout' }],
         },
         {
           text: '反馈与功能',
@@ -150,6 +157,7 @@ export default defineConfig({
             { text: 'Splitter 分隔面板', link: '/components/splitter' },
             { text: 'Tour 漫游式引导', link: '/components/tour' },
             { text: 'ContextMenu 右键菜单', link: '/components/context-menu' },
+            { text: 'FloatButton 悬浮按钮', link: '/components/float-button' },
           ],
         },
       ],

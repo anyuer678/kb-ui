@@ -341,6 +341,19 @@ try {
       .first()
       .evaluate((el) => getComputedStyle(el).backgroundImage)) !== 'none',
   )
+
+  // 5 个新组件的文档页：渲染 + 真实组件实例存在
+  for (const [slug, selector] of [
+    ['layout', '.kb-layout'],
+    ['float-button', '.kb-float-button'],
+    ['mentions', '.kb-mentions'],
+    ['virtual-list', '.kb-virtual-list'],
+    ['qrcode', '.kb-qrcode'],
+  ]) {
+    await page.goto(`${DOCS}/components/${slug}`, { waitUntil: 'networkidle', timeout: 30000 })
+    await page.waitForTimeout(500)
+    check(`docs 页 ${slug} 渲染组件`, (await page.locator(selector).count()) > 0)
+  }
 } finally {
   await browser.close()
   stopServers(servers)
