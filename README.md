@@ -33,13 +33,28 @@
 | ✅ 基础 | Alert, Avatar, BackTop, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Checkbox, Collapse, ColorPicker, ConfigProvider, CountUp, Descriptions, Dialog, Divider, Drawer, Dropdown, Empty, Icon, Image, Input, InputNumber, InputPassword, List, Loading, Message, Notification, Pagination, Popconfirm, Popover, Progress, Radio, Rate, Result, Search, Segmented, Skeleton, Slider, Space, Statistic, Steps, Switch, Tag, Textarea, TimePicker, Tooltip, Upload, Watermark |
 | 🔧 进阶 | Affix（吸顶吸底，占位不跳动）, Anchor（滚动高亮导航）, AutoComplete（本地/远程建议）, Cascader（异步加载/清空）, ContextMenu（视口边界翻转）, DatePicker（单日期/范围/多选）, Form（校验+动态字段）, Grid（响应式布局）, ImagePreview（缩放/旋转/键盘切换）, Select（搜索+键盘导航）, Splitter（拖拽/键盘分栏）, Table（排序/分页/固定列/行选择/服务端分页）, Tabs, Timeline, Tour（分步引导）, Transfer（搜索/分页/全选）, Tree（虚拟滚动/拖拽排序）, TreeSelect（树形下拉/单选多选） |
 
-### 近期更新（68 组件 / 全局配置 / 按需引入）
+### 近期更新（68 组件 / 全局配置 / 按需引入 / 质量门禁）
 
 - **新增 11 个组件**：`AutoComplete`、`TreeSelect`、`TimePicker`（表单三件套）、`Image`、`ImagePreview`（图片预览）、`Affix`、`BackTop`、`Anchor`（滚动定位三件套）、`Splitter`、`Tour`、`ContextMenu`——每个都含独立 `style.css`、单元测试与文档页
 - **`ConfigProvider` + 国际化**：`locale` / `size` / `zIndex` / `theme` 统一注入；内置 `zh-CN`、`en-US` 语言包，`useLocale()` 返回响应式 `locale`，切换即时重渲染；Empty / List / Search / Popconfirm / Cascader / Calendar / Carousel / ColorPicker / InputPassword / Pagination / DatePicker / Table / Transfer / Upload / Dialog / Form 共 16 个组件完成文案国际化，主题同步到 `<html data-theme>`
 - **按需引入 + IDE 类型**：新增独立构建入口 `kb-ui-vue/resolver`（导出 `KbResolver`）与 `dist/global.d.ts`（70 条全局组件声明）
 - **文档**：新增 `guide/i18n.md`、`guide/on-demand.md`、`components/config-provider.md` 以及 11 个新组件文档页，侧边栏已挂载
-- **质量**：单测 427 例 / 70 个测试文件全绿，`vue-tsc --noEmit` 类型检查零错误，`vite build` + 样式 + 全局类型构建全部通过
+- **质量门禁补强**：单测 511 例 / 72 个测试文件全绿；新增 **SSR 冒烟测试**（node 环境对全部组件跑 `renderToString`，拦截未做环境判断的 `window` / `document` 访问）、**axe-core 可访问性测试**（13 例，复现并修掉了 ContextMenu 键盘导航缺失、TimePicker / TreeSelect combobox 未命名等真实缺陷）、**覆盖率上报**（v8）与**体积预算校验**（含 tree-shaking 比例，见下）
+- **视觉回归重建**：原用例依赖 playground 路由，而该站是「单页 + 侧边 tab」结构并无路由，`/button` 等路径全部 404 —— 等于从未跑通。现改为独立的**确定性取样台**（`packages/ui/visual/harness`，固定 800×520 画布、关动画、内联占位图），覆盖 18 组件 × 3 主题共 **54 张基线**
+- **仓库治理**：新增 `CONTRIBUTING.md`、`SECURITY.md`、`CODE_OF_CONDUCT.md`、`.github/CODEOWNERS` 与 Dependabot 配置
+
+### 质量与测试
+
+| 门禁 | 命令 | 说明 |
+|------|------|------|
+| 单元 / SSR / a11y | `pnpm test` | Vitest 511 例（含 71 例 SSR 冒烟、13 例 axe a11y） |
+| 覆盖率 | `pnpm test:coverage` | v8 provider，当前 87%+ 语句覆盖 |
+| 体积预算 | `pnpm check-size` | 产物原始 / gzip 上限 + 单组件引入的 tree-shaking 比例（当前约 3.6%，阈值 25%） |
+| 视觉回归 | `pnpm test:visual` | Playwright 快照比对，54 张基线；`pnpm test:visual:update` 重刷 |
+| 端到端 | `pnpm e2e` | playground + docs 冒烟 |
+
+> 视觉基线与「操作系统 + 字体渲染 + 浏览器版本」强相关，必须在同一平台生成。本仓库基线在 **Windows** 上生成，CI 中对应的 `visual` job 也跑 `windows-latest`，且目前为**只报告不拦截**（`continue-on-error`）——在该 runner 上稳定跑绿后可删掉这一行升级为强制门禁。
+
 
 ### 主题系统（46 套）
 - **双维度切换**：12 套颜色主题（violet/teal/rose/ink/neon…）+ 36 套风格主题（圆润/扁平/渐变/玻璃/赛博/终端/水墨/商务/孟菲斯/波普/极简/粉彩/鎏金/丹青…）
@@ -77,7 +92,7 @@ pnpm api        # 起本地后端（tsx watch，默认 :8082）
 | `ai` | LLM 工作台（OpenAI 兼容 + SSE 流式 + 聊天前端） |
 
 ### DevOps 资产
-CI（lint / typecheck / test / build / 模板一致性校验，见 `.github/workflows/ci.yml`）、GitHub Pages 文档部署、changesets 自动发布、Node 多阶段 Dockerfile 与多服务 docker-compose（在 `fullstack` 模板内）、部署检查清单（见 `docs/devops-模板.md`）
+CI（lint / typecheck / test / coverage / 体积预算 / build / 模板一致性校验，见 `.github/workflows/ci.yml`）、视觉回归独立 job、GitHub Pages 文档部署、changesets 自动发布、Dependabot 依赖更新、Node 多阶段 Dockerfile 与多服务 docker-compose（在 `fullstack` 模板内）、部署检查清单（见 `docs/devops-模板.md`）
 
 ## 技术栈
 
@@ -87,7 +102,7 @@ CI（lint / typecheck / test / build / 模板一致性校验，见 `.github/work
 | 后端 | Express 5 + Zod 4（`@kb/api`） |
 | 构建 | Vite 8（lib mode）+ tsup |
 | 包管理 | pnpm 10 workspace monorepo |
-| 测试 | Vitest（427 例单测）+ Playwright（e2e） |
+| 测试 | Vitest（511 例单测 + SSR 冒烟 + axe a11y）+ Playwright（e2e + 视觉回归 54 基线） |
 | 文档 | Vitepress 1.6 |
 | 版本管理 | changesets |
 
@@ -127,7 +142,7 @@ pnpm sync:api-template:check    # 只校验是否漂移（CI 会跑这一步）
 ```
 kb-ui/
 ├── packages/
-│   ├── ui/            # kb-ui-vue 组件库（68 组件）
+│   ├── ui/            # kb-ui-vue 组件库（68 组件；visual/ 为视觉回归取样台与基线）
 │   ├── utils/         # @kb/utils 工具函数库（含 HTTP 请求层）
 │   ├── api/           # @kb/api 参考后端（Express + Zod）
 │   ├── config/        # 共享工程配置（tsconfig/eslint/prettier/stylelint）
@@ -146,7 +161,11 @@ pnpm start:full       # 再拉起本地后端（playground 真实接口示例需
 pnpm api              # 只起参考后端
 pnpm lint             # 全部包 lint
 pnpm typecheck        # 全部包类型检查
-pnpm test             # 全部包单元测试
+pnpm test             # 全部包单元测试（含 SSR 冒烟 + axe a11y）
+pnpm test:coverage    # 组件库测试覆盖率（v8）
+pnpm check-size       # 组件库产物体积预算 + tree-shaking 比例校验
+pnpm test:visual      # 视觉回归比对（Playwright 快照）
+pnpm test:visual:update  # 重刷视觉基线（需与运行平台一致）
 pnpm build            # 全部包构建（dist/styles 72 个样式文件）
 pnpm e2e              # 端到端测试（playground + docs）
 pnpm docs:build       # 构建文档站
@@ -167,6 +186,13 @@ pnpm sync:api-template:check  # 校验模板与 packages/api 是否一致
 - [组件文档站](https://anyuer678.github.io/kb-ui/)（部署后生效）
 - `docs/` 下含组件 API、主题定制指南、后端模块说明、DevOps 模板
 - `internal-docs/` 下含设计文档（specs）与实施计划（plans）
+
+## 贡献
+
+- 动手前请先读 [`CONTRIBUTING.md`](CONTRIBUTING.md)：环境要求、「改组件库」与「改其它模块」的流程差异、提交前自查清单
+- 安全问题请**不要**开公开 issue，按 [`SECURITY.md`](SECURITY.md) 的方式私下反馈
+- 社区交流遵循 [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)；代码归属与审查见 [`.github/CODEOWNERS`](.github/CODEOWNERS)
+- 组件库的改动请带上 changeset（`pnpm changeset`）与配套测试；视觉有变化时记得 `pnpm test:visual:update` 重刷基线
 
 ## 免责声明
 

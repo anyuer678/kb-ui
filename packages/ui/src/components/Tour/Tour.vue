@@ -121,18 +121,29 @@ watch(
     if (value) {
       window.addEventListener('resize', updatePosition)
       window.addEventListener('scroll', updatePosition, true)
+      window.addEventListener('keydown', handleKeydown)
     } else {
       window.removeEventListener('resize', updatePosition)
       window.removeEventListener('scroll', updatePosition, true)
+      window.removeEventListener('keydown', handleKeydown)
     }
   },
+  // immediate：挂载时 modelValue 若已为 true，也必须装上监听，
+  // 否则「先置 true 再挂载」的用法下 Esc 关闭与窗口重定位都会失效
+  { immediate: true },
 )
 
 onBeforeUnmount(() => {
   if (typeof window === 'undefined') return
   window.removeEventListener('resize', updatePosition)
   window.removeEventListener('scroll', updatePosition, true)
+  window.removeEventListener('keydown', handleKeydown)
 })
+
+/** 引导气泡是 aria-modal 对话框，必须支持 Esc 关闭 */
+function handleKeydown(event: KeyboardEvent): void {
+  if (event.key === 'Escape') close()
+}
 
 function close(): void {
   emit('update:modelValue', false)
@@ -168,7 +179,13 @@ function handleMaskClick(): void {
     <div v-if="modelValue" class="kb-tour">
       <div class="kb-tour__mask" @click="handleMaskClick" />
       <div class="kb-tour__highlight" :style="highlightStyle" />
-      <div class="kb-tour__bubble" :style="bubbleStyle" role="dialog" aria-modal="true">
+      <div
+        class="kb-tour__bubble"
+        :style="bubbleStyle"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="step?.title || t('tour.label')"
+      >
         <button class="kb-tour__close" type="button" :aria-label="t('tour.close')" @click="close">
           <Icon name="close" :size="14" />
         </button>

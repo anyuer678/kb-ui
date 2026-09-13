@@ -73,10 +73,30 @@ import {
   KbTimeline,
   KbDrawer,
   KbResult,
+  KbAffix,
+  KbAnchor,
+  KbAutoComplete,
+  KbBackTop,
+  KbConfigProvider,
+  KbContextMenu,
+  KbCountUp,
+  KbImage,
+  KbImagePreview,
+  KbSplitter,
+  KbStatistic,
+  KbTimePicker,
+  KbTour,
+  KbTreeSelect,
   notification,
   message,
 } from 'kb-ui-vue'
-import type { CascaderOption } from 'kb-ui-vue'
+import type {
+  AnchorItem,
+  AutoCompleteOption,
+  CascaderOption,
+  ContextMenuItem,
+  TourStep,
+} from 'kb-ui-vue'
 import { fetchRegionTree, fetchRegions, fetchUsers } from './api'
 import type { ApiUser, RegionNode } from './api'
 
@@ -426,6 +446,95 @@ onMounted(() => {
   void loadUsers()
   void loadRemoteTree()
 })
+
+// ===== 新增组件演示（v0.3.x 扩展：配置 / 选择器 / 浮层 / 布局）=====
+const timePickerValue = ref('09:30')
+
+const treeSelectValue = ref('hz')
+const treeSelectOptions = [
+  {
+    label: '浙江',
+    value: 'zj',
+    children: [
+      { label: '杭州', value: 'hz' },
+      { label: '宁波', value: 'nb' },
+    ],
+  },
+  {
+    label: '广东',
+    value: 'gd',
+    children: [
+      { label: '广州', value: 'gz' },
+      { label: '深圳', value: 'sz' },
+    ],
+  },
+]
+
+const autoCompleteValue = ref('')
+const autoCompleteOptions: AutoCompleteOption[] = [
+  { value: 'vue' },
+  { value: 'vite' },
+  { value: 'vitest' },
+  { value: 'vue-router' },
+  { value: 'typescript' },
+  { value: 'pnpm' },
+  { value: 'element-plus' },
+]
+
+const splitterSize = ref([38, 62])
+
+const tourVisible = ref(false)
+const tourSteps: TourStep[] = [
+  { title: '欢迎使用 KB UI', description: '这是一段引导气泡，用来介绍页面的新功能。' },
+  { title: '按需引入', description: '通过 kb-ui-vue/resolver 即可按需加载组件与对应样式。' },
+  { title: '主题切换', description: '顶部可切换颜色与风格主题，全部由 CSS 变量驱动。' },
+]
+
+const contextMenuItems: ContextMenuItem[] = [
+  { key: 'copy', label: '复制', icon: 'check' },
+  { key: 'paste', label: '粘贴' },
+  { key: 'rename', label: '重命名', divided: true },
+  { key: 'remove', label: '删除', icon: 'close', divided: true, disabled: true },
+]
+const contextMenuLast = ref('')
+function onContextMenuSelect(key: string) {
+  contextMenuLast.value = contextMenuItems.find((item) => item.key === key)?.label ?? key
+}
+
+/** 生成离线的占位图（data URI），保证 demo 不依赖外网 */
+function sampleImage(color: string, label: string) {
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300">` +
+    `<rect width="480" height="300" fill="${color}"/>` +
+    `<text x="240" y="164" font-size="44" fill="#ffffff" text-anchor="middle" ` +
+    `font-family="sans-serif">${label}</text></svg>`
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
+}
+const galleryImages = [
+  sampleImage('#3b82f6', '图片 1'),
+  sampleImage('#0d9488', '图片 2'),
+  sampleImage('#e11d48', '图片 3'),
+]
+const imagePreviewVisible = ref(false)
+const imagePreviewIndex = ref(0)
+function openImagePreview(index: number) {
+  imagePreviewIndex.value = index
+  imagePreviewVisible.value = true
+}
+
+const anchorItems: AnchorItem[] = [
+  { title: '图片与选择器', href: '#new-pickers' },
+  { title: '布局与浮层', href: '#new-overlay' },
+  { title: '国际化配置', href: '#new-config' },
+]
+
+const configLocale = ref<'zh-CN' | 'en-US'>('zh-CN')
+
+const statistics = [
+  { title: '本月营收', value: 1286543.5, prefix: '¥', precision: 2, groupSeparator: true },
+  { title: '订单数', value: 8462, suffix: '单' },
+  { title: '转化率', value: 32.7, suffix: '%', precision: 1 },
+]
 
 const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-left', 'arrow-right', 'search', 'menu', 'loading', 'chevron-down']
 </script>
@@ -884,6 +993,166 @@ const icons = ['check', 'close', 'info', 'warning', 'success', 'error', 'arrow-l
           </template>
         </KbResult>
       </div>
+    </section>
+
+    <!-- 新增组件（v0.3.x 扩展） -->
+    <section id="section-new" class="block">
+      <h2>新增组件（v0.3.x 扩展）</h2>
+      <KbDivider />
+      <p class="hint">
+        本轮新增 12 个组件：图片与预览、时间/树选择、自动补全、分栏、引导、右键菜单、固钉、锚点、回到顶部、统计数值、全局配置。
+      </p>
+
+      <h3 id="new-pickers">Image 图片 · ImagePreview 预览</h3>
+      <KbSpace wrap :size="16" align="center">
+        <KbImage
+          v-for="(src, i) in galleryImages"
+          :key="src"
+          :src="src"
+          :alt="`示例图 ${i + 1}`"
+          :width="180"
+          :height="112"
+          fit="cover"
+        />
+        <KbButton @click="openImagePreview(0)">打开预览器</KbButton>
+      </KbSpace>
+      <p class="hint">点击图片即可预览，或点右侧按钮从第 1 张开始浏览（可左右切换）。</p>
+      <KbImagePreview
+        v-model:visible="imagePreviewVisible"
+        v-model:index="imagePreviewIndex"
+        :images="galleryImages"
+      />
+
+      <h3>TimePicker 时间选择</h3>
+      <KbSpace wrap align="center">
+        <KbTimePicker v-model="timePickerValue" clearable />
+        <KbTimePicker format="HH:mm:ss" :minute-step="5" placeholder="步长 5 分钟" />
+        <span class="hint">已选：{{ timePickerValue || '（空）' }}</span>
+      </KbSpace>
+
+      <h3>TreeSelect 树选择 / AutoComplete 自动补全</h3>
+      <KbSpace wrap align="center">
+        <KbTreeSelect
+          v-model="treeSelectValue"
+          :options="treeSelectOptions"
+          placeholder="请选择城市"
+          clearable
+          default-expand-all
+          style="width: 220px"
+        />
+        <KbAutoComplete
+          v-model="autoCompleteValue"
+          :options="autoCompleteOptions"
+          placeholder="输入 vue / vite 试试"
+          clearable
+          style="width: 220px"
+        />
+      </KbSpace>
+      <p class="hint">城市：{{ treeSelectValue || '（空）' }} · 补全输入：{{ autoCompleteValue || '（空）' }}</p>
+
+      <h3 id="new-overlay">Splitter 分栏（拖拽 / 键盘调整）</h3>
+      <KbSplitter
+        v-model="splitterSize"
+        style="height: 150px; border: 1px solid var(--kb-color-border); border-radius: var(--kb-radius-md)"
+      >
+        <template #panel-0>
+          <div style="display: flex; align-items: center; justify-content: center; height: 100%">
+            左栏 {{ splitterSize[0] }}%
+          </div>
+        </template>
+        <template #panel-1>
+          <div style="display: flex; align-items: center; justify-content: center; height: 100%">
+            右栏 {{ splitterSize[1] }}%
+          </div>
+        </template>
+      </KbSplitter>
+
+      <h3>ContextMenu 右键菜单 / Tour 引导 / BackTop 回到顶部</h3>
+      <KbSpace wrap align="center">
+        <KbContextMenu :items="contextMenuItems" @select="onContextMenuSelect">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 220px;
+              height: 88px;
+              border: 1px dashed var(--kb-color-border);
+              border-radius: var(--kb-radius-md);
+              color: var(--kb-color-text-3);
+              font-size: var(--kb-font-size-sm);
+              cursor: context-menu;
+            "
+          >
+            在此区域点击右键
+          </div>
+        </KbContextMenu>
+        <KbButton type="primary" @click="tourVisible = true">开始引导</KbButton>
+      </KbSpace>
+      <p class="hint">最近选择：{{ contextMenuLast || '（未选择）' }}</p>
+      <KbTour v-model="tourVisible" :steps="tourSteps" />
+      <!-- 页面较长，滚过 400px 后右下角会出现回顶按钮 -->
+      <KbBackTop :visibility-height="400" />
+
+      <h3>Anchor 锚点 / Affix 固钉</h3>
+      <KbAnchor :items="anchorItems" />
+      <div
+        id="scroll-demo"
+        style="
+          height: 200px;
+          overflow: auto;
+          border: 1px solid var(--kb-color-border);
+          border-radius: var(--kb-radius-md);
+        "
+      >
+        <KbAffix target="#scroll-demo" :offset-top="0">
+          <div
+            style="
+              padding: 8px 12px;
+              background: var(--kb-color-bg-elevated);
+              border-bottom: 1px solid var(--kb-color-border);
+              color: var(--kb-color-text-2);
+              font-size: var(--kb-font-size-sm);
+            "
+          >
+            Affix：滚动时固定在本容器顶部
+          </div>
+        </KbAffix>
+        <div style="padding: 12px">
+          <p v-for="n in 16" :key="n" class="hint">第 {{ n }} 行 · 滚动这个容器可以看到固钉效果。</p>
+        </div>
+      </div>
+
+      <h3 id="new-config">Statistic 统计数值 / CountUp 数字滚动</h3>
+      <KbRow :gutter="12">
+        <KbCol v-for="item in statistics" :key="item.title" :span="8">
+          <KbStatistic
+            :title="item.title"
+            :value="item.value"
+            :prefix="item.prefix"
+            :suffix="item.suffix"
+            :precision="item.precision"
+            :group-separator="item.groupSeparator"
+          />
+        </KbCol>
+      </KbRow>
+      <p class="hint">
+        数字滚动：<KbCountUp :end="8866" prefix="¥" :duration="1200" /> ·
+        <KbCountUp :end="99.5" suffix="%" :decimals="1" />
+      </p>
+
+      <h3>ConfigProvider 全局配置（语言 / 尺寸）</h3>
+      <KbSpace wrap align="center">
+        <KbRadio v-model="configLocale" value="zh-CN">中文</KbRadio>
+        <KbRadio v-model="configLocale" value="en-US">English</KbRadio>
+      </KbSpace>
+      <KbConfigProvider :locale="configLocale" size="small">
+        <KbSpace direction="vertical" :size="12" style="width: 100%">
+          <KbEmpty />
+          <KbPagination :current-page="1" :total="64" :page-size="10" />
+        </KbSpace>
+      </KbConfigProvider>
+      <p class="hint">切换语言后，组件内置文案（如空状态描述）会跟随变化。</p>
     </section>
   </div>
 </template>

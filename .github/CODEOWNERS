@@ -1,0 +1,20 @@
+# CODEOWNERS
+# 语法：<匹配模式> <所有者...>
+# 详见 https://docs.github.com/articles/about-code-owners
+
+# 默认：所有文件由仓库所有者审查
+*                       @anyuer678
+
+# 组件库
+/packages/ui/           @anyuer678
+/packages/utils/        @anyuer678
+/packages/api/          @anyuer678
+/packages/config/       @anyuer678
+/packages/create-kb/    @anyuer678
+
+# 文档站与内部文档
+/docs/                  @anyuer678
+
+# CI、发布与仓库治理
+/.github/               @anyuer678
+/.changeset/            @anyuer678
