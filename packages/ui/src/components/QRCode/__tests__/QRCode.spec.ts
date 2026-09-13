@@ -79,7 +79,8 @@ describe('QRCode 编码器与参考库一致性', () => {
     }
   }
 
-  it('多版本字节模式（含版本信息区）与参考库一致', () => {
+  // 40 版本 × 4 级纠错 × 全矩阵逐位比对，coverage 插桩下会明显变慢，显式放宽超时
+  it('多版本字节模式（含版本信息区）与参考库一致', { timeout: 30_000 }, () => {
     const text = 'https://kb-ui.dev/docs/qrcode'
     for (const v of VERSIONS) {
       for (const level of LEVELS) {

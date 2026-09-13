@@ -18,13 +18,22 @@ import {
   KbButton,
   KbCard,
   KbCheckbox,
+  KbContent,
   KbDialog,
+  KbFloatButton,
+  KbFloatButtonGroup,
+  KbFooter,
+  KbHeader,
   KbImage,
   KbInput,
+  KbLayout,
+  KbMentions,
   KbPagination,
   KbProgress,
+  KbQRCode,
   KbRadio,
   KbSelect,
+  KbSider,
   KbSpace,
   KbSplitter,
   KbSteps,
@@ -33,6 +42,7 @@ import {
   KbTabs,
   KbTag,
   KbTreeSelect,
+  KbVirtualList,
 } from '../../src/index'
 import './harness.css'
 
@@ -269,6 +279,94 @@ const FIXTURES: Record<string, () => VNode> = {
       placeholder: '请选择城市',
       style: 'width:240px',
     }),
+
+  Layout: () =>
+    h(
+      KbLayout,
+      { style: 'width:100%;height:320px;border:1px solid var(--kb-color-border)' },
+      () => [
+        h(KbHeader, { style: 'background:var(--kb-color-fill-2)' }, () => 'Header'),
+        h(
+          KbLayout,
+          null,
+          () => [
+            h(
+              KbSider,
+              { width: 140, collapsible: false, style: 'background:var(--kb-color-fill-1)' },
+              () => 'Sider',
+            ),
+            h(KbContent, { style: 'padding:16px' }, () => 'Content'),
+          ],
+        ),
+        h(KbFooter, { style: 'background:var(--kb-color-fill-2)' }, () => 'Footer'),
+      ],
+    ),
+
+  FloatButton: () =>
+    h(KbSpace, { wrap: true, size: 14 }, () => [
+      h(KbFloatButton, { icon: 'plus' }),
+      h(KbFloatButton, { type: 'primary', icon: 'plus' }),
+      h(KbFloatButton, { type: 'success', icon: 'check' }),
+      h(KbFloatButton, { type: 'warning', icon: 'warning' }),
+      h(KbFloatButton, { type: 'danger', icon: 'close' }),
+      h(KbFloatButton, { shape: 'square', icon: 'menu' }),
+      h(KbFloatButton, { icon: 'plus', description: '新建', tooltip: '新建文档' }),
+      h(KbFloatButton, { disabled: true, icon: 'plus' }),
+      // 受控展开的按钮组（避免依赖悬浮/点击交互，保证确定性）
+      h(
+        KbFloatButtonGroup,
+        { direction: 'top', open: true },
+        () => [
+          h(KbFloatButton, { type: 'primary', icon: 'plus' }),
+          h(KbFloatButton, { icon: 'info' }),
+        ],
+      ),
+    ]),
+
+  Mentions: () =>
+    h('div', { style: 'width:360px' }, [
+      h(KbMentions, {
+        modelValue: '请查看 @设计稿 并通知 @前端',
+        options: [
+          { value: '设计稿', label: '设计稿' },
+          { value: '前端', label: '前端' },
+          { value: '后端', label: '后端', disabled: true },
+        ],
+        placeholder: '输入 @ 触发提及',
+        rows: 3,
+      }),
+      h('div', { style: { ...TEXT, 'margin-top': '10px' } }, '在输入框键入 @ 唤起候选'),
+    ]),
+
+  VirtualList: () => {
+    const ITEMS = Array.from({ length: 200 }, (_, i) => ({
+      id: i,
+      name: `列表项 ${String(i + 1).padStart(3, '0')}`,
+    }))
+    return h(
+      KbVirtualList,
+      { items: ITEMS, itemHeight: 32, height: 240, style: 'width:280px' },
+      {
+        item: ({ item }: { item: { id: number; name: string } }) =>
+          h(
+            'div',
+            {
+              key: item.id,
+              style:
+                'height:32px;line-height:32px;padding:0 12px;border-bottom:1px solid var(--kb-color-border-light)',
+            },
+            item.name,
+          ),
+      },
+    )
+  },
+
+  QRCode: () =>
+    h(KbSpace, { wrap: true, size: 16, align: 'center' }, () => [
+      h(KbQRCode, { value: 'https://kb-ui.dev' }),
+      h(KbQRCode, { value: 'https://kb-ui.dev', size: 100, level: 'H' }),
+      h(KbQRCode, { value: 'https://kb-ui.dev', color: '#2563eb', bgColor: '#f8fafc' }),
+    ]),
 }
 
 const params = new URLSearchParams(window.location.search)
