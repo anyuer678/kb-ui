@@ -39,6 +39,8 @@ export interface ImageLocale {
   loadFailed: string
   /** 点击预览的无障碍标注 */
   preview: string
+  /** 预览浮层（role=dialog）的无障碍标注 */
+  previewDialog: string
   zoomIn: string
   zoomOut: string
   rotate: string
@@ -53,11 +55,36 @@ export interface TourLocale {
   skip: string
   /** 关闭引导的无障碍标注 */
   close: string
+  /** 当前步骤没有标题时，引导气泡（role=dialog）的回退无障碍标注 */
+  label: string
+}
+
+export interface SplitterLocale {
+  /** 分隔条（role=separator）的无障碍标注 */
+  label: string
+}
+
+export interface ContextMenuLocale {
+  /** 右键菜单（role=menu）的无障碍标注 */
+  label: string
 }
 
 export interface TimePickerLocale {
   /** 未选择时的占位文案 */
   placeholder: string
+  /** 选择框（role=combobox）的无障碍标注 */
+  label: string
+  /** 小时列（role=listbox）的无障碍标注 */
+  hour: string
+  /** 分钟列（role=listbox）的无障碍标注 */
+  minute: string
+  /** 秒列（role=listbox）的无障碍标注 */
+  second: string
+}
+
+export interface TreeSelectLocale {
+  /** 选择框（role=combobox）与下拉树的无障碍标注 */
+  label: string
 }
 
 export interface EmptyLocale {
@@ -195,7 +222,10 @@ export interface ProjectLocale {
   empty: EmptyLocale
   image: ImageLocale
   tour: TourLocale
+  splitter: SplitterLocale
+  contextMenu: ContextMenuLocale
   timePicker: TimePickerLocale
+  treeSelect: TreeSelectLocale
   list: ListLocale
   table: TableLocale
   cascader: CascaderLocale
@@ -226,6 +256,7 @@ export type LocalePath =
   | 'backTop.label'
   | 'image.loadFailed'
   | 'image.preview'
+  | 'image.previewDialog'
   | 'image.zoomIn'
   | 'image.zoomOut'
   | 'image.rotate'
@@ -236,7 +267,15 @@ export type LocalePath =
   | 'tour.finish'
   | 'tour.skip'
   | 'tour.close'
+  | 'tour.label'
+  | 'splitter.label'
+  | 'contextMenu.label'
   | 'timePicker.placeholder'
+  | 'timePicker.label'
+  | 'timePicker.hour'
+  | 'timePicker.minute'
+  | 'timePicker.second'
+  | 'treeSelect.label'
   | 'empty.description'
   | 'list.empty'
   | 'table.emptyText'

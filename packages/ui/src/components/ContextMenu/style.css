@@ -27,6 +27,13 @@
   background: var(--kb-color-bg-elevated);
 }
 
+/* 键盘导航时必须有可见焦点，否则无法用键盘操作菜单 */
+.kb-contextmenu__item:focus-visible {
+  background: var(--kb-color-bg-elevated);
+  outline: 2px solid var(--kb-color-primary);
+  outline-offset: -2px;
+}
+
 .kb-contextmenu__item--disabled {
   color: var(--kb-color-text-3);
   cursor: not-allowed;

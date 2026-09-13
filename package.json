@@ -25,11 +25,14 @@
     "sync:api-template:check": "node scripts/sync-api-template.mjs --check",
     "e2e": "node scripts/e2e.mjs",
     "visual:test": "playwright test --config packages/ui/visual/playwright.config.ts",
-    "visual:update": "playwright test --config packages/ui/visual/playwright.config.ts --update-snapshots"
+    "visual:update": "playwright test --config packages/ui/visual/playwright.config.ts --update-snapshots",
+    "test:coverage": "pnpm --filter kb-ui-vue test:coverage",
+    "check-size": "pnpm --filter kb-ui-vue check-size"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.0",
     "@kb/config": "workspace:*",
+    "@playwright/test": "^1.63.0",
     "concurrently": "^10.0.4",
     "eslint": "^10.8.1",
     "prettier": "^3.9.6",

@@ -5,9 +5,15 @@ on:
     branches: [master]
   pull_request:
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ci:
+    name: Lint · Typecheck · Test · Build
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
         with:
@@ -33,8 +39,16 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      # 单测里已含 SSR 冒烟与 axe a11y 用例（见 packages/ui/src/__tests__）
       - name: Test
         run: pnpm test
+
+      - name: Test coverage
+        run: pnpm test:coverage
+
+      # 体积预算：产物原始/gzip 体积 + 单组件引入的 tree-shaking 比例
+      - name: Bundle size budget
+        run: pnpm check-size
 
       - name: Check create-kb templates are in sync with packages/api
         run: pnpm sync:api-template:check
@@ -45,3 +59,40 @@ jobs:
       - name: Changeset status
         run: pnpm changeset status --since=origin/master
 
+  visual:
+    name: Visual regression (advisory)
+    runs-on: windows-latest
+    timeout-minutes: 25
+    # 快照与「操作系统 + 字体渲染 + 浏览器版本」强相关：基线是在 Windows 上生成的，
+    # 放到 ubuntu runner 上必然对不上。所以这里跑 windows-latest，
+    # 且先以「只报告、不拦截」的方式接入（continue-on-error）。
+    # 等基线在该 runner 上稳定跑绿后，删掉下面这行即可升级为强制门禁。
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install chromium
+
+      - name: Run visual regression
+        run: pnpm visual:test
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-report
+          path: |
+            packages/ui/visual/playwright-report
+            packages/ui/visual/test-results
+          retention-days: 7

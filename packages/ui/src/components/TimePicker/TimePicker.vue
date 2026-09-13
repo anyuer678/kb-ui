@@ -34,6 +34,9 @@ const emit = defineEmits<{
 
 const { t } = useLocale()
 
+/** 面板的稳定 id，供选择框的 aria-controls 引用（ARIA 1.2 要求 combobox 必须带该属性） */
+const panelId = `kb-timepicker-${Math.random().toString(36).slice(2, 8)}`
+
 const open = ref(false)
 const rootEl = ref<HTMLDivElement | null>(null)
 
@@ -103,6 +106,8 @@ onBeforeUnmount(() => document.removeEventListener('click', handleOutside))
       role="combobox"
       tabindex="0"
       :aria-expanded="open"
+      :aria-label="t('timePicker.label')"
+      :aria-controls="panelId"
       @click="toggle"
       @keydown="handleKeydown"
     >
@@ -115,8 +120,8 @@ onBeforeUnmount(() => document.removeEventListener('click', handleOutside))
       <span class="kb-timepicker__arrow">▾</span>
     </div>
 
-    <div v-if="open" class="kb-timepicker__panel">
-      <div class="kb-timepicker__column" role="listbox">
+    <div v-if="open" :id="panelId" class="kb-timepicker__panel">
+      <div class="kb-timepicker__column" role="listbox" :aria-label="t('timePicker.hour')">
         <div
           v-for="item in hourOptions"
           :key="item"
@@ -129,7 +134,7 @@ onBeforeUnmount(() => document.removeEventListener('click', handleOutside))
           {{ item }}
         </div>
       </div>
-      <div class="kb-timepicker__column" role="listbox">
+      <div class="kb-timepicker__column" role="listbox" :aria-label="t('timePicker.minute')">
         <div
           v-for="item in minuteOptions"
           :key="item"
@@ -142,7 +147,7 @@ onBeforeUnmount(() => document.removeEventListener('click', handleOutside))
           {{ item }}
         </div>
       </div>
-      <div v-if="withSeconds" class="kb-timepicker__column" role="listbox">
+      <div v-if="withSeconds" class="kb-timepicker__column" role="listbox" :aria-label="t('timePicker.second')">
         <div
           v-for="item in secondOptions"
           :key="item"

@@ -12,5 +12,19 @@ export default defineConfig({
     globals: true,
     include: ['src/**/*.spec.ts'],
     passWithNoTests: true,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text-summary', 'html'],
+      reportsDirectory: './coverage',
+      include: ['src/**/*.{ts,vue}'],
+      exclude: [
+        'src/**/__tests__/**',
+        'src/**/*.d.ts',
+        'src/index.ts',
+        'src/resolver-map.ts',
+        'src/resolver.ts',
+        'src/components/**/index.ts',
+      ],
+    },
   },
 })
