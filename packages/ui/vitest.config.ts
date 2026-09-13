@@ -25,6 +25,14 @@ export default defineConfig({
         'src/resolver.ts',
         'src/components/**/index.ts',
       ],
+      // 光上报不拦截等于没有门禁：覆盖率掉到阈值以下直接让 CI 失败。
+      // 阈值按当前实测值（约 87/75/87/89）留了 2~3 个点的余量。
+      thresholds: {
+        statements: 85,
+        branches: 72,
+        functions: 84,
+        lines: 87,
+      },
     },
   },
 })

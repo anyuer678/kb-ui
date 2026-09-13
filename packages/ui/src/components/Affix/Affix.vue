@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, type CSSProperties } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch, type CSSProperties } from 'vue'
 
 defineOptions({ name: 'KbAffix' })
 
@@ -8,7 +8,11 @@ export interface AffixProps {
   offsetTop?: number
   /** 距视口底部的固定偏移（px） */
   offsetBottom?: number
-  /** 固定范围的边界容器（CSS 选择器）；固定不会超出该容器 */
+  /**
+   * 滚动容器 / 固定范围的边界（CSS 选择器）。
+   * 传入后：以「容器顶部 + offsetTop」为固定线，并监听该容器的 scroll；
+   * 不传则以视口顶部为固定线。固定不会超出该容器。
+   */
   target?: string
   /** 固定时是否保留占位元素，避免原位置塌陷导致布局跳动，默认 true */
   placeholder?: boolean
@@ -29,12 +33,21 @@ const fixedStyle = ref<CSSProperties>({})
 /** 占位元素的尺寸，固定后由它撑住原位置 */
 const placeholderStyle = ref<CSSProperties>({})
 
-/** 滚动监听源：有 target 时监听最近的滚动容器（简化处理为 window） */
-let boundaryEl: HTMLElement | null = null
+/**
+ * target 指向的容器：既是固定范围的边界，也是滚动监听源。
+ * 只监听 window 的话，容器内部滚动根本不会触发 update，target 形同虚设。
+ */
+let targetEl: HTMLElement | null = null
 
-function resolveBoundary(): HTMLElement | null {
+function resolveTarget(): HTMLElement | null {
   if (!props.target || typeof document === 'undefined') return null
   return document.querySelector<HTMLElement>(props.target)
+}
+
+function bindTargetScroll(): void {
+  targetEl?.removeEventListener('scroll', update)
+  targetEl = resolveTarget()
+  targetEl?.addEventListener('scroll', update, { passive: true })
 }
 
 function update(): void {
@@ -45,10 +58,13 @@ function update(): void {
   // 宽度随内容走，避免固定后因脱离文档流而收缩
   placeholderStyle.value = { width: `${rect.width}px`, height: `${rect.height}px` }
 
-  const boundaryRect = boundaryEl?.getBoundingClientRect() ?? null
+  const targetRect = targetEl?.getBoundingClientRect() ?? null
+  // 有 target 时以「容器顶部 + offsetTop」为固定线；否则以视口顶部为准
+  const refTop = (targetRect ? targetRect.top : 0) + props.offsetTop
 
   if (props.offsetBottom !== undefined) {
-    const shouldFix = rect.bottom > window.innerHeight - props.offsetBottom
+    const viewportBottom = targetRect ? targetRect.bottom : window.innerHeight
+    const shouldFix = rect.bottom > viewportBottom - props.offsetBottom
     applyFixed(shouldFix, {
       position: 'fixed',
       bottom: `${props.offsetBottom}px`,
@@ -58,12 +74,12 @@ function update(): void {
     return
   }
 
-  const shouldFix = rect.top < props.offsetTop
+  const shouldFix = rect.top < refTop
   // 容器已滚过固定线时不再固定，否则元素会溢出容器
-  const overBoundary = boundaryRect ? boundaryRect.bottom < props.offsetTop + rect.height : false
+  const overBoundary = targetRect ? targetRect.bottom < refTop + rect.height : false
   applyFixed(shouldFix && !overBoundary, {
     position: 'fixed',
-    top: `${props.offsetTop}px`,
+    top: `${refTop}px`,
     left: `${rect.left}px`,
     width: `${rect.width}px`,
   })
@@ -80,13 +96,23 @@ function applyFixed(next: boolean, style: CSSProperties): void {
 }
 
 onMounted(() => {
-  boundaryEl = resolveBoundary()
+  bindTargetScroll()
   window.addEventListener('scroll', update, { passive: true })
   window.addEventListener('resize', update, { passive: true })
   update()
 })
 
+// target 可能在运行时变化（比如异步渲染出的容器），重新解析并续接监听
+watch(
+  () => props.target,
+  () => {
+    bindTargetScroll()
+    update()
+  },
+)
+
 onBeforeUnmount(() => {
+  targetEl?.removeEventListener('scroll', update)
   window.removeEventListener('scroll', update)
   window.removeEventListener('resize', update)
 })

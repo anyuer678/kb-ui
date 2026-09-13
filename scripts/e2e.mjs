@@ -1,51 +1,127 @@
 /**
- * KB UI 端到端测试（playwright + 真实浏览器）
- * 前置：pnpm start 已启动 playground(:8070) 与 docs(:8071)
- * 运行：pnpm e2e
- * 用法：脚本自动探测 playwright（优先项目依赖，其次本机 MCP 缓存）
+ * KB UI 端到端测试（Playwright + 真实浏览器）
+ *
+ *   pnpm e2e            # 需要外部已启动 playground(:8070) 与 docs(:8071)，即先 pnpm start
+ *   pnpm e2e --serve    # 脚本自己拉起两个服务、跑完再关掉（CI 用）
+ *   E2E_CHANNEL=msedge  # 可选：指定浏览器频道，默认用 Playwright 自带的 Chromium
+ *
+ * 注意（踩过的坑）：
+ *   - 仓库只装了 @playwright/test，没有安装 playwright 包，直接 require('playwright') 必然失败；
+ *   - 旧版写死 channel:'msedge'，CI 的 ubuntu runner 上没有 Edge，等于 e2e 从来没能在 CI 跑起来；
+ *     现在默认用 Playwright 自带的 Chromium，频道改为可选。
  */
 import { createRequire } from 'node:module'
-import path from 'node:path'
+import { spawn } from 'node:child_process'
 
 const require = createRequire(import.meta.url)
 
+const ARGV_SERVE = process.argv.includes('--serve')
+const PLAYGROUND = 'http://localhost:8070'
+const DOCS = 'http://localhost:8071'
+
+// ---------- Playwright 解析 ----------
 function resolvePlaywright() {
-  try {
-    return require('playwright') // 项目内已安装
-  } catch {
-    // 回退：Reasonix playwright-mcp 缓存（本机开发环境）
-    const candidates = []
-    const appData = process.env.APPDATA
-    if (appData) {
-      candidates.push(
-        path.join(appData, 'reasonix', 'mcp-state', '0d2cf923056558d7', 'playwright-mcp', 'cache', 'npm', '_npx', '86170c4cd1c5da32', 'node_modules', 'playwright'),
-      )
-    }
-    for (const dir of candidates) {
-      try {
-        return require(dir)
-      } catch {
-        /* 继续尝试 */
-      }
+  // @playwright/test 与 playwright 都导出 chromium，项目里装的是前者
+  for (const id of ['@playwright/test', 'playwright']) {
+    try {
+      return require(id)
+    } catch {
+      /* 继续尝试 */
     }
   }
-  throw new Error('未找到 playwright，请先 npm i -D playwright 或检查 MCP 缓存')
+  throw new Error('未找到 Playwright，请先执行 pnpm add -D -w @playwright/test')
 }
 
-const { chromium } = resolvePlaywright()
+// ---------- 服务就绪探测 ----------
+/**
+ * 用 HTTP 探测而不是 TCP 连 127.0.0.1：
+ * Vite 开发服务器在 Windows 上可能只监听 IPv6 回环（::1），
+ * 写死 127.0.0.1 的 TCP 探针会永远 ECONNREFUSED——这是踩过的坑。
+ */
+async function waitForServer(url, timeoutMs = 120_000) {
+  const deadline = Date.now() + timeoutMs
+  let lastError
+  while (Date.now() < deadline) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(2000) })
+      if (res.ok || res.status < 500) return
+      lastError = new Error(`HTTP ${res.status}`)
+    } catch (error) {
+      lastError = error
+    }
+    await new Promise((r) => setTimeout(r, 500))
+  }
+  throw new Error(`等待 ${url} 超时（${timeoutMs}ms）：${lastError?.message ?? ''}`)
+}
 
+// ---------- 自启服务 ----------
+function startServers() {
+  const child = spawn('pnpm', ['start'], {
+    stdio: 'inherit',
+    shell: true,
+    // detached 才能拿到进程组，关停时把整棵树一起杀掉（concurrently 会 fork 子进程）
+    detached: process.platform !== 'win32',
+  })
+  return child
+}
+
+function stopServers(child) {
+  if (!child || child.killed) return
+  try {
+    if (process.platform === 'win32') {
+      spawn('taskkill', ['/pid', String(child.pid), '/T', '/F'], { stdio: 'ignore' })
+    } else {
+      process.kill(-child.pid, 'SIGTERM')
+    }
+  } catch {
+    /* 已退出 */
+  }
+}
+
+// ---------- 断言 ----------
 const results = []
 function check(name, cond) {
   results.push(`${cond ? 'PASS' : 'FAIL'}  ${name}`)
   if (!cond) process.exitCode = 1
 }
 
-const browser = await chromium.launch({ channel: 'msedge', headless: true })
+/** 断言不抛异常才算通过：组件交互崩了（比如未处理的报错）也要能被抓到 */
+async function checkSafe(name, fn) {
+  try {
+    check(name, await fn())
+  } catch (error) {
+    results.push(`FAIL  ${name}（异常：${error.message}）`)
+    process.exitCode = 1
+  }
+}
+
+const { chromium } = resolvePlaywright()
+const launchOptions = { headless: true }
+if (process.env.E2E_CHANNEL) launchOptions.channel = process.env.E2E_CHANNEL
+
+let servers
+if (ARGV_SERVE) {
+  console.log('正在启动 playground(:8070) 与 docs(:8071)…')
+  servers = startServers()
+  try {
+    await waitForServer(PLAYGROUND)
+    await waitForServer(DOCS)
+  } catch (error) {
+    // 起不来就别把服务扔在后台跑着
+    stopServers(servers)
+    throw error
+  }
+  console.log('两个服务已就绪\n')
+}
+
+const browser = await chromium.launch(launchOptions)
 try {
   const page = await browser.newPage()
+  const pageErrors = []
+  page.on('pageerror', (err) => pageErrors.push(err.message))
 
-  // ===== playground (8070) =====
-  await page.goto('http://localhost:8070', { waitUntil: 'networkidle', timeout: 30000 })
+  // ===== playground (8070) · 基础组件 =====
+  await page.goto(PLAYGROUND, { waitUntil: 'networkidle', timeout: 30000 })
   await page.waitForTimeout(1000)
   check('playground 页面标题', (await page.title()).includes('KB UI Playground'))
   check('Button 渲染(>10)', (await page.locator('.kb-button').count()) > 10)
@@ -97,6 +173,127 @@ try {
   await page.waitForTimeout(300)
   check('Checkbox/Radio/Switch 交互无异常', true)
 
+  // ===== playground · 新增组件（v0.3.x 扩展） =====
+  await page.locator('#section-new').scrollIntoViewIfNeeded()
+
+  check('Image 渲染(>=3)', (await page.locator('.kb-image').count()) >= 3)
+
+  // ImagePreview：打开 → 是可命名的模态对话框 → Esc 关闭
+  await checkSafe('ImagePreview 打开为可命名的模态对话框', async () => {
+    await page.getByRole('button', { name: '打开预览器' }).click()
+    await page.waitForTimeout(500)
+    const dialog = page.locator('[role="dialog"][aria-modal="true"]').first()
+    return (await dialog.count()) > 0 && !!(await dialog.getAttribute('aria-label'))
+  })
+  await checkSafe('ImagePreview Esc 关闭', async () => {
+    await page.keyboard.press('Escape')
+    await page.waitForTimeout(500)
+    return (await page.locator('[role="dialog"][aria-modal="true"]').count()) === 0
+  })
+
+  // TimePicker：展开出 listbox，选中后出现已选状态
+  await checkSafe('TimePicker 展开并可选中', async () => {
+    await page.locator('.kb-timepicker__control').first().click()
+    await page.waitForTimeout(400)
+    const options = page.locator('[role="listbox"] [role="option"]')
+    if ((await options.count()) === 0) return false
+    await options.nth(3).click()
+    await page.waitForTimeout(400)
+    return (await page.locator('[role="option"][aria-selected="true"]').count()) > 0
+  })
+  await page.keyboard.press('Escape')
+
+  // TreeSelect：展开出可访问性树
+  await checkSafe('TreeSelect 展开为 role=tree', async () => {
+    await page.locator('.kb-treeselect__control').first().click()
+    await page.waitForTimeout(400)
+    const tree = page.locator('[role="tree"]')
+    return (await tree.count()) > 0 && (await page.locator('[role="treeitem"]').count()) > 0
+  })
+  await page.keyboard.press('Escape')
+
+  // AutoComplete：输入后出候选
+  await checkSafe('AutoComplete 输入后出现候选', async () => {
+    const input = page.locator('.kb-autocomplete input').first()
+    await input.fill('vue')
+    await page.waitForTimeout(500)
+    return (await page.locator('[role="listbox"] [role="option"]').count()) > 0
+  })
+  await page.keyboard.press('Escape')
+
+  // Splitter：separator 可聚焦、键盘可调
+  // 注意必须限定在 .kb-splitter 内：KbDivider 同样是 role="separator"，
+  // 不区分类名会抓到分隔线（它没有 aria-valuenow，断言必然失败）
+  await checkSafe('Splitter 分隔条键盘可调整比例', async () => {
+    const bar = page.locator('.kb-splitter [role="separator"]').first()
+    const before = await bar.getAttribute('aria-valuenow')
+    await bar.focus()
+    await page.keyboard.press('ArrowRight')
+    await page.waitForTimeout(300)
+    const after = await bar.getAttribute('aria-valuenow')
+    return before !== after
+  })
+
+  // ContextMenu：右键出菜单，方向键可移动，Esc 关闭
+  await checkSafe('ContextMenu 右键弹出菜单', async () => {
+    await page.getByText('在此区域点击右键').click({ button: 'right' })
+    await page.waitForTimeout(400)
+    return (
+      (await page.locator('[role="menu"]').count()) > 0 &&
+      (await page.locator('[role="menuitem"]').count()) >= 3
+    )
+  })
+  await checkSafe('ContextMenu Esc 关闭', async () => {
+    await page.keyboard.press('Escape')
+    await page.waitForTimeout(300)
+    return (await page.locator('[role="menu"]').count()) === 0
+  })
+
+  // Tour：开始引导 → 气泡是模态对话框 → Esc 关闭
+  await checkSafe('Tour 气泡为模态对话框', async () => {
+    await page.getByRole('button', { name: '开始引导' }).click()
+    await page.waitForTimeout(500)
+    return (await page.locator('[role="dialog"][aria-modal="true"]').count()) > 0
+  })
+  await checkSafe('Tour Esc 关闭', async () => {
+    await page.keyboard.press('Escape')
+    await page.waitForTimeout(400)
+    return (await page.locator('[role="dialog"][aria-modal="true"]').count()) === 0
+  })
+
+  // BackTop：滚过阈值后出现
+  await checkSafe('BackTop 滚动后出现', async () => {
+    await page.evaluate(() => window.scrollTo(0, 900))
+    await page.waitForTimeout(600)
+    return (await page.locator('.kb-backtop').count()) > 0
+  })
+  await page.evaluate(() => window.scrollTo(0, 0))
+
+  // Anchor：锚点链接渲染
+  check('Anchor 链接渲染(>=3)', (await page.locator('.kb-anchor__link').count()) >= 3)
+
+  // Affix：容器内滚动后固钉
+  await checkSafe('Affix 容器内滚动后固定', async () => {
+    await page.locator('#scroll-demo').evaluate((el) => {
+      el.scrollTop = 150
+    })
+    await page.waitForTimeout(500)
+    return (await page.locator('.kb-affix__inner--fixed').count()) > 0
+  })
+
+  // Statistic / CountUp
+  check('Statistic 渲染(>=3)', (await page.locator('.kb-statistic').count()) >= 3)
+  check('CountUp 渲染', (await page.locator('.kb-countup').count()) > 0)
+
+  // ConfigProvider：切换语言，内置文案跟随变化
+  await checkSafe('ConfigProvider 切英文后内置文案变化', async () => {
+    await page.getByText('English', { exact: true }).click()
+    await page.waitForTimeout(500)
+    return (await page.getByText('No data').count()) > 0
+  })
+  await page.getByText('中文', { exact: true }).click()
+  await page.waitForTimeout(300)
+
   // 暗色主题 token 生效
   await page.evaluate(() => {
     document.documentElement.dataset.theme = 'dark'
@@ -107,11 +304,14 @@ try {
   )
   check('暗色主题 token 切换生效', darkBg === '#0f172a')
 
+  // 整个流程跑完，页面不应有未捕获异常
+  check(`playground 无未捕获异常（${pageErrors.length}）`, pageErrors.length === 0)
+
   // ===== docs (8071) =====
-  await page.goto('http://localhost:8071', { waitUntil: 'networkidle', timeout: 30000 })
+  await page.goto(DOCS, { waitUntil: 'networkidle', timeout: 30000 })
   await page.waitForTimeout(800)
   check('docs 加载', (await page.title()).includes('KB UI'))
-  await page.goto('http://localhost:8071/components/button', { waitUntil: 'networkidle', timeout: 30000 })
+  await page.goto(`${DOCS}/components/button`, { waitUntil: 'networkidle', timeout: 30000 })
   await page.waitForTimeout(800)
   check('docs 组件页渲染 Button', (await page.locator('.kb-button').count()) > 0)
   check('docs 组件页 API 表格', (await page.locator('table').count()) > 0)
@@ -124,6 +324,7 @@ try {
   )
 } finally {
   await browser.close()
+  stopServers(servers)
 }
 
 console.log('\n===== KB UI 端到端测试结果 =====')

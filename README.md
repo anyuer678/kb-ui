@@ -39,7 +39,7 @@
 - **`ConfigProvider` + 国际化**：`locale` / `size` / `zIndex` / `theme` 统一注入；内置 `zh-CN`、`en-US` 语言包，`useLocale()` 返回响应式 `locale`，切换即时重渲染；Empty / List / Search / Popconfirm / Cascader / Calendar / Carousel / ColorPicker / InputPassword / Pagination / DatePicker / Table / Transfer / Upload / Dialog / Form 共 16 个组件完成文案国际化，主题同步到 `<html data-theme>`
 - **按需引入 + IDE 类型**：新增独立构建入口 `kb-ui-vue/resolver`（导出 `KbResolver`）与 `dist/global.d.ts`（70 条全局组件声明）
 - **文档**：新增 `guide/i18n.md`、`guide/on-demand.md`、`components/config-provider.md` 以及 11 个新组件文档页，侧边栏已挂载
-- **质量门禁补强**：单测 511 例 / 72 个测试文件全绿；新增 **SSR 冒烟测试**（node 环境对全部组件跑 `renderToString`，拦截未做环境判断的 `window` / `document` 访问）、**axe-core 可访问性测试**（13 例，复现并修掉了 ContextMenu 键盘导航缺失、TimePicker / TreeSelect combobox 未命名等真实缺陷）、**覆盖率上报**（v8）与**体积预算校验**（含 tree-shaking 比例，见下）
+- **质量门禁补强**：单测 512 例 / 72 个测试文件全绿；新增 **SSR 冒烟测试**（node 环境对全部组件跑 `renderToString`，拦截未做环境判断的 `window` / `document` 访问）、**axe-core 可访问性测试**（13 例，复现并修掉了 ContextMenu 键盘导航缺失、TimePicker / TreeSelect combobox 未命名等真实缺陷）、**覆盖率上报**（v8）与**体积预算校验**（含 tree-shaking 比例，见下）
 - **视觉回归重建**：原用例依赖 playground 路由，而该站是「单页 + 侧边 tab」结构并无路由，`/button` 等路径全部 404 —— 等于从未跑通。现改为独立的**确定性取样台**（`packages/ui/visual/harness`，固定 800×520 画布、关动画、内联占位图），覆盖 18 组件 × 3 主题共 **54 张基线**
 - **仓库治理**：新增 `CONTRIBUTING.md`、`SECURITY.md`、`CODE_OF_CONDUCT.md`、`.github/CODEOWNERS` 与 Dependabot 配置
 
@@ -47,13 +47,15 @@
 
 | 门禁 | 命令 | 说明 |
 |------|------|------|
-| 单元 / SSR / a11y | `pnpm test` | Vitest 511 例（含 71 例 SSR 冒烟、13 例 axe a11y） |
-| 覆盖率 | `pnpm test:coverage` | v8 provider，当前 87%+ 语句覆盖 |
+| 单元 / SSR / a11y | `pnpm test` | Vitest 512 例（含 71 例 SSR 冒烟、13 例 axe a11y） |
+| 覆盖率 | `pnpm test:coverage` | v8 provider，当前 87%+ 语句覆盖；**低于阈值直接失败**（85/72/84/87） |
 | 体积预算 | `pnpm check-size` | 产物原始 / gzip 上限 + 单组件引入的 tree-shaking 比例（当前约 3.6%，阈值 25%） |
 | 视觉回归 | `pnpm test:visual` | Playwright 快照比对，54 张基线；`pnpm test:visual:update` 重刷 |
-| 端到端 | `pnpm e2e` | playground + docs 冒烟 |
+| 端到端 | `pnpm e2e` | 真实浏览器跑 37 项检查：老组件交互 + 12 个新组件 + 主题 token + 文档站 |
 
-> 视觉基线与「操作系统 + 字体渲染 + 浏览器版本」强相关，必须在同一平台生成。本仓库基线在 **Windows** 上生成，CI 中对应的 `visual` job 也跑 `windows-latest`，且目前为**只报告不拦截**（`continue-on-error`）——在该 runner 上稳定跑绿后可删掉这一行升级为强制门禁。
+> 视觉基线与「操作系统 + 字体渲染 + 浏览器版本」强相关，必须在同一平台生成。本仓库基线在 **Windows** 上生成，CI 里 `visual` job 同样跑 `windows-latest`，已作为**强制门禁**接入。
+
+> `pnpm e2e` 默认假设你已 `pnpm start` 起好服务；加 `--serve` 则由脚本自己拉起 playground(:8070) 与 docs(:8071)、跑完再关掉（CI 用这个）。默认使用 Playwright 自带 Chromium，需要本机 Edge 时可设 `E2E_CHANNEL=msedge`。
 
 
 ### 主题系统（46 套）
@@ -92,7 +94,7 @@ pnpm api        # 起本地后端（tsx watch，默认 :8082）
 | `ai` | LLM 工作台（OpenAI 兼容 + SSE 流式 + 聊天前端） |
 
 ### DevOps 资产
-CI（lint / typecheck / test / coverage / 体积预算 / build / 模板一致性校验，见 `.github/workflows/ci.yml`）、视觉回归独立 job、GitHub Pages 文档部署、changesets 自动发布、Dependabot 依赖更新、Node 多阶段 Dockerfile 与多服务 docker-compose（在 `fullstack` 模板内）、部署检查清单（见 `docs/devops-模板.md`）
+CI（lint / typecheck / test / coverage / 体积预算 / build / 模板一致性校验，见 `.github/workflows/ci.yml`）、视觉回归独立 job（windows-latest）、端到端独立 job（真实浏览器，脚本自启服务）、GitHub Pages 文档部署、changesets 自动发布、Dependabot 依赖更新、Node 多阶段 Dockerfile 与多服务 docker-compose（在 `fullstack` 模板内）、部署检查清单（见 `docs/devops-模板.md`）
 
 ## 技术栈
 
@@ -102,7 +104,7 @@ CI（lint / typecheck / test / coverage / 体积预算 / build / 模板一致性
 | 后端 | Express 5 + Zod 4（`@kb/api`） |
 | 构建 | Vite 8（lib mode）+ tsup |
 | 包管理 | pnpm 10 workspace monorepo |
-| 测试 | Vitest（511 例单测 + SSR 冒烟 + axe a11y）+ Playwright（e2e + 视觉回归 54 基线） |
+| 测试 | Vitest（512 例单测 + SSR 冒烟 + axe a11y）+ Playwright（e2e + 视觉回归 54 基线） |
 | 文档 | Vitepress 1.6 |
 | 版本管理 | changesets |
 
@@ -167,7 +169,7 @@ pnpm check-size       # 组件库产物体积预算 + tree-shaking 比例校验
 pnpm test:visual      # 视觉回归比对（Playwright 快照）
 pnpm test:visual:update  # 重刷视觉基线（需与运行平台一致）
 pnpm build            # 全部包构建（dist/styles 72 个样式文件）
-pnpm e2e              # 端到端测试（playground + docs）
+pnpm e2e              # 端到端测试（需先 pnpm start；加 --serve 由脚本自启服务）
 pnpm docs:build       # 构建文档站
 pnpm sync:api-template        # 同步 create-kb 后端模板
 pnpm sync:api-template:check  # 校验模板与 packages/api 是否一致
