@@ -87,6 +87,32 @@ describe('KbAffix', () => {
     document.body.removeChild(boundary)
   })
 
+  it('target 指向滚动容器时，监听容器滚动并以容器顶部为固定线', async () => {
+    const container = document.createElement('div')
+    container.id = 'affix-scroll'
+    document.body.appendChild(container)
+    stubRect(container, { top: 100, bottom: 300, height: 200 })
+
+    const wrapper = mount(KbAffix, { props: { offsetTop: 0, target: '#affix-scroll' } })
+
+    // 元素还在容器顶部线以下：不固定
+    stubRect(wrapper.element, { top: 120, height: 40 })
+    container.dispatchEvent(new Event('scroll'))
+    await nextTick()
+    expect(wrapper.find('.kb-affix__inner--fixed').exists()).toBe(false)
+
+    // 容器继续滚动，元素越过容器顶部：固定到容器顶部（100px），而不是视口顶部
+    stubRect(wrapper.element, { top: 90, height: 40 })
+    container.dispatchEvent(new Event('scroll'))
+    await nextTick()
+
+    expect(wrapper.find('.kb-affix__inner--fixed').exists()).toBe(true)
+    expect(wrapper.find('.kb-affix__inner').attributes('style')).toContain('top: 100px')
+
+    wrapper.unmount()
+    document.body.removeChild(container)
+  })
+
   it('卸载后移除滚动与 resize 监听', () => {
     const removeSpy = vi.spyOn(window, 'removeEventListener')
     const wrapper = mount(KbAffix)
