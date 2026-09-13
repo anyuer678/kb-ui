@@ -35,7 +35,7 @@
     "@kb/config": "workspace:*",
     "@types/express": "^5.0.0",
     "@types/node": "^26.5.1",
-    "@types/supertest": "^6.0.0",
+    "@types/supertest": "^7.2.1",
     "supertest": "^7.1.0",
     "tsup": "^8.5.0",
     "tsx": "^4.20.0",
