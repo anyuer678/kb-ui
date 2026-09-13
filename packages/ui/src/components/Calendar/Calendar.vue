@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useLocale } from '../../composables/useGlobalConfig'
+import { defaultLocale } from '../../locale'
 
 defineOptions({ name: 'KbCalendar' })
+
+const { t, locale } = useLocale()
 
 export interface CalendarDay {
   date: Date
@@ -31,13 +35,17 @@ const props = withDefaults(defineProps<CalendarProps>(), {
 
 const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 
-const WEEK_LABELS = ['一', '二', '三', '四', '五', '六', '日']
+/** 周一起始的星期缩写；语言包长度不足 7 时回退到默认包，避免渲染错列 */
+const weekLabels = computed(() => {
+  const shorts = locale.value.calendar.weekShorts
+  return Array.isArray(shorts) && shorts.length === 7 ? shorts : defaultLocale.calendar.weekShorts
+})
 
 const selected = computed(() => (props.modelValue ? new Date(props.modelValue) : new Date()))
 const viewYear = ref(selected.value.getFullYear())
 const viewMonth = ref(selected.value.getMonth()) // 0-11
 
-const title = computed(() => `${viewYear.value} 年 ${viewMonth.value + 1} 月`)
+const title = computed(() => t('calendar.title', viewYear.value, viewMonth.value + 1))
 
 function fmt(date: Date): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
@@ -96,12 +104,26 @@ function nextMonth() {
 <template>
   <div class="kb-calendar">
     <div class="kb-calendar__header">
-      <button class="kb-calendar__nav" type="button" aria-label="上一月" @click="prevMonth">‹</button>
+      <button
+        class="kb-calendar__nav"
+        type="button"
+        :aria-label="t('calendar.prevMonth')"
+        @click="prevMonth"
+      >
+        ‹
+      </button>
       <span class="kb-calendar__title">{{ title }}</span>
-      <button class="kb-calendar__nav" type="button" aria-label="下一月" @click="nextMonth">›</button>
+      <button
+        class="kb-calendar__nav"
+        type="button"
+        :aria-label="t('calendar.nextMonth')"
+        @click="nextMonth"
+      >
+        ›
+      </button>
     </div>
     <div class="kb-calendar__week">
-      <span v-for="label in WEEK_LABELS" :key="label" class="kb-calendar__week-label">{{ label }}</span>
+      <span v-for="label in weekLabels" :key="label" class="kb-calendar__week-label">{{ label }}</span>
     </div>
     <div class="kb-calendar__grid">
       <button

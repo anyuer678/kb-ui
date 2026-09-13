@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useLocale } from '../../composables/useGlobalConfig'
+
 defineOptions({ name: 'KbColorPicker' })
+
+const { t } = useLocale()
 
 export interface ColorPickerProps {
   modelValue?: string
@@ -32,7 +36,7 @@ function select(color: string) {
         :class="{ 'kb-colorpicker__swatch--active': modelValue === color }"
         type="button"
         :style="{ background: color }"
-        :aria-label="`选择颜色 ${color}`"
+        :aria-label="t('colorPicker.pick', color)"
         @click="select(color)"
       />
     </div>

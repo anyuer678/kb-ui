@@ -15,7 +15,15 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./resolver": {
+      "types": "./dist/resolver.d.ts",
+      "import": "./dist/resolver.js",
+      "require": "./dist/resolver.cjs"
+    },
     "./styles/*": "./dist/styles/*",
+    "./global": {
+      "types": "./dist/global.d.ts"
+    },
     "./package.json": "./package.json"
   },
   "sideEffects": [
@@ -27,7 +35,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build && node scripts/build-styles.mjs",
+    "build": "vue-tsc --noEmit && vite build && node scripts/build-styles.mjs && node scripts/build-global-types.mjs",
     "test": "vitest run",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . && stylelint \"src/**/*.css\" --allow-empty-input"

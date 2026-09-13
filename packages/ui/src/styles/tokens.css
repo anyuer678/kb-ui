@@ -50,6 +50,10 @@
   --kb-transition-timing: ease;
 
   /* 层级 */
+  --kb-z-index-affix: 1100;
+  --kb-z-index-backtop: 1200;
   --kb-z-index-message: 2000;
   --kb-z-index-modal: 1000;
+  --kb-z-index-preview: 2100;
+  --kb-z-index-tour: 2200;
 }

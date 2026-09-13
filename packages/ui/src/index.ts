@@ -111,6 +111,37 @@ export * from './components/Transfer'
 export { Transfer as KbTransfer } from './components/Transfer'
 export * from './components/Cascader'
 export { Cascader as KbCascader } from './components/Cascader'
+export * from './components/ConfigProvider'
+export { ConfigProvider as KbConfigProvider } from './components/ConfigProvider'
+export * from './components/BackTop'
+export { BackTop as KbBackTop } from './components/BackTop'
+export * from './components/Affix'
+export { Affix as KbAffix } from './components/Affix'
+export * from './components/Anchor'
+export { Anchor as KbAnchor } from './components/Anchor'
+export * from './components/AutoComplete'
+export { AutoComplete as KbAutoComplete } from './components/AutoComplete'
+export * from './components/TreeSelect'
+export { TreeSelect as KbTreeSelect } from './components/TreeSelect'
+export * from './components/TimePicker'
+export { TimePicker as KbTimePicker } from './components/TimePicker'
+export * from './components/Image'
+export { Image as KbImage } from './components/Image'
+export * from './components/ImagePreview'
+export { ImagePreview as KbImagePreview } from './components/ImagePreview'
+export * from './components/Splitter'
+export { Splitter as KbSplitter } from './components/Splitter'
+export * from './components/Tour'
+export { Tour as KbTour } from './components/Tour'
+export * from './components/ContextMenu'
+export { ContextMenu as KbContextMenu } from './components/ContextMenu'
+
+/** 语言包与全局配置相关导出，供 ConfigProvider 消费或自定义语言包 */
+export { defaultLocale, getLocale, locales, zhCN, enUS } from './locale'
+export type { LocalePath, ProjectLocale } from './locale/types'
+export type { LocaleName } from './locale'
+export { defaultGlobalConfig, useGlobalConfig, useLocale, useSize, useZIndex } from './composables/useGlobalConfig'
+export type { ComponentSize, GlobalConfig, ThemeMode } from './composables/useGlobalConfig'
 
 import type { App, Plugin } from 'vue'
 import { Button } from './components/Button'
@@ -167,6 +198,18 @@ import { CountUp } from './components/CountUp'
 import { List } from './components/List'
 import { Transfer } from './components/Transfer'
 import { Cascader } from './components/Cascader'
+import { ConfigProvider } from './components/ConfigProvider'
+import { BackTop } from './components/BackTop'
+import { Affix } from './components/Affix'
+import { Anchor } from './components/Anchor'
+import { AutoComplete } from './components/AutoComplete'
+import { TreeSelect } from './components/TreeSelect'
+import { TimePicker } from './components/TimePicker'
+import { Image } from './components/Image'
+import { ImagePreview } from './components/ImagePreview'
+import { Splitter } from './components/Splitter'
+import { Tour } from './components/Tour'
+import { ContextMenu } from './components/ContextMenu'
 
 // 由 vite.config.ts 的 define 注入（与 package.json version 保持同步）
 declare const __KB_VERSION__: string
@@ -228,6 +271,18 @@ const components = [
   List,
   Transfer,
   Cascader,
+  ConfigProvider,
+  Affix,
+  Anchor,
+  AutoComplete,
+  BackTop,
+  ContextMenu,
+  Image,
+  ImagePreview,
+  Splitter,
+  TimePicker,
+  Tour,
+  TreeSelect,
 ]
 
 const install: Plugin = (app: App) => {

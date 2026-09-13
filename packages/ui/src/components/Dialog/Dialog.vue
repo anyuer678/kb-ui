@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbDialog' })
+
+const { t } = useLocale()
 
 export interface DialogProps {
   modelValue?: boolean
@@ -75,7 +78,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleKeydown))
         :style="dialogStyle"
         role="dialog"
         aria-modal="true"
-        :aria-label="title || '对话框'"
+        :aria-label="title || t('dialog.panel')"
         tabindex="-1"
       >
         <header v-if="title" class="kb-dialog__header">{{ title }}</header>

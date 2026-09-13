@@ -1,6 +1,12 @@
 import { defineConfig } from 'vitepress'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
+import { readFileSync } from 'node:fs'
+
+const rootDir = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
+// 版本号直接从组件库 package.json 读取，避免文档站与发布版本脱节
+const uiVersion = JSON.parse(readFileSync(resolve(rootDir, 'packages/ui/package.json'), 'utf8'))
+  .version as string
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -9,7 +15,7 @@ export default defineConfig({
   // GitHub Pages 部署到 /kb-ui/ 子路径时通过 BASE_URL 覆盖
   base: process.env.BASE_URL ?? '/',
   vite: {
-    define: { __KB_VERSION__: JSON.stringify('0.2.0') },
+    define: { __KB_VERSION__: JSON.stringify(uiVersion) },
     server: { port: 8071 },
     resolve: {
       alias: {
@@ -32,12 +38,18 @@ export default defineConfig({
           text: '指南',
           items: [
             { text: '快速上手', link: '/guide/quickstart' },
+            { text: '按需引入', link: '/guide/on-demand' },
             { text: '主题定制', link: '/guide/theme' },
+            { text: '国际化', link: '/guide/i18n' },
             { text: '后端模块与请求层', link: '/guide/backend' },
           ],
         },
       ],
       '/components/': [
+        {
+          text: '全局',
+          items: [{ text: 'ConfigProvider 全局配置', link: '/components/config-provider' }],
+        },
         {
           text: '基础组件',
           items: [
@@ -83,6 +95,8 @@ export default defineConfig({
             { text: 'Calendar 日历', link: '/components/calendar' },
             { text: 'Timeline 时间线', link: '/components/timeline' },
             { text: 'Carousel 轮播图', link: '/components/carousel' },
+            { text: 'Image 图片', link: '/components/image' },
+            { text: 'ImagePreview 图片预览', link: '/components/image-preview' },
           ],
         },
         {
@@ -94,6 +108,7 @@ export default defineConfig({
             { text: 'Steps 步骤条', link: '/components/steps' },
             { text: 'Dropdown 下拉菜单', link: '/components/dropdown' },
             { text: 'Segmented 分段控制器', link: '/components/segmented' },
+            { text: 'Anchor 锚点', link: '/components/anchor' },
           ],
         },
         {
@@ -112,6 +127,9 @@ export default defineConfig({
             { text: 'Rate 评分', link: '/components/rate' },
             { text: 'Slider 滑块', link: '/components/slider' },
             { text: 'InputPassword 密码输入', link: '/components/input-password' },
+            { text: 'AutoComplete 自动补全', link: '/components/autocomplete' },
+            { text: 'TreeSelect 树选择', link: '/components/tree-select' },
+            { text: 'TimePicker 时间选择', link: '/components/time-picker' },
           ],
         },
         {
@@ -127,6 +145,11 @@ export default defineConfig({
             { text: 'Loading 加载中', link: '/components/loading' },
             { text: 'CountUp 数字滚动', link: '/components/count-up' },
             { text: 'List 列表', link: '/components/list' },
+            { text: 'BackTop 回到顶部', link: '/components/back-top' },
+            { text: 'Affix 固钉', link: '/components/affix' },
+            { text: 'Splitter 分隔面板', link: '/components/splitter' },
+            { text: 'Tour 漫游式引导', link: '/components/tour' },
+            { text: 'ContextMenu 右键菜单', link: '/components/context-menu' },
           ],
         },
       ],

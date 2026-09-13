@@ -1,0 +1,56 @@
+.kb-anchor {
+  position: relative;
+  font-size: var(--kb-font-size-md);
+}
+
+.kb-anchor__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border-left: 2px solid var(--kb-color-border);
+}
+
+.kb-anchor__sublist {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.kb-anchor__item {
+  position: relative;
+}
+
+.kb-anchor__link {
+  display: block;
+  padding: var(--kb-space-1) var(--kb-space-3);
+  overflow: hidden;
+  color: var(--kb-color-text-2);
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-anchor__link:hover {
+  color: var(--kb-color-primary);
+}
+
+.kb-anchor__item--sub .kb-anchor__link {
+  padding-left: var(--kb-space-5);
+  font-size: var(--kb-font-size-sm);
+}
+
+.kb-anchor__item--active > .kb-anchor__link {
+  color: var(--kb-color-primary);
+}
+
+/* 激活态左侧指示条 */
+.kb-anchor__item--active::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -2px;
+  width: 2px;
+  content: '';
+  background: var(--kb-color-primary);
+}
