@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbCarousel' })
+
+const { t } = useLocale()
 
 export interface CarouselItem {
   title: string
@@ -51,8 +54,12 @@ function prev() {
         <div v-if="item.description" class="kb-carousel__description">{{ item.description }}</div>
       </div>
     </div>
-    <button class="kb-carousel__prev" type="button" aria-label="上一张" @click="prev">‹</button>
-    <button class="kb-carousel__next" type="button" aria-label="下一张" @click="next">›</button>
+    <button class="kb-carousel__prev" type="button" :aria-label="t('carousel.prev')" @click="prev">
+      ‹
+    </button>
+    <button class="kb-carousel__next" type="button" :aria-label="t('carousel.next')" @click="next">
+      ›
+    </button>
     <div class="kb-carousel__dots">
       <button
         v-for="(_, index) in items"
@@ -60,7 +67,7 @@ function prev() {
         class="kb-carousel__dot"
         :class="{ 'kb-carousel__dot--active': index === current }"
         type="button"
-        :aria-label="`第 ${index + 1} 张`"
+        :aria-label="t('carousel.indicator', index + 1)"
         @click="goTo(index)"
       />
     </div>

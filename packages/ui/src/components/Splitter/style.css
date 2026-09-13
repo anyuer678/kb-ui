@@ -1,0 +1,59 @@
+.kb-splitter {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.kb-splitter--horizontal {
+  flex-direction: row;
+}
+
+.kb-splitter--vertical {
+  flex-direction: column;
+}
+
+.kb-splitter__pane {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+.kb-splitter__bar {
+  flex: none;
+  background: var(--kb-color-border);
+  transition: background var(--kb-transition-duration) var(--kb-transition-timing);
+}
+
+.kb-splitter--horizontal > .kb-splitter__bar {
+  width: 6px;
+  cursor: col-resize;
+}
+
+.kb-splitter--vertical > .kb-splitter__bar {
+  height: 6px;
+  cursor: row-resize;
+}
+
+.kb-splitter__bar:focus-visible {
+  background: var(--kb-color-primary);
+  outline: none;
+}
+
+.kb-splitter__bar:hover,
+.kb-splitter--dragging > .kb-splitter__bar:active {
+  background: var(--kb-color-primary);
+}
+
+.kb-splitter__bar--disabled {
+  cursor: not-allowed;
+}
+
+.kb-splitter__bar--disabled:hover {
+  background: var(--kb-color-border);
+}
+
+/* 拖拽过程中禁用文本选中，避免出现选区闪烁 */
+.kb-splitter--dragging {
+  user-select: none;
+}

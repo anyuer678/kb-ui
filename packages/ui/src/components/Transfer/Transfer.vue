@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Checkbox as KbCheckbox } from '../Checkbox'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbTransfer' })
+
+const { t, locale } = useLocale()
 
 export interface TransferItem {
   key: string
@@ -26,12 +29,20 @@ export interface TransferProps {
 const props = withDefaults(defineProps<TransferProps>(), {
   data: () => [],
   modelValue: () => [],
-  titles: () => ['待选', '已选'],
+  titles: () => ['', ''],
   filterable: false,
-  filterPlaceholder: '请输入搜索内容',
+  filterPlaceholder: '',
   pageSize: 0,
   disabled: false,
 })
+
+/** 显式传入优先，未传或长度不足时回落到当前语言包 */
+const panelTitles = computed<[string, string]>(() => {
+  const custom = props.titles
+  if (custom?.length === 2 && custom[0] && custom[1]) return [custom[0], custom[1]]
+  return [locale.value.transfer.titles[0], locale.value.transfer.titles[1]]
+})
+const filterHint = computed(() => props.filterPlaceholder || t('transfer.filterPlaceholder'))
 
 const emit = defineEmits<{
   'update:modelValue': [value: string[]]
@@ -157,14 +168,14 @@ function goto(side: 'left' | 'right', page: number) {
           :disabled="disabled || !leftView.length"
           @update:model-value="(checked: boolean) => toggleAll('left', checked)"
         >
-          <span class="kb-transfer__title">{{ titles[0] }} · {{ leftItems.length }}</span>
+          <span class="kb-transfer__title">{{ panelTitles[0] }} · {{ leftItems.length }}</span>
         </KbCheckbox>
       </div>
       <div v-if="filterable" class="kb-transfer__filter">
         <input
           class="kb-transfer__input"
           type="text"
-          :placeholder="filterPlaceholder"
+          :placeholder="filterHint"
           :disabled="disabled"
           :value="queries.left"
           @input="onFilter('left', $event)"
@@ -183,13 +194,13 @@ function goto(side: 'left' | 'right', page: number) {
         >
           {{ item.label }}
         </div>
-        <div v-if="!leftView.length" class="kb-transfer__empty">无匹配数据</div>
+        <div v-if="!leftView.length" class="kb-transfer__empty">{{ t('transfer.noMatch') }}</div>
       </div>
       <div v-if="pageSize > 0" class="kb-transfer__pager">
         <button
           class="kb-transfer__page kb-transfer__page--prev"
           type="button"
-          aria-label="上一页"
+          :aria-label="t('transfer.prevPage')"
           :disabled="leftPage <= 1"
           @click="goto('left', leftPage - 1)"
         >
@@ -199,7 +210,7 @@ function goto(side: 'left' | 'right', page: number) {
         <button
           class="kb-transfer__page kb-transfer__page--next"
           type="button"
-          aria-label="下一页"
+          :aria-label="t('transfer.nextPage')"
           :disabled="leftPage >= leftPageCount"
           @click="goto('left', leftPage + 1)"
         >
@@ -235,14 +246,14 @@ function goto(side: 'left' | 'right', page: number) {
           :disabled="disabled || !rightView.length"
           @update:model-value="(checked: boolean) => toggleAll('right', checked)"
         >
-          <span class="kb-transfer__title">{{ titles[1] }} · {{ rightItems.length }}</span>
+          <span class="kb-transfer__title">{{ panelTitles[1] }} · {{ rightItems.length }}</span>
         </KbCheckbox>
       </div>
       <div v-if="filterable" class="kb-transfer__filter">
         <input
           class="kb-transfer__input"
           type="text"
-          :placeholder="filterPlaceholder"
+          :placeholder="filterHint"
           :disabled="disabled"
           :value="queries.right"
           @input="onFilter('right', $event)"
@@ -261,13 +272,13 @@ function goto(side: 'left' | 'right', page: number) {
         >
           {{ item.label }}
         </div>
-        <div v-if="!rightView.length" class="kb-transfer__empty">无匹配数据</div>
+        <div v-if="!rightView.length" class="kb-transfer__empty">{{ t('transfer.noMatch') }}</div>
       </div>
       <div v-if="pageSize > 0" class="kb-transfer__pager">
         <button
           class="kb-transfer__page kb-transfer__page--prev"
           type="button"
-          aria-label="上一页"
+          :aria-label="t('transfer.prevPage')"
           :disabled="rightPage <= 1"
           @click="goto('right', rightPage - 1)"
         >
@@ -277,7 +288,7 @@ function goto(side: 'left' | 'right', page: number) {
         <button
           class="kb-transfer__page kb-transfer__page--next"
           type="button"
-          aria-label="下一页"
+          :aria-label="t('transfer.nextPage')"
           :disabled="rightPage >= rightPageCount"
           @click="goto('right', rightPage + 1)"
         >

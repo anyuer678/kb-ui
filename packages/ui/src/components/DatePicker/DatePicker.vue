@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Calendar } from '../Calendar'
+import { useLocale } from '../../composables/useGlobalConfig'
 
 defineOptions({ name: 'KbDatePicker' })
+
+const { t } = useLocale()
 
 export type DatePickerMode = 'single' | 'range' | 'multiple'
 
@@ -13,6 +16,7 @@ export interface DatePickerProps {
   mode?: DatePickerMode
   placeholder?: string
   /** range 模式的起止分隔符 */
+  /** 范围分隔符，不传时取语言包中的 `datePicker.separator` */
   separator?: string
   disabled?: boolean
   /** 是否显示清空按钮 */
@@ -23,10 +27,13 @@ const props = withDefaults(defineProps<DatePickerProps>(), {
   modelValue: '',
   mode: 'single',
   placeholder: '',
-  separator: ' 至 ',
+  separator: '',
   disabled: false,
   clearable: false,
 })
+
+/** 显式传入优先，未传时回落到当前语言包 */
+const rangeSeparator = computed(() => props.separator || t('datePicker.separator'))
 
 const emit = defineEmits<{ 'update:modelValue': [value: string | string[]] }>()
 
@@ -55,18 +62,18 @@ const displayText = computed(() => {
   if (isRange.value) {
     if (!list.length) return ''
     return list.length === 1
-      ? `${list[0]}${props.separator}`
-      : `${list[0]}${props.separator}${list[1]}`
+      ? `${list[0]}${rangeSeparator.value}`
+      : `${list[0]}${rangeSeparator.value}${list[1]}`
   }
-  if (isMultiple.value) return list.length ? `已选 ${list.length} 个日期` : ''
+  if (isMultiple.value) return list.length ? t('datePicker.selectedCount', list.length) : ''
   return list[0] ?? ''
 })
 
 const placeholderText = computed(() => {
   if (props.placeholder) return props.placeholder
-  if (isRange.value) return '选择日期范围'
-  if (isMultiple.value) return '选择日期（可多选）'
-  return '选择日期'
+  if (isRange.value) return t('datePicker.panelRange')
+  if (isMultiple.value) return t('datePicker.panelMultiple')
+  return t('datePicker.panel')
 })
 
 const hasValue = computed(() => values.value.length > 0)
@@ -132,7 +139,7 @@ function onSelect(date: string) {
       v-if="clearable && hasValue"
       class="kb-datepicker__clear"
       type="button"
-      aria-label="清空"
+      :aria-label="t('common.clear')"
       @click="clear"
     >
       ×
