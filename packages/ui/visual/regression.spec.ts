@@ -43,6 +43,11 @@ const SPECIMENS: Specimen[] = [
   { name: 'Dialog' },
   { name: 'Splitter' },
   { name: 'TreeSelect', panelRole: 'tree' },
+  { name: 'Layout' },
+  { name: 'FloatButton' },
+  { name: 'Mentions' },
+  { name: 'VirtualList' },
+  { name: 'QRCode' },
 ]
 
 async function bootHarness(page: Page, name: string, theme: string) {
