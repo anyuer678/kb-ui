@@ -35,14 +35,14 @@
   cursor: row-resize;
 }
 
-.kb-splitter__bar:hover,
-.kb-splitter--dragging > .kb-splitter__bar:active {
-  background: var(--kb-color-primary);
-}
-
 .kb-splitter__bar:focus-visible {
   background: var(--kb-color-primary);
   outline: none;
+}
+
+.kb-splitter__bar:hover,
+.kb-splitter--dragging > .kb-splitter__bar:active {
+  background: var(--kb-color-primary);
 }
 
 .kb-splitter__bar--disabled {
