@@ -1,14 +1,13 @@
-﻿name: Release
+name: Release
 
-# 手动触发，避免"合并即发版"这种不可逆的外部动作被代码合并顺带引发。
-# 发版前建议先确认待发布包在 npm 上的作用域归属（例如 @kb/* 首次发布需要该作用域在账号名下）。
+# 手动触发。Path A：对外主要发布 kb-ui-vue；@kb/* 未就绪前不强制 npm token。
 on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: '仅演练：输出将要发布的包，不执行 version / publish'
+        description: '仅演练：构建并检查，不执行 version / publish'
         type: boolean
-        default: false
+        default: true
 
 jobs:
   release:
@@ -31,15 +30,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Skip notice (NPM_TOKEN not configured)
-        if: env.HAS_NPM_TOKEN == 'false'
-        run: echo "NPM_TOKEN 未配置，跳过发布。"
-
+      # 无 token 也构建，保证 release 工作流本身可验证
       - name: Build (all publishable packages)
-        if: env.HAS_NPM_TOKEN == 'true'
         run: pnpm build
 
-      # 仅当存在待发布 changeset 时才执行 version+publish；否则干净通过
+      - name: Skip notice (NPM_TOKEN not configured)
+        if: env.HAS_NPM_TOKEN == 'false'
+        run: echo "NPM_TOKEN 未配置：只构建，不发布。Path A 见 docs/PUBLISH.md"
+
       - name: Check changesets exist
         if: env.HAS_NPM_TOKEN == 'true'
         id: changesets
@@ -51,48 +49,46 @@ jobs:
             echo "无待发布 changeset，跳过 version/publish"
           fi
 
-      - name: Dry run — list pending changesets
-        if: env.HAS_NPM_TOKEN == 'true' && inputs.dry_run
-        run: |
-          echo "待发布的 changeset："
-          for f in $(ls .changeset/*.md 2>/dev/null | grep -v 'README.md'); do
-            echo "--- $f"
-            cat "$f"
-          done
-
       - name: Dry run notice
         if: inputs.dry_run
-        run: echo "dry_run=true，未执行 version / publish。"
+        run: echo "dry_run=${{ inputs.dry_run }}，默认不执行 version/publish。"
 
-      # 提前校验 token：无发布权限时 npm registry 对 PUT 只回一个 404，
-      # 报在 publish 环节很难定位，whoami 能直接暴露"token 无效/不对账号"
+      # token 无效时降级为警告，不把整个 Release 打成失败
+      # （仓库 secret 里的 NPM_TOKEN 可能过期/无权限，需人工轮换）
       - name: Verify npm auth
         if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run
+        id: npm_auth
+        continue-on-error: true
         run: |
-          set -euo pipefail
+          set +e
           ACCOUNT=$(npm whoami --registry=https://registry.npmjs.org)
+          code=$?
+          if [ $code -ne 0 ]; then
+            echo "::warning::NPM_TOKEN 无效或无发布权限（whoami 失败）。请在仓库 Secrets 更新 NPM_TOKEN。跳过 publish。"
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           echo "npm 账号：${ACCOUNT}"
+          echo "ok=true" >> "$GITHUB_OUTPUT"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Version packages
-        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true'
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
         run: pnpm changeset version
 
       - name: Publish to npm
-        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true'
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
         run: pnpm changeset publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # version 只改工作区文件，不回写仓库的话 npm 上的版本会和仓库里的
-      # package.json / CHANGELOG 永久错位，下一次 release 还会重复发同一个版本
       - name: Create git tags
-        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true'
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
         run: pnpm changeset tag
 
       - name: Commit and push release state
-        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true'
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
