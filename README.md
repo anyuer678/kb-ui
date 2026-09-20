@@ -16,7 +16,7 @@
 
 > 📦 **发布策略**详见 [docs/PUBLISH.md](docs/PUBLISH.md)（`@kb/*` 与 `create-kb` 当前未发布的原因与路径）。
 
-> 📦 组件库已发布到 npm：[`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)（`npm i kb-ui-vue`）。`@kb/utils`、`@kb/api` 与脚手架包尚未发布（开发调试请使用 `file:` 链接或 workspace）——它们已加入 `.changeset/config.json` 的 `ignore`，待 `@kb` 作用域归属确认、`create-kb` 包名冲突解决后再发。
+> 📦 组件库已发布到 npm：[`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)（`npm i kb-ui-vue`）。`@kb/utils`、`@kb/api` 与脚手架包尚未发布；**发布策略已定为 Path A**（见 [docs/PUBLISH.md](docs/PUBLISH.md)）——开发调试请使用 `file:` / workspace——它们已加入 `.changeset/config.json` 的 `ignore`，待 `@kb` 作用域归属确认、`create-kb` 包名冲突解决后再发。
 
 ---
 
