@@ -1,5 +1,8 @@
 # KB UI
 
+> **状态**：`portfolio` · 组件库作品集 · npm 已发布 [`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)  
+> **与 design-assets**：本地设计素材库仅用于文档/PPT/案例配图，**不替换**组件默认主题与运行时皮肤。  
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Vue 3](https://img.shields.io/badge/Vue-3.5-42b883)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
