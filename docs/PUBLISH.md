@@ -44,3 +44,19 @@
 ## 与 design-assets
 
 素材库 **不**进入 npm 运行时依赖；仅文档/PPT 引用。
+
+
+## 决策（Path A · 2026-09-20）
+
+**选定路径 A**：对外只推广已发布的 `kb-ui-vue`。
+
+| 包 | 对外名 | 说明 |
+|----|--------|------|
+| 组件库 | `kb-ui-vue` | npm 已发布，README 主入口 |
+| `@kb/utils` | 仅 monorepo / workspace | 不在 npm 叙事中承诺可 `npm i @kb/utils` |
+| `@kb/api` | 仅 monorepo | 同上 |
+| `create-kb` | 建议后续改名 `create-kb-ui` | 通用名冲突；改名后再评估发布 |
+
+changesets `ignore` 保持不变，避免误 publish。
+
+Issue #21 可在 README 与 npm 名完全一致后关闭。
