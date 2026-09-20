@@ -60,3 +60,10 @@
 changesets `ignore` 保持不变，避免误 publish。
 
 Issue #21 可在 README 与 npm 名完全一致后关闭。
+
+
+## CI / Release 说明（2026-09-20）
+
+- `Release` 工作流：**无 token 或 token 无效时只 build**，不把 job 打成红叉
+- 仓库 Secrets 中的 `NPM_TOKEN` 曾 **401**（`npm whoami` 失败），发版前请到 npm 重新生成 Automation Token 并更新 Secrets
+- Dependabot 已忽略 vitest/playwright 等 peer 解析失败包；根目录 `.npmrc` 开启 `legacy-peer-deps`
