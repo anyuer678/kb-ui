@@ -14,6 +14,8 @@
 
 **一套自建的前端素材库与工程模板集**：Vue 3 组件库 + 36 个完整页面模块 + 46 套多风格主题 + 通用工具函数（含 HTTP 请求层）+ 可复用的参考后端 + 7 种项目脚手架模板 + DevOps 资产，全部零运行时依赖、CSS 变量驱动。
 
+> 📦 **发布策略**详见 [docs/PUBLISH.md](docs/PUBLISH.md)（`@kb/*` 与 `create-kb` 当前未发布的原因与路径）。
+
 > 📦 组件库已发布到 npm：[`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)（`npm i kb-ui-vue`）。`@kb/utils`、`@kb/api` 与脚手架包尚未发布（开发调试请使用 `file:` 链接或 workspace）——它们已加入 `.changeset/config.json` 的 `ignore`，待 `@kb` 作用域归属确认、`create-kb` 包名冲突解决后再发。
 
 ---
