@@ -1,6 +1,7 @@
 name: doc-claims
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - "README.md"
