@@ -10,7 +10,7 @@
   "dependencies": {
     "@kb/utils": "workspace:*",
     "kb-ui-vue": "workspace:*",
-    "vue": "^3.5.42"
+    "vue": "^3.5.43"
   },
   "devDependencies": {
     "@kb/api": "workspace:*",
