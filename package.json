@@ -30,7 +30,7 @@
     "check-size": "pnpm --filter kb-ui-vue check-size"
   },
   "devDependencies": {
-    "@changesets/cli": "^3.0.2",
+    "@changesets/cli": "^3.0.3",
     "@kb/config": "workspace:*",
     "@playwright/test": "^1.63.0",
     "concurrently": "^10.0.5",
