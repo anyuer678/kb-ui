@@ -16,7 +16,7 @@
     "@kb/api": "workspace:*",
     "@types/node": "^26.6.1",
     "@vitejs/plugin-vue": "^6.0.0",
-    "typescript": "^5.9.0",
+    "typescript": "^7.0.2",
     "vite": "^8.3.0",
     "vue-tsc": "^3.3.11"
   }

@@ -27,7 +27,7 @@
     "@types/node": "^26.6.1",
     "@types/prompts": "^2.4.9",
     "tsup": "^8.0.0",
-    "typescript": "^5.9.0"
+    "typescript": "^7.0.2"
   },
   "overrides": {
     "js-yaml": "^4.1.1",

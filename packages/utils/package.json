@@ -28,7 +28,7 @@
     "@kb/config": "workspace:*",
     "@types/node": "^26.6.1",
     "tsup": "^8.5.0",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.0"
   },
   "publishConfig": {
