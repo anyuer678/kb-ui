@@ -11,6 +11,11 @@ updates:
       - dependency-name: "vitest"
       - dependency-name: "@vitest/coverage-v8"
       - dependency-name: "@playwright/test"
+      # TypeScript 7 是 native 重写大版本，与本仓 tsconfig / vue-tsc 组合不兼容
+      # （PR #34 上 Typecheck 与 E2E 均红）。只接受 5.x 内的 minor / patch。
+      - dependency-name: "typescript"
+        update-types:
+          - "version-update:semver-major"
     labels:
       - "dependencies"
   - package-ecosystem: "github-actions"
