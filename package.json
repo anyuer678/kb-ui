@@ -43,6 +43,7 @@
   "overrides": {
     "js-yaml": "^4.3.2",
     "fast-uri": "^3.1.6",
+    "esbuild": "^0.28.1",
     "vite": "^8.3.0"
   },
   "pnpm": {
@@ -50,6 +51,7 @@
       "js-yaml": "^4.3.2",
       "fast-uri": "^3.1.6",
       "electron": "^39.8.10",
+      "esbuild": "^0.28.1",
       "vite": "^8.3.0"
     },
     "onlyBuiltDependencies": [

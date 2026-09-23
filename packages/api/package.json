@@ -40,7 +40,7 @@
     "tsup": "^8.5.0",
     "tsx": "^4.23.14",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.11"
   },
   "publishConfig": {
     "access": "public"
