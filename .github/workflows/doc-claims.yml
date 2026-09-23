@@ -1,5 +1,10 @@
 name: doc-claims
 
+# 注意：pull_request 故意不加 paths 过滤。
+# `claims` job 是 master 的 required status check；GitHub 对「paths 未命中」的 workflow
+# 不产生任何 check-run，于是不碰 README.md / packages/ui/** 的 PR 会永久卡在
+# "Waiting for status to be reported" → mergeable_state=blocked（所有已跑检查全绿）。
+# 脚本很轻（<10s），PR 一律跑；push 保留 paths 过滤（直推 master 不在保护范围内）。
 on:
   workflow_dispatch:
   push:
@@ -8,10 +13,6 @@ on:
       - "packages/ui/**"
       - "scripts/check-doc-claims.py"
   pull_request:
-    paths:
-      - "README.md"
-      - "packages/ui/**"
-      - "scripts/check-doc-claims.py"
 
 jobs:
   claims:
