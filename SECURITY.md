@@ -8,7 +8,7 @@
 |---|---|
 | `kb-ui-vue` 最新 minor | ✅ |
 | 更早版本 | ❌（请先升级） |
-| `create-kb`、`@kb/utils`、`@kb/api` | ⚠️ 尚未发布到 npm，仅接受仓库内的问题报告 |
+| `@yuer678/kb-utils`、`@yuer678/kb-api`、`@yuer678/create-kb` | npm 已发布（维护者 `yuer678`），问题报告走本仓库 issues |
 
 ## 报告漏洞
 
@@ -39,4 +39,4 @@
 
 - 组件会把传入的 `string` 内容按 HTML 渲染的场景（如 `Tooltip` 的 `rawContent`、`Watermark` 的 `content`）——调用方需自行确保内容可信
 - `kb-ui-vue` 自身**零运行时依赖**，但使用方的依赖树不在我们的控制范围内
-- 参考后端 `@kb/api` 使用内存数据与内置 CORS，本就只面向本地演示，**不可直接暴露到公网**
+- 参考后端 `@yuer678/kb-api` 使用内存数据与内置 CORS，本就只面向本地演示，**不可直接暴露到公网**

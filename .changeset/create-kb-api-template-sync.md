@@ -1,8 +1,8 @@
 ---
-'create-kb': minor
+'@yuer678/create-kb': minor
 ---
 
-create-kb 的 api / fullstack 模板不再自带一份后端拷贝，改为从 `@kb/api` 同步：
+create-kb 的 api / fullstack 模板不再自带一份后端拷贝，改为从 `@yuer678/kb-api` 同步：
 
 - 新增 `scripts/sync-api-template.mjs`：以 `packages/api` 为唯一源，把源码铺进 `templates/api` 与
   `templates/fullstack/server`；`pnpm sync:api-template` 写入，`pnpm sync:api-template:check` 校验漂移（可用于 CI）

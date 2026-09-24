@@ -14,9 +14,9 @@
 
 **一套自建的前端素材库与工程模板集**：Vue 3 组件库 + 36 个完整页面模块 + 46 套多风格主题 + 通用工具函数（含 HTTP 请求层）+ 可复用的参考后端 + 7 种项目脚手架模板 + DevOps 资产，全部零运行时依赖、CSS 变量驱动。
 
-> 📦 **发布策略**详见 [docs/PUBLISH.md](docs/PUBLISH.md)（`@kb/*` 与 `create-kb` 当前未发布的原因与路径）。
+> 📦 **发布策略**详见 [docs/PUBLISH.md](docs/PUBLISH.md)（发布包与内部包的对应关系、两次发布决策的记录）。
 
-> 📦 组件库已发布到 npm：[`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)（`npm i kb-ui-vue`）。`@kb/utils`、`@kb/api` 与脚手架包尚未发布；**发布策略已定为 Path A**（见 [docs/PUBLISH.md](docs/PUBLISH.md)）——开发调试请使用 `file:` / workspace——它们已加入 `.changeset/config.json` 的 `ignore`，待 `@kb` 作用域归属确认、`create-kb` 包名冲突解决后再发。
+> 📦 组件库已发布到 npm：[`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)（`npm i kb-ui-vue`）。工具库、参考后端与脚手架也已发布：[`@yuer678/kb-utils`](https://www.npmjs.com/package/@yuer678/kb-utils)、[`@yuer678/kb-api`](https://www.npmjs.com/package/@yuer678/kb-api)、[`@yuer678/create-kb`](https://www.npmjs.com/package/@yuer678/create-kb)——脚手架用 scoped 名，是因为 npm 上的无 scope `create-kb` 是同名无关项目。
 
 ---
 
@@ -72,10 +72,10 @@
 ### 页面模块模板（36 个）
 登录 / 注册 / 仪表盘 / 数据大屏 / 任务看板 / 数据分析 / 订单管理 / 用户管理 / 邮件收件箱 / 文件管理 / 博客文章 / 聊天窗口 / 音乐播放器 / 购物结算 / 价格页 / 分步向导 / 图片画廊 / 个人简历 / 宠物商店 / 视频列表 / 落地页 …（playground 内全部可切换预览）
 
-### 通用工具库（`@kb/utils`，60+ 函数）
+### 通用工具库（`@yuer678/kb-utils`，60+ 函数）
 格式化（日期/数字/文件大小/时长/金额）、数组、对象（深拷贝/深合并）、字符串、正则校验、并发控制（pLimit/retry）、防抖节流、存储封装、DOM 工具、**HTTP 请求层**（`createHttp`：baseURL / 参数拼接 / 超时 / 请求响应钩子 / 指数退避重试）
 
-### 参考后端（`@kb/api`）
+### 参考后端（`@yuer678/kb-api`）
 一个可直接 `import` 的 Express 5 + Zod 4 后端，同时充当组件演示的数据源与脚手架模板的后端底座：
 
 - **开箱即用**：`createApp()` 返回可挂载的 Express 应用，`startServer()` 一键起服务（默认 `127.0.0.1:8082`）
@@ -93,8 +93,8 @@ pnpm api        # 起本地后端（tsx watch，默认 :8082）
 |------|------|
 | `base` | 最小可用 Vue 3 + Vite + TS 前端 |
 | `starter` | 带完整组件示例的前端 |
-| `api` | Express + TypeScript + Zod 后端（源码与 `@kb/api` 同步，含 21 例 supertest 测试） |
-| `fullstack` | Vue 前端 + Express API + Docker Compose 一键起（后端同样与 `@kb/api` 同步） |
+| `api` | Express + TypeScript + Zod 后端（源码与 `@yuer678/kb-api` 同步，含 21 例 supertest 测试） |
+| `fullstack` | Vue 前端 + Express API + Docker Compose 一键起（后端同样与 `@yuer678/kb-api` 同步） |
 | `electron` | Electron 桌面应用骨架（安全模型 + 打包） |
 | `react` | React 19 + Vite 前端 |
 | `ai` | LLM 工作台（OpenAI 兼容 + SSE 流式 + 聊天前端） |
@@ -107,7 +107,7 @@ CI（lint / typecheck / test / coverage / 体积预算 / build / 模板一致性
 | 层级 | 技术 |
 |------|------|
 | 前端 | Vue 3.5 + TypeScript 5.9 |
-| 后端 | Express 5 + Zod 4（`@kb/api`） |
+| 后端 | Express 5 + Zod 4（`@yuer678/kb-api`） |
 | 构建 | Vite 8（lib mode）+ tsup |
 | 包管理 | pnpm 10 workspace monorepo |
 | 测试 | Vitest（606 例单测 + SSR 冒烟 + axe a11y）+ Playwright（e2e + 视觉回归 69 基线） |
@@ -119,7 +119,7 @@ CI（lint / typecheck / test / coverage / 体积预算 / build / 模板一致性
 ```bash
 pnpm install       # 安装全部依赖
 pnpm start         # 启动 playground(:8070) + docs(:8071)
-pnpm start:full    # 再额外拉起本地后端 @kb/api(:8082)，playground 的「真实接口」示例即可用
+pnpm start:full    # 再额外拉起本地后端 @yuer678/kb-api(:8082)，playground 的「真实接口」示例即可用
 ```
 
 - **playground** http://localhost:8070 —— 46 主题切换 + 36 模块预览 + 真实接口联调示例
@@ -128,12 +128,11 @@ pnpm start:full    # 再额外拉起本地后端 @kb/api(:8082)，playground 的
 
 ### 用 create-kb 创建项目
 
-> ⚠️ npm 上的 `create-kb` 是**同名无关项目**（来源 `adamBoualleiguie/knowledge-base`，维护者 `kb-base`）。
-> 直接跑 `pnpm create kb my-app` 会拉到那个包，而不是本仓库的脚手架。
-> 脚手架尚未发布，请在本仓库内以本地方式使用：
+> ⚠️ npm 上的 `create-kb`（无 scope）是**同名无关项目**（来源 `adamBoualleiguie/knowledge-base`，维护者 `kb-base`）。
+> 本仓库脚手架发布为 [`@yuer678/create-kb`](https://www.npmjs.com/package/@yuer678/create-kb)，CLI 命令名仍是 `create-kb`。直接在本仓库以本地方式使用：
 
 ```bash
-pnpm --filter create-kb build                       # 先构建 CLI
+pnpm --filter @yuer678/create-kb build                       # 先构建 CLI
 node packages/create-kb/dist/index.js my-app        # 交互式选择模板
 node packages/create-kb/dist/index.js my-api --template api   # 直接指定模板（7 选 1）
 ```
@@ -151,8 +150,8 @@ pnpm sync:api-template:check    # 只校验是否漂移（CI 会跑这一步）
 kb-ui/
 ├── packages/
 │   ├── ui/            # kb-ui-vue 组件库（73 组件；visual/ 为视觉回归取样台与基线）
-│   ├── utils/         # @kb/utils 工具函数库（含 HTTP 请求层）
-│   ├── api/           # @kb/api 参考后端（Express + Zod）
+│   ├── utils/         # @yuer678/kb-utils 工具函数库（含 HTTP 请求层）
+│   ├── api/           # @yuer678/kb-api 参考后端（Express + Zod）
 │   ├── config/        # 共享工程配置（tsconfig/eslint/prettier/stylelint）
 │   └── create-kb/     # 脚手架 CLI（7 种模板，后端模板由 sync 脚本生成）
 ├── playground/        # 组件演示站（源码直连热更新，含真实接口示例）
