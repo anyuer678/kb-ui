@@ -1,6 +1,16 @@
 {
   "name": "kb-ui-vue",
   "version": "0.3.0",
+  "author": "anyuer678",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anyuer678/kb-ui.git",
+    "directory": "packages/ui"
+  },
+  "homepage": "https://anyuer678.github.io/kb-ui/",
+  "bugs": {
+    "url": "https://github.com/anyuer678/kb-ui/issues"
+  },
   "license": "MIT",
   "type": "module",
   "files": [

@@ -1,6 +1,17 @@
 {
   "name": "create-kb",
   "version": "0.2.0",
+  "license": "MIT",
+  "author": "anyuer678",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anyuer678/kb-ui.git",
+    "directory": "packages/create-kb"
+  },
+  "homepage": "https://anyuer678.github.io/kb-ui/",
+  "bugs": {
+    "url": "https://github.com/anyuer678/kb-ui/issues"
+  },
   "type": "module",
   "bin": {
     "create-kb": "./dist/index.js"
