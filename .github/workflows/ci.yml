@@ -58,7 +58,7 @@ jobs:
         run: pnpm audit --prod --audit-level=high
 
       # 仅当 packages/** 有「非依赖类」变更时强制 changeset。
-      # 纯依赖升级（package.json / lockfile）没有面向用户的 API 变化，不应被 changeset 门禁拦红。
+      # 纯依赖升级（package.json / lockfile）与 CHANGELOG 没有面向用户的 API 变化，不应被 changeset 门禁拦红。
       - name: Changeset status
         run: |
           set +e
@@ -74,7 +74,7 @@ jobs:
           fi
           # 去掉 package.json 与各类 lockfile，剩下的才是真正的源码变更
           src_changed=$(printf '%s\n' "$pkg_changed" \
-            | grep -v -E '(^|/)(package\.json|pnpm-lock\.yaml|package-lock\.json|yarn\.lock)$' || true)
+            | grep -v -E '(^|/)(package\.json|pnpm-lock\.yaml|package-lock\.json|yarn\.lock|CHANGELOG\.md)$' || true)
           if [ -n "$src_changed" ]; then
             echo "::error::packages/ source changed but changeset status failed:"
             echo "$src_changed"
