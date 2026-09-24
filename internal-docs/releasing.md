@@ -46,8 +46,9 @@ git checkout -- packages .changeset   # 回滚，别把版本提交流出去
 2. GitHub Actions → **Release** → Run workflow：
    - 先 `dry_run=true` 看会发哪些包
    - 确认无误再 `dry_run=false`
-3. workflow 会自动：`npm whoami` 校验 → build → `changeset version` → `changeset publish` → `changeset tag` → commit + `git push --follow-tags`
-4. 发布后验证（见下）
+3. workflow 会自动：`npm whoami` 校验 → build → `changeset version` → `changeset publish` → **API 建 tag**（`Create release tags (API)`，指向触发 commit）→ 推 `release/writeback-*` 分支并尝试自动开回写 PR
+4. 发布后验证（见下）；registry 实测用 `npm view <pkg>@<version> version`，**别只 curl packument**（新包 packument 有 CDN 负缓存，会 404 一阵子）
+5. 回写 PR 合并后，若需要 tag 精确锚在 merge commit，手动把 tag 重打到该 commit（API 重打即可，npm 版本才是真源）
 
 没配 `NPM_TOKEN` 时 workflow 只打印「跳过发布」并正常结束，不会红。
 
@@ -74,6 +75,9 @@ curl -s --noproxy '*' https://registry.npmjs.org/<pkg>                          
 | npm 上有新版本、仓库里 `package.json` 还停在旧版本 | `changeset version` 只改 runner 工作区。workflow 现在会提交回写；手工发版时记得自己 commit + `pnpm changeset tag` + `git push --follow-tags` |
 | changesets 报某个包没 changeset | 要么补 changeset，要么把它加进 `ignore` |
 | 校验步骤写 `echo "$(cmd)"` 却在失败时还是绿的 | 命令替换的退出码被 `echo` 吞掉，`set -e` 不生效。用 `set -euo pipefail` + `VAR=$(cmd)` |
+| 发完 `curl https://registry.npmjs.org/<pkg>` 404，以为没发出去 | **新包 packument 有 CDN 负缓存**。用 `npm view <pkg>@<version> version` 或版本端点验证（run 35989660546 实证：publish 真成功了，packument 404 迷惑了排查半小时） |
+| `changeset tag` 自称 Created、`git push --tags` 报 Everything up-to-date，远端却没 tag | v3.0.3 在 scoped 包名上静默失灵（机理未深究）。workflow 已改用 Git Data API 建 tag（可核验、可重跑） |
+| `gh pr create` 报 `GitHub Actions is not permitted to create or approve pull requests` | repo 设置没开（且该设置不在 Update Repository API 里，改不了）。workflow 已 `continue-on-error` 降级为警告；手动从 `release/writeback-*` 分支开 PR 即可 |
 
 ## 发布后验证
 
