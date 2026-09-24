@@ -1,6 +1,7 @@
 /* eslint-disable */
 // ⚠️ 自动生成文件，请勿直接修改。
 // 源：packages/api/src —— 改动请改源文件后运行 `pnpm sync:api-template`。
+import { createRequire } from 'node:module'
 import express from 'express'
 import type { Express, RequestHandler } from 'express'
 import { createHealthRouter } from './routes/health'
@@ -20,9 +21,20 @@ export interface CreateAppOptions {
   cors?: boolean
 }
 
+/** 运行时读自己包的 package.json 版本，避免默认值随发布演进漂移（包内 dist/ 与 package.json 同级） */
+function readOwnVersion(): string {
+  try {
+    const req = createRequire(import.meta.url)
+    const pkg = req('../package.json') as { version?: string }
+    return pkg.version ?? 'unknown'
+  } catch {
+    return 'unknown'
+  }
+}
+
 export const API_PREFIX = '/api'
 export const DEFAULT_API_NAME = 'kb-api'
-export const DEFAULT_API_VERSION = '0.1.0'
+export const DEFAULT_API_VERSION = readOwnVersion()
 
 const ENDPOINTS = [
   'GET    /api/health',

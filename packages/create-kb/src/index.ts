@@ -1,15 +1,19 @@
+import { createRequire } from 'node:module'
 import { Command } from 'commander'
 import { promptMissing, validateProjectName, type CreateOptions } from './prompts'
 import { createProject } from './create'
+
+const require = createRequire(import.meta.url)
+const ownVersion = (require('../package.json') as { version?: string }).version ?? 'unknown'
 
 const program = new Command()
 
 program
   .name('create-kb')
-  .description('创建一个预装 @kb/ui 的 Vue 3 + Vite + TypeScript 项目')
-  .version('0.1.0')
+  .description('创建一个预装 kb-ui-vue 的 Vue 3 + Vite + TypeScript 项目')
+  .version(ownVersion)
   .argument('[project-name]', '项目名称')
-  .option('--template <template>', '模板：base（最小）| starter（完整示例）', 'base')
+  .option('--template <template>', '模板：base（最小）| starter（完整示例）| api（后端）| fullstack（全栈）| electron（桌面）| react | ai（LLM 工作台）', 'base')
   .option('--no-git', '不初始化 git 仓库')
   .option('-p, --package-manager <pm>', '包管理器：pnpm | npm | yarn', 'pnpm')
   .action(async (projectName?: string) => {
