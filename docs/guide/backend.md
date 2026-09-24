@@ -1,15 +1,15 @@
 # 后端模块与请求层
 
 组件库只解决「界面」，一个能跑起来的示例往往还差两件事：**一个不用配数据库就能用的后端**，
-和**一层统一处理 baseURL / 超时 / 重试的请求封装**。这两块分别由 `@kb/api` 与 `@kb/utils`
+和**一层统一处理 baseURL / 超时 / 重试的请求封装**。这两块分别由 `@yuer678/kb-api` 与 `@yuer678/kb-utils`
 的 `createHttp` 提供。
 
 ## 为什么单独做成包
 
 之前的后端只存在于 `create-kb` 的脚手架模板里——它是「拷贝一次就丢」的快照，改动不会回流。
-现在后端有唯一实现 `@kb/api`：
+现在后端有唯一实现 `@yuer678/kb-api`：
 
-- **可 `import`**：直接 `import { createApp } from '@kb/api'`，挂到自己的服务里
+- **可 `import`**：直接 `import { createApp } from '@yuer678/kb-api'`，挂到自己的服务里
 - **可当 mock**：`pnpm api` 起一个本地服务，前端不必再手写假数据
 - **模板复用源码**：`create-kb` 的 `api` / `fullstack` 模板由 `pnpm sync:api-template` 从本包生成
 
@@ -42,7 +42,7 @@ PORT=9000 pnpm api  # 换端口
 ## 在代码里挂载
 
 ```ts
-import { createApp, startServer } from '@kb/api'
+import { createApp, startServer } from '@yuer678/kb-api'
 
 // 1) 交给现有服务挂载
 const app = createApp({ name: 'my-api', cors: true })
@@ -76,10 +76,10 @@ export async function listUsers(): Promise<User[]> {
 
 ## 前端请求层：`createHttp`
 
-`@kb/utils` 提供一层基于原生 `fetch` 的请求封装，零运行时依赖：
+`@yuer678/kb-utils` 提供一层基于原生 `fetch` 的请求封装，零运行时依赖：
 
 ```ts
-import { createHttp } from '@kb/utils'
+import { createHttp } from '@yuer678/kb-utils'
 
 const http = createHttp({
   baseURL: '/api',
@@ -111,7 +111,7 @@ export default defineConfig({
 })
 ```
 
-`pnpm start:full` 会同时拉起 playground、docs 与后端；playground 的「真实接口 · @kb/api」
+`pnpm start:full` 会同时拉起 playground、docs 与后端；playground 的「真实接口 · @yuer678/kb-api」
 一节演示了服务端分页排序（`KbTable` 的 `sortable: 'custom'` + `total`）、Cascader 远程懒加载
 与 Tree 远程树数据。
 

@@ -1,69 +1,46 @@
-# npm 发布策略（@kb/* 与 create-kb）
+# npm 发布策略（kb-ui-vue 与 @yuer678/*）
 
-## 现状
+## 现状（2026-09-24）
 
 | 包 | npm 名 | 状态 |
 |----|--------|------|
-| 组件库 | `kb-ui-vue` | **已发布** 0.3.0 |
-| 工具库 | `@kb/utils` | 未发布（changesets ignore） |
-| API 参考后端 | `@kb/api` | 未发布 |
-| 脚手架 | `create-kb` | 未发布（可能与 npm 上他人包名冲突） |
+| 组件库 | `kb-ui-vue` | **已发布**（0.4.0 起，Release 工作流自动发） |
+| 工具库 | `@yuer678/kb-utils` | **已发布**（随 2026-09-24 Path B 上线） |
+| API 参考后端 | `@yuer678/kb-api` | **已发布**（同上） |
+| 脚手架 | `@yuer678/create-kb` | **已发布**（同上；CLI 命令名仍是 `create-kb`） |
+| 共享配置 | `@kb/config` | 私有，workspace 内部 |
+| `kb-playground` / `kb-docs` | — | 私有 |
 
-原因：`@kb` scope 归属需 npm org；`create-kb` 通用名易冲突。
+## 决策记录
 
-## 推荐路径（按性价比）
+### Path A（2026-09-20）
 
-### 路径 A — 聚焦 `kb-ui-vue`（推荐，短期）
+对外只推广 `kb-ui-vue`；`@kb/utils` / `@kb/api` / `create-kb` 放 changesets `ignore`，避免「文档写得到、npm 装不到」。
 
-1. 对外叙事只强调 **`kb-ui-vue`**
-2. `@kb/utils` / `@kb/api` / `create-kb`：
-   - 文档写「monorepo 内部/本地 `file:` 或 workspace 使用」
-   - 或改名为未占用 scope：`@yuer-kb/utils`、`create-kb-ui`
-3. changesets **ignore 保持**，避免误 publish 失败
+### Path B（2026-09-24，执行完毕）
 
-### 路径 B — 完整 scope（中期）
+全部发布包迁到用户 scope `@yuer678/*`：
 
-1. npm 上创建 org（如 `@yuer-kb` 或验证能否获得 `@kb`）
-2. 统一改 `package.json` `name`
-3. 更新 `resolver` 文档与 templates 中的包名
-4. 移出 changesets ignore，配置 `access: public`
-5. CI：`changeset version` + `npm publish --provenance`（可选）
+- `@kb/utils` → `@yuer678/kb-utils`
+- `@kb/api` → `@yuer678/kb-api`
+- `create-kb` → `@yuer678/create-kb`
 
-### 路径 C — create-kb 独立
+迁移原因：
 
-- 发布为 `create-kb-ui` 或 `npx kb-ui-vue create`
-- 保持模板在 monorepo，CLI 薄封装
+1. npm 上的无 scope `create-kb` 是同名无关项目（`adamBoualleiguie/knowledge-base`，维护者 `kb-base`），直接发必 403；
+2. `@kb` scope 需要 npm org，归属未确认（两字母名大概率被占），而用户 scope 零外部依赖、现有 token 即可发。
+
+随迁改动：playground（依赖 / 导入 / vite 别名 / tsconfig paths）、docs 与各 README、changesets（`ignore` 移除三项 + changeset 文件头改新包名）、`sync-api-template.mjs` 注释、`release.yml` 注释。模板生成的项目内嵌后端源码、不依赖 `@yuer678/kb-api`，无需改。
+
+`.changeset/config.json` 的 `ignore` 只剩内部包：`["@kb/config", "kb-playground", "kb-docs"]`。
 
 ## 验收（Issue #21）
 
-- [ ] README / docs 与 npm 实际可安装名 **一致**
-- [ ] 不会出现「文档写 @kb/utils 但 npm 装不到」
-- [ ] 选定 A/B/C 之一并在 PR 描述写明
-- [ ]（路径 B）至少一包成功 publish 且 `npm i` 可用
+- [x] README / docs 与 npm 实际可安装名一致
+- [x] 不再出现「文档写 @kb/utils 但 npm 装不到」
+- [x] 选定路径（A 先行、B 收尾）并在 PR 描述写明
+- [x] 迁移后的三个包 publish 成功且 `npm i` 可用
 
 ## 与 design-assets
 
-素材库 **不**进入 npm 运行时依赖；仅文档/PPT 引用。
-
-
-## 决策（Path A · 2026-09-20）
-
-**选定路径 A**：对外只推广已发布的 `kb-ui-vue`。
-
-| 包 | 对外名 | 说明 |
-|----|--------|------|
-| 组件库 | `kb-ui-vue` | npm 已发布，README 主入口 |
-| `@kb/utils` | 仅 monorepo / workspace | 不在 npm 叙事中承诺可 `npm i @kb/utils` |
-| `@kb/api` | 仅 monorepo | 同上 |
-| `create-kb` | 建议后续改名 `create-kb-ui` | 通用名冲突；改名后再评估发布 |
-
-changesets `ignore` 保持不变，避免误 publish。
-
-Issue #21 可在 README 与 npm 名完全一致后关闭。
-
-
-## CI / Release 说明（2026-09-20）
-
-- `Release` 工作流：**无 token 或 token 无效时只 build**，不把 job 打成红叉
-- 仓库 Secrets 中的 `NPM_TOKEN` 曾 **401**（`npm whoami` 失败），发版前请到 npm 重新生成 Automation Token 并更新 Secrets
-- Dependabot 已忽略 vitest/playwright 等 peer 解析失败包；根目录 `.npmrc` 开启 `legacy-peer-deps`
+素材库**不**进入 npm 运行时依赖；仅文档/PPT 引用。

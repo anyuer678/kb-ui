@@ -13,7 +13,7 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     port: 8070,
-    // 演示接真实接口：把 /api 转发到本地 @kb/api（pnpm api 启动，默认 8082）
+    // 演示接真实接口：把 /api 转发到本地 @yuer678/kb-api（pnpm api 启动，默认 8082）
     proxy: {
       '/api': {
         target: process.env.KB_API_TARGET ?? 'http://127.0.0.1:8082',
@@ -24,7 +24,7 @@ export default defineConfig({
   resolve: {
     alias: {
       'kb-ui-vue': fileURLToPath(new URL('../packages/ui/src/index.ts', import.meta.url)),
-      '@kb/utils': fileURLToPath(new URL('../packages/utils/src/index.ts', import.meta.url)),
+      '@yuer678/kb-utils': fileURLToPath(new URL('../packages/utils/src/index.ts', import.meta.url)),
     },
   },
 })

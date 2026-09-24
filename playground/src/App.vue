@@ -365,7 +365,7 @@ function onTreeDrop(payload: { dragNode: { label: string }; dropNode: { label: s
   treeLastDrop.value = `${payload.dragNode.label} → ${payload.dropNode.label}（${payload.position}）`
 }
 
-// ===== 真实接口演示（@kb/api，开发态经 Vite 代理到 127.0.0.1:8082）=====
+// ===== 真实接口演示（@yuer678/kb-api，开发态经 Vite 代理到 127.0.0.1:8082）=====
 const serverKeyword = ref('')
 const serverPage = ref(1)
 const serverSortProp = ref('')
@@ -776,9 +776,9 @@ const virtualItems = Array.from({ length: 1000 }, (_, i) => `列表项 ${i + 1}`
       <p class="hint">最近落点：{{ treeLastDrop || '（拖动节点试试）' }}</p>
     </section>
 
-    <!-- 真实接口（@kb/api） -->
+    <!-- 真实接口（@yuer678/kb-api） -->
     <section class="block">
-      <h2>真实接口 · @kb/api</h2>
+      <h2>真实接口 · @yuer678/kb-api</h2>
       <KbDivider />
       <p class="hint">
         以下三个示例走真实 HTTP：先跑 <code>pnpm api</code> 起服务（默认 127.0.0.1:8082），

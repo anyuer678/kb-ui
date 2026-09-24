@@ -1,5 +1,5 @@
 {
-  "name": "@kb/utils",
+  "name": "@yuer678/kb-utils",
   "version": "0.1.0",
   "description": "通用 TS 工具函数库（格式化/时间/数组/对象/字符串/存储/正则/异步/DOM）",
   "license": "MIT",

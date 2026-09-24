@@ -2,7 +2,7 @@
 
 Express 5 + TypeScript + Zod 的参考后端服务。
 
-> 本目录的 `src/` 与 `test/` 由 `scripts/sync-api-template.mjs` 从 **`packages/api`**（`@kb/api`）
+> 本目录的 `src/` 与 `test/` 由 `scripts/sync-api-template.mjs` 从 **`packages/api`**（`@yuer678/kb-api`）
 > 自动生成，请勿直接修改；需要调整请改 `packages/api` 的源码后运行 `pnpm sync:api-template`。
 > 只有 `src/index.ts`（启动入口）是模板自带的。
 
