@@ -1,6 +1,7 @@
 {
   "name": "@yuer678/create-kb",
   "version": "0.3.0",
+  "description": "kb-ui 脚手架 CLI：7 种项目模板（Vue3 前端 / Express 后端 / 全栈 / Electron / React / LLM 工作台）一键创建",
   "license": "MIT",
   "author": "anyuer678",
   "repository": {
