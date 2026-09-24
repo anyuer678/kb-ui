@@ -12,7 +12,7 @@
 ```bash
 pnpm install       # 安装全部工作区依赖
 pnpm start         # playground(:8070) + docs(:8071)
-pnpm start:full    # 再额外拉起参考后端 @kb/api(:8082)
+pnpm start:full    # 再额外拉起参考后端 @yuer678/kb-api(:8082)
 ```
 
 > 如果 `pnpm install` 长时间没有任何输出，多半是被 `~/.npmrc` 里的本地代理挂住了，见下方「常见卡点」。
@@ -21,8 +21,8 @@ pnpm start:full    # 再额外拉起参考后端 @kb/api(:8082)
 
 ```
 packages/ui/        kb-ui-vue 组件库（发布到 npm 的就是这个包）
-packages/utils/     @kb/utils 工具函数
-packages/api/       @kb/api 参考后端（Express + Zod）
+packages/utils/     @yuer678/kb-utils 工具函数
+packages/api/       @yuer678/kb-api 参考后端（Express + Zod）
 packages/config/    共享工程配置（tsconfig / eslint / stylelint）
 packages/create-kb/ 脚手架 CLI
 playground/         组件与页面模块演示站（Vite，源码直连热更新）
@@ -90,7 +90,7 @@ pnpm changeset          # 交互式选择受影响的包与版本档位
 
 - 说人话写变更说明，它是 CHANGELOG 的正文
 - `minor`：新增组件、新增能力；`patch`：修复、文档、内部调整
-- `@kb/utils`、`@kb/api`、`create-kb` 目前在 `.changeset/config.json` 的 `ignore` 里，暂不参与发布
+- `@yuer678/kb-utils`、`@yuer678/kb-api`、`@yuer678/create-kb` 都在发布范围内（内部包 `@kb/config`、`kb-playground`、`kb-docs` 仍在 `ignore`）
 
 ## 提交信息
 

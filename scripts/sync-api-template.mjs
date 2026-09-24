@@ -2,7 +2,7 @@
 /**
  * 把 packages/api 的后端源码同步进 create-kb 的模板，保证全仓只有一份后端实现。
  *
- * 背景：`@kb/api` 是可复用的参考后端（Express + Zod），而 create-kb 的 api / fullstack
+ * 背景：`@yuer678/kb-api` 是可复用的参考后端（Express + Zod），而 create-kb 的 api / fullstack
  * 模板原本各带一份几乎相同的后端拷贝，改一处就要改三处。本脚本以 `packages/api` 为唯一
  * 源，把源码铺进模板，两处只保留模板特有的入口文件。
  *
@@ -11,7 +11,7 @@
  *     → <target>/src/...（写入「自动生成」banner）
  *   packages/api/test/** → <target>/test/**
  *   src/index.ts 由本脚本生成（模板入口，端口默认 3000，与 docker-compose / web 代理一致）
- *   src/start.ts、src/cli.ts 不复制（那是 @kb/api 包自身的启动入口与 CLI）
+ *   src/start.ts、src/cli.ts 不复制（那是 @yuer678/kb-api 包自身的启动入口与 CLI）
  *
  * 用法
  *   node scripts/sync-api-template.mjs            # 写入模板
@@ -31,7 +31,7 @@ const targets = [
   join(rootDir, 'packages', 'create-kb', 'templates', 'fullstack', 'server'),
 ]
 
-/** 不从 @kb/api 复制的文件（模板有自己的入口） */
+/** 不从 @yuer678/kb-api 复制的文件（模板有自己的入口） */
 const EXCLUDED = new Set(['src/index.ts', 'src/start.ts', 'src/cli.ts'])
 
 const BANNER = [

@@ -1,11 +1,11 @@
-import { createHttp } from '@kb/utils'
-import type { OptionItem, PageResult, RegionNode, RegionSummary, User } from '@kb/api'
+import { createHttp } from '@yuer678/kb-utils'
+import type { OptionItem, PageResult, RegionNode, RegionSummary, User } from '@yuer678/kb-api'
 
 /**
- * 演示用的请求客户端：开发态由 Vite 代理 `/api` 到 `@kb/api`（默认 127.0.0.1:8082）。
+ * 演示用的请求客户端：开发态由 Vite 代理 `/api` 到 `@yuer678/kb-api`（默认 127.0.0.1:8082）。
  * 不需要真后端时，页面会落到 catch 分支展示错误提示，不影响其它组件演示。
  *
- * 接口的**类型**直接复用 `@kb/api` 的导出（`import type`，不进运行时代码），
+ * 接口的**类型**直接复用 `@yuer678/kb-api` 的导出（`import type`，不进运行时代码），
  * 这样前端与后端的契约只有一份定义，改后端就能被 vue-tsc 立刻发现。
  */
 export const http = createHttp({
@@ -17,7 +17,7 @@ export const http = createHttp({
 
 export type { OptionItem, PageResult, RegionNode, RegionSummary }
 
-/** 与 `@kb/api` 的 `User` 同构，这里只换个更贴合前端的名字 */
+/** 与 `@yuer678/kb-api` 的 `User` 同构，这里只换个更贴合前端的名字 */
 export type ApiUser = User
 
 /** `/api/users` 的查询入参（可选形态，与后端归一化后的 `PageQuery` 区分） */

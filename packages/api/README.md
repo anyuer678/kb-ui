@@ -1,4 +1,4 @@
-# @kb/api
+# @yuer678/kb-api
 
 可复用的参考后端服务（Express 5 + TypeScript + Zod）。它不是「生成一次就丢」的脚手架，而是一个**能被 import 的包**：既给仓库内的 playground / docs / e2e 提供真实数据，也可以在你自己的项目里当成 mock 后端直接起起来。
 
@@ -10,18 +10,18 @@
 
 ```bash
 # 方式一：仓库内开发（tsx watch，改源码即时重启）
-pnpm --filter @kb/api dev               # 默认 http://127.0.0.1:8082
+pnpm --filter @yuer678/kb-api dev               # 默认 http://127.0.0.1:8082
 
 # 方式二：构建后用自带 CLI 起服务
-pnpm --filter @kb/api build
+pnpm --filter @yuer678/kb-api build
 npx kb-api                              # 端口默认 8082
 npx kb-api --port 9000 --host 0.0.0.0   # 换端口 / 对外暴露（容器内需要）
 
 # 方式三：装进你自己的项目当依赖
-pnpm add -D @kb/api
+pnpm add -D @yuer678/kb-api
 ```
 
-`kb-api --help` 可看全部参数；端口与地址也可用环境变量 `PORT` / `HOST` 覆盖，命令行参数优先级更高。`npm i -g @kb/api` 之后可以直接敲 `kb-api`。
+`kb-api --help` 可看全部参数；端口与地址也可用环境变量 `PORT` / `HOST` 覆盖，命令行参数优先级更高。`npm i -g @yuer678/kb-api` 之后可以直接敲 `kb-api`。
 
 ## 接口一览
 
@@ -57,7 +57,7 @@ pnpm add -D @kb/api
 ### 起一个独立 mock 服务
 
 ```ts
-import { startServer } from '@kb/api'
+import { startServer } from '@yuer678/kb-api'
 
 await startServer({ port: 9000, name: 'my-mock' })
 ```
@@ -66,7 +66,7 @@ await startServer({ port: 9000, name: 'my-mock' })
 
 ```ts
 import express from 'express'
-import { createApp } from '@kb/api'
+import { createApp } from '@yuer678/kb-api'
 
 const app = express()
 app.use('/mock', createApp({ name: 'my-mock' }))
@@ -78,7 +78,7 @@ app.listen(3000)
 `queryList` / `parsePageQuery` 是与框架无关的纯函数，可以直接用在你自己路由里，保证分页排序语义跟这套接口一致：
 
 ```ts
-import { parsePageQuery, queryList } from '@kb/api'
+import { parsePageQuery, queryList } from '@yuer678/kb-api'
 
 app.get('/posts', (req, res) => {
   const query = parsePageQuery(req.query)
@@ -106,20 +106,13 @@ pnpm sync:api-template --check  # 只校验是否漂移（CI 用）
 ## 测试
 
 ```bash
-pnpm --filter @kb/api test
+pnpm --filter @yuer678/kb-api test
 ```
 
 用 supertest 直接打真实 HTTP，覆盖分页、排序、搜索、树懒加载、校验失败、404 与 CORS 预检。
 
 ## 发布状态
 
-`@kb/api` **尚未发布到 npm**，当前被放进 `.changeset/config.json` 的 `ignore` 列表，因此 changesets 不会给它升版本、也不会尝试发布。
+`@yuer678/kb-api` 由 changesets 管理版本，随 Release 工作流发布到 npm（`npm i @yuer678/kb-api`，维护者 `yuer678`）。
 
-阻塞原因是作用域归属未确认：`@kb/*` 在 npm 上还没有任何已发布的包，无法据此判断该 scope 是否归本账号所有（账号 token 只有发布权限，`npm org ls kb` 会 403）。
-
-处理方式：
-
-- 确认 `@kb` scope 归自己所有后，把它从 `ignore` 里移除，下一个 release 即可随 changesets 正常发布；
-- 如果 scope 不归自己，需要换成用户名对应的 scope（例如 `@yuer678/api`），届时本项目里所有 `import ... from '@kb/api'`（docs、playground、create-kb 的 api / fullstack 模板）以及同步脚本都要一并替换。
-
-上面两点同样适用于 `@kb/utils`。
+历史说明：曾因 `@kb` scope 归属未确认，与工具库一起放在 `.changeset/config.json` 的 `ignore` 里；2026-09-24 起包名迁到用户 scope（见 `docs/PUBLISH.md` 的决策记录），从 `ignore` 移除并正式发布。

@@ -10,9 +10,6 @@
   "ignore": [
     "@kb/config",
     "kb-playground",
-    "kb-docs",
-    "@kb/utils",
-    "@kb/api",
-    "create-kb"
+    "kb-docs"
   ]
 }

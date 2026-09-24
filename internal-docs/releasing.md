@@ -4,24 +4,24 @@
 
 ## 包与 npm 归属现状
 
-| 包 | 版本 | npm 状态 | 是否在发布范围 |
+| 包 | npm 名 | 状态 | 是否在发布范围 |
 | --- | --- | --- | --- |
-| `kb-ui-vue` | 0.3.0 | 已发布，维护者 `yuer678` | ✅ 正常发布 |
-| `@kb/utils` | 0.1.0 | 404（未发布） | ⏸ 暂缓 |
-| `@kb/api` | 0.1.0 | 404（未发布） | ⏸ 暂缓 |
-| `@kb/config` | 0.0.0 | 私有，不发 | ❌ |
-| `create-kb` | 0.2.0 | **名字被无关项目占用** | ⏸ 暂缓 |
+| 组件库 | `kb-ui-vue` | 已发布，维护者 `yuer678` | ✅ 正常发布 |
+| 工具库 | `@yuer678/kb-utils` | 已发布 | ✅ 正常发布 |
+| API 参考后端 | `@yuer678/kb-api` | 已发布 | ✅ 正常发布 |
+| 脚手架 | `@yuer678/create-kb` | 已发布（CLI 命令名仍是 `create-kb`） | ✅ 正常发布 |
+| 共享配置 | `@kb/config` | 私有，不发 | ❌ |
 | `kb-playground` / `kb-docs` | — | 私有，不发 | ❌ |
 
-两个阻塞（解决前不要解禁）：
+历史上的两个阻塞（2026-09-24 已解决，包名整体迁到用户 scope `@yuer678/*`，详见 `docs/PUBLISH.md` 决策记录）：
 
-- **`@kb` 作用域归属未确认**。当前 npm token 只有发布权限，`npm org ls kb` / `npm access list packages` 都返回 403，查不了。确认归属后从 `ignore` 移除即可；若不归你所有，需要整体换成用户名 scope（如 `@yuer678/*`），届时 `docs`、`playground`、create-kb 的 api / fullstack 模板里的 `import '@kb/...'` 都要一起替换。
-- **`create-kb` 是同名无关项目**（npm 上 0.1.1，来源 `adamBoualleiguie/knowledge-base`，维护者 `kb-base`）。直接发必 403。候选新名：`@kb/create-kb` 或 `kb-create`。
+- `@kb` scope 归属未确认 → 不再依赖 org，改用用户 scope。
+- 无 scope 的 `create-kb` 被无关项目占用（`kb-base`）→ 脚手架改名 `@yuer678/create-kb`，CLI 命令名不变。
 
 ## 发布范围的开关：`.changeset/config.json` 的 `ignore`
 
 ```json
-"ignore": ["@kb/config", "kb-playground", "kb-docs", "@kb/utils", "@kb/api", "create-kb"]
+"ignore": ["@kb/config", "kb-playground", "kb-docs"]
 ```
 
 这个列表对 **version 和 publish 双向生效**——`@changesets/cli` 的 `getPublishPlan.mjs`（publish 时算待发列表）和 `version.mjs`（升版本）都会过 `shouldSkipPackage(pkg, { ignore })`。被忽略的包：
@@ -55,7 +55,7 @@ git checkout -- packages .changeset   # 回滚，别把版本提交流出去
 
 必须是 **带 publish 权限的 npm Automation token**，`Settings → Secrets → NPM_TOKEN`。
 
-现在仓库里那个是**无效凭据**（`npm whoami` 返回 401），kb-ui-vue@0.3.0 是改用本机 `~/.npmrc` 里的 token 手发的。换 token 后跑一次 Release 就能验证：`Verify npm auth` 步骤会打出账号名。
+仓库 Secrets 的 `NPM_TOKEN` 已于 2026-09-22 轮换为有效的 Automation token（`kb-ui-vue@0.4.0` 即由 Release 工作流发出）。
 
 本机验证 token 的几条命令（**必须显式带 `--registry`，否则走 `~/.npmrc` 里的 npmmirror**）：
 
