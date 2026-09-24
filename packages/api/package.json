@@ -1,6 +1,6 @@
 {
   "name": "@yuer678/kb-api",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "可复用的参考后端服务（Express + Zod）：分页/排序/搜索、树形懒加载、大列表，供组件演示、原型联调与本地 mock",
   "license": "MIT",
   "author": "anyuer678",
