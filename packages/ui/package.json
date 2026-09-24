@@ -1,6 +1,7 @@
 {
   "name": "kb-ui-vue",
   "version": "0.4.0",
+  "description": "Vue 3 组件库：73 组件 · 46 主题（CSS 变量驱动）· 按需引入（unplugin resolver）· 零运行时依赖",
   "author": "anyuer678",
   "repository": {
     "type": "git",
