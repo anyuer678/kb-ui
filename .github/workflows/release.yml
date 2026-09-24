@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     env:
       HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
     steps:
@@ -87,7 +88,14 @@ jobs:
         if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
         run: pnpm changeset tag
 
-      - name: Commit and push release state
+      # tag 推送不受分支保护（required checks 只挡分支更新）
+      - name: Push release tags
+        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
+        run: git push origin --tags
+
+      # master 有分支保护（required status checks），GITHUB_TOKEN 直接 push 必被 GH006 拒绝
+      # → 版本回写改为推到独立分支并自动开 PR，由 required checks 走完再人工/自动合并
+      - name: Open version write-back PR
         if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
         run: |
           git config user.name "github-actions[bot]"
@@ -96,6 +104,13 @@ jobs:
             echo "无版本变更需要回写"
             exit 0
           fi
+          BR="release/writeback-$(date +%Y%m%d%H%M%S)"
+          git checkout -b "$BR"
           git add -A
-          git commit -m "release: version packages"
-          git push --follow-tags origin HEAD:${GITHUB_REF_NAME}
+          git commit -m "release: version packages (write-back from run ${{ github.run_id }})"
+          git push origin "$BR"
+          gh pr create --base "$GITHUB_REF_NAME" --head "$BR" \
+            --title "release: version packages (auto write-back)" \
+            --body "Automated write-back from Release run ${{ github.run_id }}. npm publish 已由该 run 完成，本 PR 仅同步版本号 / CHANGELOG 与 .changeset 消费状态，使 master 与 registry 一致（防止下次 publish 撞已存在版本）。"
+        env:
+          GH_TOKEN: ${{ github.token }}
