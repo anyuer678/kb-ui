@@ -84,19 +84,41 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create git tags
+      # `changeset tag` + `git push --tags` 在 scoped 包名上出现过静默失灵
+      # （run 35989660546：tag 步骤自称 Created，push 却报 Everything up-to-date，远端无 ref）。
+      # 改用 Git Data API 显式建 tag，逐个可核验、可重跑；tag 指向触发 commit，
+      # 更精确的锚点可在回写 PR 合并后手动重打到该 merge commit（npm 版本才是真源）。
+      - name: Create release tags (API)
         if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
-        run: pnpm changeset tag
-
-      # tag 推送不受分支保护（required checks 只挡分支更新）
-      - name: Push release tags
-        if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
-        run: git push origin --tags
+        run: |
+          set -euo pipefail
+          TAG_SHA="$(git rev-parse HEAD)"
+          for PKG_DIR in packages/*; do
+            NAME="$(node -p "require('./$PKG_DIR/package.json').name")"
+            VERSION="$(node -p "require('./$PKG_DIR/package.json').version")"
+            case "$NAME" in
+              @kb/config|kb-playground|kb-docs) continue ;;
+            esac
+            REF="refs/tags/${NAME}@${VERSION}"
+            if gh api "repos/${{ github.repository }}/git/matching-refs/tags/${NAME}@${VERSION}" --jq '.[].ref' | grep -qFx "$REF"; then
+              echo "tag ${NAME}@${VERSION} 已存在，跳过"
+            else
+              gh api --method POST "repos/${{ github.repository }}/git/refs" \
+                -f "ref=$REF" -f "sha=$TAG_SHA" --jq '.ref'
+              echo "created $REF @ $TAG_SHA"
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       # master 有分支保护（required status checks），GITHUB_TOKEN 直接 push 必被 GH006 拒绝
-      # → 版本回写改为推到独立分支并自动开 PR，由 required checks 走完再人工/自动合并
+      # → 版本回写改为推到独立分支并自动开 PR，由 required checks 走完再人工/自动合并。
+      # 若 repo 未开启「Allow GitHub Actions to create and approve pull requests」，
+      # gh pr create 会失败——publish/tag 均已完成，这里降级为警告，
+      # 手动从 release/writeback-* 分支开 PR 即可（run 35989660546 的实证流程）。
       - name: Open version write-back PR
         if: env.HAS_NPM_TOKEN == 'true' && !inputs.dry_run && steps.changesets.outputs.has_changesets == 'true' && steps.npm_auth.outputs.ok == 'true'
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
