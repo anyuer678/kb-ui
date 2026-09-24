@@ -2,6 +2,17 @@
   "name": "@kb/api",
   "version": "0.1.0",
   "description": "可复用的参考后端服务（Express + Zod）：分页/排序/搜索、树形懒加载、大列表，供组件演示、原型联调与本地 mock",
+  "license": "MIT",
+  "author": "anyuer678",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anyuer678/kb-ui.git",
+    "directory": "packages/api"
+  },
+  "homepage": "https://anyuer678.github.io/kb-ui/",
+  "bugs": {
+    "url": "https://github.com/anyuer678/kb-ui/issues"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
