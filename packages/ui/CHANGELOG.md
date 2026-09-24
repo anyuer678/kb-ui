@@ -1,5 +1,134 @@
 # @kb/ui
 
+## 0.4.0
+
+### Minor Changes
+
+- 19de01a: 新增 ConfigProvider 全局配置组件与国际化体系。
+
+  **ConfigProvider**
+
+  - 提供统一的 `locale` / `size` / `zIndex` / `theme` 配置，透传 slot、不产生额外 DOM
+  - `theme="dark"` 会把 `data-theme="dark"` 同步到 `<html>`，配合内置 `dark.css` 生效
+  - 配置通过 `reactive` 注入，运行时切换语言或尺寸会立即作用于整棵子树
+  - 配套导出 `useGlobalConfig` / `useLocale` / `useSize` / `useZIndex`
+
+  **国际化**
+
+  - 内置 `zh-CN` 与 `en-US` 语言包，导出 `locales` / `getLocale` / `zhCN` / `enUS`
+  - 把 15 个组件里硬编码的中文文案与无障碍标注（`aria-label`）全部抽到语言包：
+    Calendar、Carousel、Cascader、ColorPicker、DatePicker、Dialog、Empty、Form、
+    InputPassword、List、Pagination、Popconfirm、Search、Table、Transfer、Upload
+  - 取值优先级为「显式 prop > 语言包 > 默认语言包」，未传 prop 时行为与之前一致，
+    已有代码无需改动；自定义语言包缺字段会自动回退，不必抄全量
+
+  **其他**
+
+  - 文档站版本号改为从 `packages/ui/package.json` 读取，避免与发布版本脱节
+
+- 19de01a: 新增 16 个组件，补齐表单、图片、滚动、浮层与布局五类常见场景，并修复一处 SSR 缺陷。
+
+  **表单（3）**
+
+  - `AutoComplete` 自动补全：本地过滤 + `fetchSuggestions` 远程取数，支持上下键导航
+  - `TreeSelect` 树选择：下拉面板内展开树形结构，`defaultExpandAll` 可默认全展开
+  - `TimePicker` 时间选择：时 / 分 / 秒三列，`format` 含 `ss` 时启用秒列，支持 `minuteStep`
+
+  **图片（2）**
+
+  - `Image` 图片：加载失败 `fallback` 兜底、点击打开预览、`previewList` 多图切换
+  - `ImagePreview` 图片预览：全屏查看器，支持缩放（`0.25 ~ 5`）、旋转、左右切换与键盘操作
+
+  **滚动与定位（3）**
+
+  - `BackTop` 回到顶部：`requestAnimationFrame` + easeOutCubic 动画，可监听自定义滚动容器
+  - `Affix` 固钉：按 `offsetTop` / `offsetBottom` 吸附，保留占位元素避免布局跳动，`target` 同时作为滚动监听来源与边界容器
+  - `Anchor` 锚点：滚动监听高亮当前锚点，支持嵌套与平滑跳转
+
+  **浮层与布局（4）**
+
+  - `Splitter` 分隔面板：拖拽调整相邻面板占比，`min` 限制下限，方向键可微调
+  - `Tour` 漫游式引导：分步高亮目标元素并展示气泡说明，支持跳过与遮罩关闭
+  - `ContextMenu` 右键菜单：位置按视口边界自动修正，支持禁用项与 `close()` 实例方法
+  - `Layout` 布局：`Layout` / `Header` / `Sider` / `Content` / `Footer` 组合，Sider 可折叠并注入 `layout.sider.collapse/expand` 文案
+
+  **悬浮与高级输入 / 列表 / 码（4）**
+
+  - `FloatButton` / `FloatButtonGroup` 悬浮按钮：圆形 / 方形、多尺寸，组内可受控展开收起
+  - `Mentions` @ 提及：textarea 内 `@` 触发下拉，支持过滤、禁用项与受控值
+  - `VirtualList` 虚拟列表：定高窗口化渲染，只渲染可视区 + 缓冲区，含 `scroll` / `reachEnd` 事件；已修复 SSR 无 `items` 默认值时渲染崩溃
+  - `QRCode` 二维码：零运行时依赖的自研 ISO 18004 编码器（GF(256) / Reed-Solomon / 8 掩码自动优选），SVG 单 `<path>` 渲染，与参考库 `qrcode` 逐位交叉验证一致
+
+  所有新组件均已接入 `ConfigProvider` 的语言包与尺寸配置，并补齐单元测试、playground 演示与按需引入。
+
+- 19de01a: 新增按需引入解析器与 Volar 全局组件类型。
+
+  **按需引入**
+
+  - 新增 `kb-ui-vue/resolver` 导出 `KbResolver`，配合 `unplugin-vue-components` 使用：
+
+    ```ts
+    import Components from 'unplugin-vue-components/vite'
+    import { KbResolver } from 'kb-ui-vue/resolver'
+
+    Components({ resolvers: [KbResolver()] })
+    ```
+
+  - 解析 `<KbButton>` 这类标签时自动注入 `import { KbButton } from 'kb-ui-vue'`
+    以及对应的样式副作用 `kb-ui-vue/styles/<entry>.css`
+  - 支持自定义前缀（`prefix`）与关闭样式注入（`importStyle: false`）
+  - 处理了复用同一份样式的别名组件：`KbRow` / `KbCol` 归到 `Grid`，`KbFormItem` 归到 `Form`；
+    `KbConfigProvider` 无独立样式，不注入 CSS
+
+  **IDE 类型支持**
+
+  - 新增 `kb-ui-vue/global` 类型入口，构建时由 `scripts/build-global-types.mjs` 生成
+    `dist/global.d.ts`，为 `vue` 模块增补 `GlobalComponents` 声明
+  - 在 `tsconfig.json` 的 `types` 中引入后，模板里使用 `<KbXxx>` 即可获得组件名提示与 props 类型，无需手动 import
+
+  详见文档 [按需引入](/guide/on-demand)。
+
+### Patch Changes
+
+- 3bc1d7d: chore: docs/CI hygiene without user-facing API changes
+- 89aee97: chore(deps-dev): bump dev dependencies (dev-minor-patch group)
+- 4bfe3d4: chore(deps): bump vue from 3.5.41 to 3.5.42
+- 7ac10c0: fix(affix): `target` 现在真正作为滚动容器生效
+
+  此前 `KbAffix` 只监听 window 的 scroll/resize，`target` 仅被当成固定范围的边界使用。
+  结果是：把 Affix 放进一个 `overflow: auto` 的容器里并传 `target` 时，滚动容器**完全不会触发**重新计算，
+  组件永远不固定——而 playground 的演示恰好就是这么写的，等于演示了一个不生效的功能。
+
+  现在 `target` 同时承担两个职责：
+  - 作为滚动监听源（容器滚动即触发更新）
+  - 作为固定范围的边界（固定线取「容器顶部 + offsetTop」，而不是视口顶部）
+
+  不传 `target` 时的视口行为保持不变。
+
+- 99a4319: Security dependency refresh (js-yaml, fast-uri, vite, electron templates).
+- 1d3263a: 补强可访问性、SSR 兼容与质量门禁。
+
+  **可访问性修复（axe-core 复现的真实缺陷）**
+
+  - `ContextMenu`：补齐 WAI-ARIA 菜单键盘导航（↑/↓ 移动焦点、Home/End 跳转首尾、Esc 关闭），菜单项 `tabindex="-1"`，并新增 `:focus-visible` 可见焦点样式；面板补 `aria-label`
+  - `Tour`：支持 Esc 关闭；气泡补 `aria-label`
+  - `ImagePreview` / `Splitter`：浮层与分隔条补 `aria-label`
+  - `TimePicker` / `TreeSelect`：combobox 补 `aria-label` 与 `aria-controls`（ARIA 1.2 要求），下拉面板补稳定 `id` 与名称
+  - 新增 `splitter` / `contextMenu` / `tour.label` / `image.previewDialog` / `timePicker.*` / `treeSelect.label` 等国际化词条（中英双语）
+
+  **新增测试**
+
+  - SSR 冒烟测试：node 环境下对全部组件执行 `renderToString`，拦截未做环境判断的 `window` / `document` 访问（71 例）
+  - a11y 测试：axe-core 规则校验 + 结构断言，覆盖 9 个组件（13 例）
+  - 覆盖率上报：新增 `pnpm test:coverage`（v8 provider）
+
+  **新增质量门禁**
+
+  - `pnpm check-size`：产物原始 / gzip 体积预算，并校验单组件引入的 tree-shaking 比例（当前约 3.6%）
+  - `pnpm test:visual`：重建视觉回归取样台。原用例依赖 playground 路由（该站并无路由，`/button` 等路径全部 404），实际从未跑通；现改为独立的确定性取样台，覆盖 18 个组件 × 3 套主题共 54 张基线
+
+- b0adb10: 视觉回归覆盖补齐：Layout / FloatButton / Mentions / VirtualList / QRCode 五个组件接入取样台，新增 15 张基线（三主题）；QRCode 交叉验证测试在 coverage 插桩下的超时放宽到 30s。
+
 ## 0.3.0
 
 ### Minor Changes
