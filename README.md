@@ -1,4 +1,5 @@
 # KB UI
+[English](README.en.md) | 简体中文
 
 [![CI](https://github.com/anyuer678/kb-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/anyuer678/kb-ui/actions/workflows/ci.yml)
 
