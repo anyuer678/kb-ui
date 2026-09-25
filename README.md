@@ -1,5 +1,7 @@
 # KB UI
 
+[![CI](https://github.com/anyuer678/kb-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/anyuer678/kb-ui/actions/workflows/ci.yml)
+
 > **状态**：`portfolio` · 组件库作品集 · npm 已发布 [`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)  
 > **与 design-assets**：本地设计素材库仅用于文档/PPT/案例配图，**不替换**组件默认主题与运行时皮肤。  
 
