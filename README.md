@@ -1,21 +1,24 @@
+<div align="center">
+
 # KB UI
+
+**Vue 3 组件库 + 36 页面模块 + 46 主题 + 工具库 + 参考后端 + 脚手架——零运行时依赖，CSS 变量驱动**
+
 [English](README.en.md) | 简体中文
 
 [![CI](https://github.com/anyuer678/kb-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/anyuer678/kb-ui/actions/workflows/ci.yml)
-
-> **状态**：`portfolio` · 组件库作品集 · npm 已发布 [`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue)  
-> **与 design-assets**：本地设计素材库仅用于文档/PPT/案例配图，**不替换**组件默认主题与运行时皮肤。  
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Vue 3](https://img.shields.io/badge/Vue-3.5-42b883)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-8-646cff)](https://vitejs.dev/)
-[![pnpm](https://img.shields.io/badge/pnpm-10-f69220)](https://pnpm.io/)
-[![组件](https://img.shields.io/badge/组件-73-10b981)](https://github.com/anyuer678/kb-ui)
-[![主题](https://img.shields.io/badge/主题-46-8b5cf6)](https://github.com/anyuer678/kb-ui)
-[![模块模板](https://img.shields.io/badge/模块模板-36+-f59e0b)](https://github.com/anyuer678/kb-ui)
+[![组件](https://img.shields.io/badge/组件-73-10b981)](https://anyuer678.github.io/kb-ui/)
+[![主题](https://img.shields.io/badge/主题-46-8b5cf6)](https://anyuer678.github.io/kb-ui/)
+[![npm](https://img.shields.io/badge/npm-四包已发布-cb3837)](https://www.npmjs.com/package/kb-ui-vue)
 
-**一套自建的前端素材库与工程模板集**：Vue 3 组件库 + 36 个完整页面模块 + 46 套多风格主题 + 通用工具函数（含 HTTP 请求层）+ 可复用的参考后端 + 7 种项目脚手架模板 + DevOps 资产，全部零运行时依赖、CSS 变量驱动。
+</div>
+
+> **状态**：`portfolio` · 组件库作品集 · npm 已发布 [`kb-ui-vue`](https://www.npmjs.com/package/kb-ui-vue) · [`@yuer678/kb-utils`](https://www.npmjs.com/package/@yuer678/kb-utils) · [`@yuer678/kb-api`](https://www.npmjs.com/package/@yuer678/kb-api) · [`@yuer678/create-kb`](https://www.npmjs.com/package/@yuer678/create-kb)（脚手架用 scoped 名：npm 无 scope `create-kb` 为同名无关项目）  
+> **与 design-assets**：本地设计素材库仅用于文档/PPT/案例配图，**不替换**组件默认主题与运行时皮肤。  
+> 📦 发布策略详见 [docs/PUBLISH.md](docs/PUBLISH.md)。
 
 > 📦 **发布策略**详见 [docs/PUBLISH.md](docs/PUBLISH.md)（发布包与内部包的对应关系、两次发布决策的记录）。
 
