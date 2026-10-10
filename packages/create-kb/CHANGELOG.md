@@ -1,5 +1,12 @@
 # create-kb
 
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [7e5e8f4]
+  - kb-ui-vue@0.4.2
+
 ## 0.3.1
 
 ### Patch Changes
