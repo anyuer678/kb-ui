@@ -93,11 +93,12 @@ function startUpload(item: InternalItem) {
   })
   const fd = new FormData()
   fd.append(props.name, item.raw)
+  if (props.withCredentials) xhr.withCredentials = true
+  xhr.open('POST', props.action)
+  // 请求头必须在 open() 之后、send() 之前设置（XHR 规范要求）
   for (const [k, v] of Object.entries(props.headers ?? {})) {
     xhr.setRequestHeader(k, v)
   }
-  if (props.withCredentials) xhr.withCredentials = true
-  xhr.open('POST', props.action)
   xhr.send(fd)
 }
 
