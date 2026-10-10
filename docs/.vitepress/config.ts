@@ -13,7 +13,17 @@ export default defineConfig({
   title: 'KB UI · Vue 3 组件库',
   description: '一套自建的 Vue 3 组件库与工程模板：73 组件 · 46 主题 · 36 页面模块 · npm 四包已发布，零运行时依赖，CSS 变量驱动',
   // 浏览器级 /favicon.ico 404 的兜底：data-URI 内联图标，不依赖 base 子路径
-  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%237c3aed%22%2F%3E%3Crect%20x%3D%226.5%22%20y%3D%228%22%20width%3D%2219%22%20height%3D%2216%22%20rx%3D%222.5%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M6.5%2013h19%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20cx%3D%229.5%22%20cy%3D%2210.5%22%20r%3D%221.1%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%2212.5%22%20cy%3D%2210.5%22%20r%3D%221.1%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E' }]],
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%237c3aed%22%2F%3E%3Crect%20x%3D%226.5%22%20y%3D%228%22%20width%3D%2219%22%20height%3D%2216%22%20rx%3D%222.5%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M6.5%2013h19%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20cx%3D%229.5%22%20cy%3D%2210.5%22%20r%3D%221.1%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%2212.5%22%20cy%3D%2210.5%22%20r%3D%221.1%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E' }],
+    // 社交分享卡片（X/Telegram/Discord 抓取 OG 标签渲染预览卡）
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'KB UI' }],
+    ['meta', { property: 'og:title', content: 'KB UI · Vue 3 组件库' }],
+    ['meta', { property: 'og:description', content: '一套自建的 Vue 3 组件库与工程模板：73 组件 · 46 主题 · 36 页面模块 · npm 四包已发布，零运行时依赖，CSS 变量驱动' }],
+    ['meta', { property: 'og:url', content: 'https://anyuer678.github.io/kb-ui/' }],
+    ['meta', { property: 'og:image', content: 'https://anyuer678.github.io/kb-ui/og-image.png' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+  ],
   // GitHub Pages 部署到 /kb-ui/ 子路径时通过 BASE_URL 覆盖
   base: process.env.BASE_URL ?? '/',
   vite: {
