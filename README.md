@@ -211,6 +211,16 @@ pnpm sync:api-template:check  # 校验模板与 packages/api 是否一致
 
 本项目按 **MIT** 协议以「现状」（AS IS）提供，作者与贡献者**不对使用本项目产生的任何直接、间接、偶然或后果性损失负责**。本项目以功能演示与学习交流为主要目的，架构设计、安全基线、容错机制与性能表现均未按生产级标准验证，**不适用于实际生产环境或关键业务场景**。任何部署于生产系统、对外提供服务或接入真实业务工作流的做法，均属使用者的自主决策行为，由此产生的任何不良后果，作者均不承担任何责任。
 
+## 生态
+
+本项目属于 [作品体系](https://anyuer678.github.io/yuer.dev/map) 中的 **UI 工程基建** 主线——Vue 3 组件库 + 脚手架四包（`kb-ui-vue` / `create-kb` 等，均发 npm）。
+
+真实生产使用（dogfooding）：
+
+- [yuer.dev 作品地图页](https://anyuer678.github.io/yuer.dev/map) —— 由 `kb-ui-vue@0.4.2` 驱动（KbCard / KbTag / KbDivider 按需引入），源码见 [yuer.dev/src/pages/Map.vue](https://github.com/anyuer678/yuer.dev/blob/main/src/pages/Map.vue)
+
+新项目脚手架：`npm create create-kb` 可直接生成带 CI / changesets / 质量基线的仓库骨架。
+
 ## License
 
 [MIT License](LICENSE) — Copyright (c) 2026 anyuer678
