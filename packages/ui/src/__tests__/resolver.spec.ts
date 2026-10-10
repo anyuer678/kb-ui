@@ -27,6 +27,17 @@ describe('KbResolver', () => {
     expect(resolver.resolve('KbFormItem')?.sideEffects).toEqual(['kb-ui-vue/styles/Form.css'])
   })
 
+  it('复合组件别名指向宿主样式（FloatButtonGroup / Layout 子组件）', () => {
+    expect(resolver.resolve('KbFloatButtonGroup')?.name).toBe('KbFloatButtonGroup')
+    expect(resolver.resolve('KbFloatButtonGroup')?.sideEffects).toEqual([
+      'kb-ui-vue/styles/FloatButton.css',
+    ])
+    for (const sub of ['KbHeader', 'KbSider', 'KbContent', 'KbFooter']) {
+      expect(resolver.resolve(sub)?.name).toBe(sub)
+      expect(resolver.resolve(sub)?.sideEffects).toEqual(['kb-ui-vue/styles/Layout.css'])
+    }
+  })
+
   it('无样式组件（ConfigProvider）不引入 CSS', () => {
     const result = resolver.resolve('KbConfigProvider')
     expect(result).toEqual({ name: 'KbConfigProvider', from: 'kb-ui-vue' })

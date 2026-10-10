@@ -54,7 +54,9 @@
       "esbuild": "^0.28.1",
       "vite": "^8.3.0",
       "vite@^5.4.14": "5.4.21",
-      "esbuild@^0.21.3": "0.21.5"
+      "esbuild@^0.21.3": "0.21.5",
+      "proxy-addr": ">=2.0.8",
+      "source-map-js": ">=1.2.2"
     },
     "onlyBuiltDependencies": [
       "esbuild"

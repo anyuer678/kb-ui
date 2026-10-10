@@ -90,6 +90,11 @@ const ALIASED_ENTRIES: Record<string, string> = {
   Row: 'Grid',
   Col: 'Grid',
   FormItem: 'Form',
+  FloatButtonGroup: 'FloatButton',
+  Header: 'Layout',
+  Sider: 'Layout',
+  Content: 'Layout',
+  Footer: 'Layout',
 }
 
 /** 无样式产物的组件：参与组件解析但不引入任何 CSS */
