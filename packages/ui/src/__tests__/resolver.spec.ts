@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { readdirSync, existsSync } from 'node:fs'
+import { readdirSync, existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 import { KbResolver } from '../resolver'
-import { styleEntryMap } from '../resolver-map'
+import { styleEntryMap, compositeDeps } from '../resolver-map'
 
 const componentsDir = resolve(dirname(fileURLToPath(import.meta.url)), '../components')
 
@@ -29,13 +29,42 @@ describe('KbResolver', () => {
 
   it('复合组件别名指向宿主样式（FloatButtonGroup / Layout 子组件）', () => {
     expect(resolver.resolve('KbFloatButtonGroup')?.name).toBe('KbFloatButtonGroup')
+    // FloatButton 内嵌 Icon（compositeDeps），按需引入需级联其样式
     expect(resolver.resolve('KbFloatButtonGroup')?.sideEffects).toEqual([
       'kb-ui-vue/styles/FloatButton.css',
+      'kb-ui-vue/styles/Icon.css',
     ])
     for (const sub of ['KbHeader', 'KbSider', 'KbContent', 'KbFooter']) {
       expect(resolver.resolve(sub)?.name).toBe(sub)
-      expect(resolver.resolve(sub)?.sideEffects).toEqual(['kb-ui-vue/styles/Layout.css'])
+      expect(resolver.resolve(sub)?.sideEffects).toEqual([
+        'kb-ui-vue/styles/Layout.css',
+        'kb-ui-vue/styles/Icon.css',
+      ])
     }
+  })
+
+  it('复合组件级联内嵌子组件样式（Table/Transfer/Alert/Image 闭包）', () => {
+    expect(resolver.resolve('KbTable')?.sideEffects).toEqual([
+      'kb-ui-vue/styles/Table.css',
+      'kb-ui-vue/styles/Checkbox.css',
+      'kb-ui-vue/styles/Pagination.css',
+    ])
+    expect(resolver.resolve('KbTransfer')?.sideEffects).toEqual([
+      'kb-ui-vue/styles/Transfer.css',
+      'kb-ui-vue/styles/Checkbox.css',
+    ])
+    expect(resolver.resolve('KbAlert')?.sideEffects).toEqual([
+      'kb-ui-vue/styles/Alert.css',
+      'kb-ui-vue/styles/Icon.css',
+    ])
+    // Image → ImagePreview → Icon 传递闭包已平铺
+    expect(resolver.resolve('KbImage')?.sideEffects).toEqual([
+      'kb-ui-vue/styles/Image.css',
+      'kb-ui-vue/styles/Icon.css',
+      'kb-ui-vue/styles/ImagePreview.css',
+    ])
+    // 独立组件仍只带自身样式
+    expect(resolver.resolve('KbInput')?.sideEffects).toEqual(['kb-ui-vue/styles/Input.css'])
   })
 
   it('无样式组件（ConfigProvider）不引入 CSS', () => {
@@ -85,5 +114,41 @@ describe('styleEntryMap 与实际组件目录保持一致', () => {
       .filter((name) => existsSync(resolve(componentsDir, name, 'style.css')))
       .filter((name) => !registered.has(name))
     expect(unregistered).toEqual([])
+  })
+
+  it('组件内嵌的子组件依赖全部登记在 compositeDeps（防新增漏登）', () => {
+    const missing: string[] = []
+    for (const dir of readdirSync(componentsDir, { withFileTypes: true })) {
+      if (!dir.isDirectory()) continue
+      const consumer = dir.name
+      const vueFiles = readdirSync(resolve(componentsDir, consumer)).filter((f) =>
+        f.endsWith('.vue'),
+      )
+      for (const file of vueFiles) {
+        const src = readFileSync(resolve(componentsDir, consumer, file), 'utf-8')
+        for (const m of src.matchAll(/from '\.\.\/([A-Z][A-Za-z]+)'/g)) {
+          const subDir = m[1]
+          // 子组件无样式（或映射为空）则无需级联
+          const entry = styleEntryMap[subDir]
+          if (!entry) continue
+          const declared = compositeDeps[consumer] ?? []
+          if (!declared.includes(subDir)) {
+            missing.push(`${consumer} -> ${subDir}`)
+          }
+        }
+      }
+    }
+    expect(missing).toEqual([])
+  })
+
+  it('compositeDeps 的每个键值都是已登记且带样式的导出名', () => {
+    const bad: string[] = []
+    for (const [consumer, deps] of Object.entries(compositeDeps)) {
+      if (!(consumer in styleEntryMap)) bad.push(`unknown consumer: ${consumer}`)
+      for (const dep of deps) {
+        if (!styleEntryMap[dep]) bad.push(`${consumer} -> unstyled/unknown dep: ${dep}`)
+      }
+    }
+    expect(bad).toEqual([])
   })
 })

@@ -17,7 +17,7 @@
  * `import { KbButton } from 'kb-ui-vue'` 与对应的样式引入，
  * 从而实现组件 + 样式的双重按需加载。
  */
-import { styleEntryMap } from './resolver-map'
+import { styleEntryMap, compositeDeps } from './resolver-map'
 
 /** resolver 的解析结果，结构对齐 unplugin-vue-components */
 export interface KbComponentResolveResult {
@@ -72,7 +72,14 @@ export function KbResolver(options: KbResolverOptions = {}): KbComponentResolver
       // 这样即使使用方自定义了前缀（如 `<KBInput>`）也能正确导入
       const result: KbComponentResolveResult = { name: `Kb${base}`, from: 'kb-ui-vue' }
       if (importStyle && styleEntry) {
-        result.sideEffects = [`kb-ui-vue/styles/${styleEntry}.css`]
+        // 复合组件级联内嵌子组件样式（如 Table → Checkbox/Pagination），
+        // 否则按需模式下内嵌子组件裸奔；自样式排最前，去重防 ALIASED 重叠。
+        // compositeDeps 以宿主样式名（=目录名）为键，别名组件（FloatButtonGroup
+        // → FloatButton）同样能命中
+        const entries = [styleEntry, ...(compositeDeps[styleEntry] ?? [])]
+          .map((dep) => styleEntryMap[dep])
+          .filter((entry, i, arr): entry is string => Boolean(entry) && arr.indexOf(entry) === i)
+        result.sideEffects = entries.map((entry) => `kb-ui-vue/styles/${entry}.css`)
       }
       return result
     },
@@ -89,5 +96,5 @@ function stripPrefix(name: string, prefixes: string[]): string | undefined {
   return undefined
 }
 
-export { styleEntryMap }
+export { styleEntryMap, compositeDeps }
 export default KbResolver

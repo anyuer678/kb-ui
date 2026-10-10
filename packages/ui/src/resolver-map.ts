@@ -109,3 +109,39 @@ export const styleEntryMap: Record<string, string> = {
   ...ALIASED_ENTRIES,
   ...Object.fromEntries(STYLELESS_ENTRIES.map((name) => [name, ''])),
 }
+
+/**
+ * 复合组件的内嵌子组件（导出名，已展开为传递闭包）。
+ *
+ * 按需引入复合组件时，resolver 需把内嵌子组件的样式一并带入——
+ * 否则 `<KbTable>` 的勾选列（Checkbox）与分页器（Pagination）、
+ * `<KbAlert>` 的图标（Icon）等在按需模式下全部裸奔（外部审查 2026-10）。
+ *
+ * 全量引入（styles/index.css）不受影响：它本来就聚合全部组件样式。
+ * 维护方式：组件新增 `from '../Xxx'` 的内部依赖时，在此登记一条。
+ */
+export const compositeDeps: Record<string, string[]> = {
+  Alert: ['Icon'],
+  AutoComplete: ['Icon'],
+  Avatar: ['Icon'],
+  BackTop: ['Icon'],
+  ContextMenu: ['Icon'],
+  DatePicker: ['Icon', 'Calendar'],
+  Empty: ['Icon'],
+  FloatButton: ['Icon'],
+  // Image 内嵌 ImagePreview，ImagePreview 又内嵌 Icon——此处直接写闭包
+  Image: ['Icon', 'ImagePreview'],
+  ImagePreview: ['Icon'],
+  InputPassword: ['Icon'],
+  Layout: ['Icon'],
+  Message: ['Icon'],
+  Notification: ['Icon'],
+  Result: ['Icon'],
+  Search: ['Icon'],
+  Steps: ['Icon'],
+  Table: ['Checkbox', 'Pagination'],
+  TimePicker: ['Icon'],
+  Tour: ['Icon'],
+  Transfer: ['Checkbox'],
+  TreeSelect: ['Icon'],
+}
