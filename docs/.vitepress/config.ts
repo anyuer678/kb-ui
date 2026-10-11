@@ -15,6 +15,8 @@ export default defineConfig({
   // 浏览器级 /favicon.ico 404 的兜底：data-URI 内联图标，不依赖 base 子路径
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%237c3aed%22%2F%3E%3Crect%20x%3D%226.5%22%20y%3D%228%22%20width%3D%2219%22%20height%3D%2216%22%20rx%3D%222.5%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M6.5%2013h19%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20cx%3D%229.5%22%20cy%3D%2210.5%22%20r%3D%221.1%22%20fill%3D%22%23fff%22%2F%3E%3Ccircle%20cx%3D%2212.5%22%20cy%3D%2210.5%22%20r%3D%221.1%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E' }],
+    // SEO：canonical（首页）
+    ['link', { rel: 'canonical', href: 'https://anyuer678.github.io/kb-ui/' }],
     // 社交分享卡片（X/Telegram/Discord 抓取 OG 标签渲染预览卡）
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: 'KB UI' }],
@@ -27,6 +29,8 @@ export default defineConfig({
   ],
   // GitHub Pages 部署到 /kb-ui/ 子路径时通过 BASE_URL 覆盖
   base: process.env.BASE_URL ?? '/',
+  // SEO：生成 sitemap.xml（hostname 会自动拼接 base 子路径）
+  sitemap: { hostname: 'https://anyuer678.github.io' },
   vite: {
     define: { __KB_VERSION__: JSON.stringify(uiVersion) },
     server: { port: 8071 },
