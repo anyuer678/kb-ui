@@ -377,7 +377,7 @@ const theme = params.get('theme') ?? 'default'
 // 'default' 表示不设置该属性（走 tokens.css 的基础变量）。
 document.documentElement.dataset.theme = theme === 'default' ? '' : theme
 
-const renderFixture = FIXTURES[fixtureKey]
+const renderFixture = Object.hasOwn(FIXTURES, fixtureKey) ? FIXTURES[fixtureKey as keyof typeof FIXTURES] : undefined
 if (!renderFixture) {
   throw new Error(
     `[visual] 未知的 fixture "${fixtureKey}"，可用：${Object.keys(FIXTURES).join(', ')}`,

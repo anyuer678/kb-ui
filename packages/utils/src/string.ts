@@ -37,7 +37,16 @@ export function randomString(length = 8, chars = 'abcdefghijklmnopqrstuvwxyzABCD
   return result
 }
 
-/** 移除 HTML 标签 */
+/** 移除 HTML 标签（单遍线性扫描，无正则回溯；非 XSS sanitizer——渲染前仍须转义） */
 export function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '')
+  let out = ''
+  for (let i = 0; i < html.length; ) {
+    const lt = html.indexOf('<', i)
+    if (lt < 0) { out += html.slice(i); break }
+    out += html.slice(i, lt)
+    const gt = html.indexOf('>', lt)
+    if (gt < 0) { out += html.slice(lt); break } // 孤立'<'：与正则语义一致，原样保留
+    i = gt + 1
+  }
+  return out
 }

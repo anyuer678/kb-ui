@@ -76,9 +76,15 @@ function isAbsoluteURL(url: string): boolean {
   return /^https?:\/\//i.test(url)
 }
 
+function stripTrailingSlashes(s: string): string {
+  let end = s.length
+  while (end > 0 && s[end - 1] === '/') end--
+  return s.slice(0, end)
+}
+
 function joinURL(base: string | undefined, url: string): string {
   if (!base || isAbsoluteURL(url)) return url
-  return `${base.replace(/\/+$/, '')}/${url.replace(/^\/+/, '')}`
+  return `${stripTrailingSlashes(base)}/${url.replace(/^\/+/, '')}`
 }
 
 /** 追加查询串，自动跳过 undefined / null / 空字符串 */
