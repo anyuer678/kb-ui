@@ -23,6 +23,7 @@ export default defineConfig({
     ['meta', { property: 'og:url', content: 'https://anyuer678.github.io/kb-ui/' }],
     ['meta', { property: 'og:image', content: 'https://anyuer678.github.io/kb-ui/og-image.png' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+['meta', { name: 'twitter:image', content: 'https://anyuer678.github.io/kb-ui/og-image.png' }],
   ],
   // GitHub Pages 部署到 /kb-ui/ 子路径时通过 BASE_URL 覆盖
   base: process.env.BASE_URL ?? '/',
