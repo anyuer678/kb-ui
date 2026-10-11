@@ -30,7 +30,7 @@ export default defineConfig({
   // GitHub Pages 部署到 /kb-ui/ 子路径时通过 BASE_URL 覆盖
   base: process.env.BASE_URL ?? '/',
   // SEO：生成 sitemap.xml（hostname 会自动拼接 base 子路径）
-  sitemap: { hostname: 'https://anyuer678.github.io' },
+  sitemap: { hostname: 'https://anyuer678.github.io/kb-ui/' },
   vite: {
     define: { __KB_VERSION__: JSON.stringify(uiVersion) },
     server: { port: 8071 },
