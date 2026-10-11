@@ -1,5 +1,12 @@
 name: doc-claims
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 # 注意：pull_request 故意不加 paths 过滤。
 # `claims` job 是 master 的 required status check；GitHub 对「paths 未命中」的 workflow
 # 不产生任何 check-run，于是不碰 README.md / packages/ui/** 的 PR 会永久卡在

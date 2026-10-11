@@ -1,5 +1,13 @@
 name: Release
 
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 # 手动触发。发布范围（ignore 之外）：kb-ui-vue、@yuer678/kb-utils、@yuer678/kb-api、@yuer678/create-kb；内部包（@kb/config、kb-playground、kb-docs）不发布。
 on:
   workflow_dispatch:
