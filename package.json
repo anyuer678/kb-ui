@@ -33,7 +33,7 @@
     "@changesets/cli": "^3.0.3",
     "@kb/config": "workspace:*",
     "@playwright/test": "^1.63.0",
-    "concurrently": "^10.0.5",
+    "concurrently": "^10.0.6",
     "eslint": "^10.11.0",
     "prettier": "^3.9.10",
     "stylelint": "^17.15.0",
