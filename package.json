@@ -43,6 +43,7 @@
   "overrides": {
     "js-yaml": "^4.3.2",
     "fast-uri": "^3.1.6",
+    "body-parser": "^2.4.0",
     "shell-quote": "^1.11.0",
     "esbuild": "^0.28.1",
     "vite": "^8.3.0"
@@ -51,6 +52,7 @@
     "overrides": {
       "js-yaml": "^4.3.2",
       "fast-uri": "^3.1.6",
+      "body-parser": "^2.4.0",
       "shell-quote": "^1.11.0",
       "electron": "^41.10.6",
       "esbuild": "^0.28.1",

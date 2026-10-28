@@ -15,7 +15,7 @@ npm install kb-ui-vue
 ```ts
 import { createApp } from 'vue'
 import KbUi from 'kb-ui-vue'
-import '@kb/ui/styles/index.css'
+import 'kb-ui-vue/styles/index.css'
 
 createApp(App).use(KbUi).mount('#app')
 ```
@@ -24,10 +24,10 @@ createApp(App).use(KbUi).mount('#app')
 
 ```ts
 import { KbButton } from 'kb-ui-vue'
-import '@kb/ui/styles/Button.css'
+import 'kb-ui-vue/styles/Button.css'
 ```
 
-样式文件与组件一一对应（`@kb/ui/styles/<Name>.css`），也可配合
+样式文件与组件一一对应（`kb-ui-vue/styles/<Name>.css`），也可配合
 [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components) 做自动按需导入。
 
 ## 第一个示例
