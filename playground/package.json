@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@yuer678/kb-api": "workspace:*",
-    "@types/node": "^26.6.1",
+    "@types/node": "^26.6.6",
     "@vitejs/plugin-vue": "^6.0.9",
     "typescript": "^5.9.0",
     "vite": "^8.3.5",
