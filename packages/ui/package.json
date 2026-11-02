@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@types/qrcode": "^1.5.5",
-    "@vitejs/plugin-vue": "^6.0.9",
+    "@vitejs/plugin-vue": "^6.0.10",
     "@vitest/coverage-v8": "^4.1.12",
     "@vue/test-utils": "^2.5.1",
     "axe-core": "^4.13.0",
